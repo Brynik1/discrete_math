@@ -21,34 +21,60 @@ class Rational(Integer, Natural):
         return (str(self.numerator) + '/' + str(self.denominator))
 
 
-
     # Сокращение дроби
     def RED_Q_Q():
         pass
+
     # Проверка сокращенного дробного на целое, если рациональное число является целым, то «да», иначе «нет»
     def INT_Q_B():
         pass
+
     # Преобразование целого в дробное
     def TRANS_Z_Q():
         pass
+
     # Преобразование сокращенного дробного в целое (если знаменатель равен 1)
-    def TRANS_Q_Z():
+    def TRANS_Q_Z(self):
+        return Integer(self.numerator)
         pass
+
     # Сложение дробей
-    def ADD_QQ_Q():
-        pass
+    def ADD_QQ_Q(self, other):
+        new_numerator = Integer.ADD_ZZ_Z(Integer.MUL_ZZ_Z(self.numerator,
+                                                          Integer.TRANS_N_Z(other.denominator)),
+                                         Integer.MUL_ZZ_Z(Integer.TRANS_N_Z(self.denominator),
+                                                          other.numerator))  # новый числитель
+        new_denominator = Integer.MUL_ZZ_Z(Integer.TRANS_N_Z(self.denominator),
+                                           Integer.TRANS_N_Z(other.denominator))  # новый знаменатель
+        return Rational(f'{new_numerator}/{new_denominator}')
+
     # Вычитание дробей
-    def SUB_QQ_Q():
-        pass
+    def SUB_QQ_Q(self, other):
+        new_numerator = Integer.SUB_ZZ_Z(Integer.MUL_ZZ_Z(self.numerator,
+                                                          Integer.TRANS_N_Z(other.denominator)),
+                                         Integer.MUL_ZZ_Z(Integer.TRANS_N_Z(self.denominator),
+                                                          other.numerator))  # новый числитель
+        new_denominator = Integer.MUL_ZZ_Z(self.denominator,
+                                           Integer.TRANS_N_Z(other.denominator))  # новый знаменатель
+        return Rational(f'{new_numerator}/{new_denominator}')
+
     # Умножение дробей
-    def MUL_QQ_Q():
-        pass
+    def MUL_QQ_Q(self, other):
+        new_numerator = Integer.MUL_ZZ_Z(self.numerator, other.numerator)  # новый числитель
+        new_denominator = Integer.MUL_ZZ_Z(Integer.TRANS_N_Z(self.denominator),
+                                           Integer.TRANS_N_Z(other.denominator))  # новый знаменатель
+        return Rational(f'{new_numerator}/{new_denominator}')
+
     # Деление дробей (делитель отличен от нуля)
-    def DIV_QQ_Q():
-        pass
+    def DIV_QQ_Q(self, other):
+        other.numerator = Integer.TRANS_N_Z(other.denominator)  # Переворачиваем дроби
+        other.denominator = Integer.TRANS_Z_N(other.numerator)  # чтобы далее произвести умножение
+        return Rational.MUL_QQ_Q(self, other)
 
 
 # Пример инициализации и вывода рационального числа
 if __name__ == '__main__':
-    a = Rational('-4/2')
-    print(a)
+    a = Rational('3/2')
+    b = Rational('-4/7')
+    print(Rational.MUL_QQ_Q(a, b))  # тест для операции MUL_QQ_Q()
+    print(Rational.DIV_QQ_Q(a, b))  # тест для операции DIV_QQ_Q()
