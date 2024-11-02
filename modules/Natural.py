@@ -155,10 +155,8 @@ class Natural:
 
 
 
-
-
-# Тестики
-def tests():
+# Тестики (нужно допилить)
+def Natural_tests():
     num1 = Natural("123")
     num2 = Natural("456")
     num3 = Natural("1000")
@@ -191,8 +189,8 @@ def tests():
         print("Умножение:")
         print(f"{num1} * 2 = {num1.MUL_ND_N(2)}")      # 246
         print(f"{num1} * 9 = {num1.MUL_ND_N(9)}")      # 1107
-        print(f"{num1} * 10**3 = {num1.MUL_Nk_N(3)}")  # 123000
-        print(f"{num1} * 10**0 = {num1.MUL_Nk_N(0)}")  # 123
+        print(f"{num1} * 10^3 = {num1.MUL_Nk_N(3)}")  # 123000
+        print(f"{num1} * 10^0 = {num1.MUL_Nk_N(0)}")  # 123
         print(f"{num1} * {num3} = {num1.MUL_NN_N(num3)}")   # 123000
         print(f"{num1} * {num2} = {num1.MUL_NN_N(num2)}")   # 56088
         print()
@@ -220,7 +218,7 @@ def tests():
     def test_LCM_NN_N():
         print("Наименьшее общее кратное (НОК):")
         print(f"НОК({num2}, {num3}) = {num2.LCM_NN_N(num3)}")   # 57000
-
+    print("\n______ПРОВЕРКА НАТУРАЛЬНЫХ______\n")
     test_COM_NN_D()
     test_NZER_N_B()
     test_ADD_NN_N()
@@ -232,8 +230,10 @@ def tests():
     test_GCF_NN_N()
     test_LCM_NN_N()
 
+
+
 if __name__ == '__main__':
-    tests()
+    Natural_tests()
 
 
 
