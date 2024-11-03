@@ -167,8 +167,8 @@ def Natural_tests():
         print()
     def test_NZER_N_B():
         print("Проверка на ноль:")
-        print(f"{num1} != 0: {num1.NZER_N_B()}")       # True
-        print(f"{num5} != 0: {num5.NZER_N_B()}")       # False
+        print(f"{num1} ≠ 0: {num1.NZER_N_B()}")       # True
+        print(f"{num5} ≠ 0: {num5.NZER_N_B()}")       # False
         print()
     def test_ADD_NN_N():
         print("Сложение:")
@@ -183,17 +183,17 @@ def Natural_tests():
         print()
     def test_MUL_NN_N():
         print("Умножение:")
-        print(f"{num1} * 2 = {num1.MUL_ND_N(2)}")      # 246
-        print(f"{num1} * 9 = {num1.MUL_ND_N(9)}")      # 1107
-        print(f"{num1} * 10^3 = {num1.MUL_Nk_N(3)}")  # 123000
-        print(f"{num1} * 10^0 = {num1.MUL_Nk_N(0)}")  # 123
-        print(f"{num1} * {num3} = {num1.MUL_NN_N(num3)}")   # 123000
-        print(f"{num1} * {num2} = {num1.MUL_NN_N(num2)}")   # 56088
+        print(f"{num1} ∙ 2 = {num1.MUL_ND_N(2)}")      # 246
+        print(f"{num1} ∙ 9 = {num1.MUL_ND_N(9)}")      # 1107
+        print(f"{num1} ∙ 10^3 = {num1.MUL_Nk_N(3)}")  # 123000
+        print(f"{num1} ∙ 10^0 = {num1.MUL_Nk_N(0)}")  # 123
+        print(f"{num1} ∙ {num3} = {num1.MUL_NN_N(num3)}")   # 123000
+        print(f"{num1} ∙ {num2} = {num1.MUL_NN_N(num2)}")   # 56088
         print()
     def test_SUB_NDN_N():
         print("Вычитание с умножением:")
-        print(f"{num3} - ({num1} * 2) = {num3.SUB_NDN_N(num1, 2)}")  # 754
-        print(f"{num3} - ({num4} * 1) = {num3.SUB_NDN_N(num4, 1)}")  # 1
+        print(f"{num3} - ({num1} ∙ 2) = {num3.SUB_NDN_N(num1, 2)}")  # 754
+        print(f"{num3} - ({num4} ∙ 1) = {num3.SUB_NDN_N(num4, 1)}")  # 1
         print()
     def test_DIV_NN_N():
         print("Деление:")

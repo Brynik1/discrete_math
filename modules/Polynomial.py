@@ -3,17 +3,16 @@ from Integer import Integer
 from Natural import Natural
 import copy
 
-
 '''    
     Найти и исправить
-    
+
     У функции деления нацело и всех от нее зависимых результат верный, но очень долгие вычисления!
-    
+
     Пример (считается дольше пяти минут):
     x = Polynomial('-35/1 -33/1 -62/1 22/1')
     y = Polynomial('207/121 51/22 1207/242')
     print(f'{x}  %  {y}  =  {Polynomial.MOD_PP_P(x, y)}')
-    
+
     Ps: можно менять другие функции, если нужно
 '''
 
@@ -22,10 +21,13 @@ class Polynomial:
     def __init__(self, polynomial: str):  # инициализация многочлена
         self.numbers = polynomial.split()
         self.coefficients = [Rational(coefficient) for coefficient in polynomial.split()]
-        while len(self.coefficients) > 1 and self.coefficients[-1].numerator.POZ_Z_D() == 0: self.coefficients = self.coefficients[:-1]
+        while len(self.coefficients) > 1 and self.coefficients[
+            -1].numerator.POZ_Z_D() == 0: self.coefficients = self.coefficients[:-1]
 
     def __str__(self):
-        def f(coefficient): return f'{coefficient.numerator}/{coefficient.denominator}' if coefficient.denominator.COM_NN_D(Natural('1')) else str(coefficient.numerator)
+        def f(coefficient): return f'{coefficient.numerator}/{coefficient.denominator}' if coefficient.denominator.COM_NN_D(
+            Natural('1')) else str(coefficient.numerator)
+
         return visualize_polynomial(' '.join([f(coefficient) for coefficient in self.coefficients]))
 
     # Сложение многочленов
@@ -43,7 +45,6 @@ class Polynomial:
         for i in range(len(b)):
             b[i] = Rational(f'{b[i].numerator.MUL_ZM_Z()}/{b[i].denominator}')  # Изменяем знаки коэффициентов
         return Polynomial.ADD_PP_P(self, Polynomial(' '.join(str(coefficient) for coefficient in b)))
-
 
     # Умножение многочлена на рациональное число
     def MUL_PQ_P(self, q):
@@ -73,7 +74,6 @@ class Polynomial:
     def DEG_P_N(self):
         return len(self.coefficients) - 1
 
-
     # Вынесение из многочлена НОК знаменателей коэффициентов и НОД числителей
     def FAC_P_Q(self):
         numerators = []
@@ -92,7 +92,6 @@ class Polynomial:
         # Возвращается число вида НОД/НОК
         return Rational(f'{numerators[0]}/{denominators[0]}')
 
-
     # Умножение многочленов
     def MUL_PP_P(self, other):
         # Определяем степень результирующего многочлена
@@ -102,7 +101,8 @@ class Polynomial:
         # Умножаем коэффициенты
         for i in range(len(self.coefficients)):
             for j in range(len(other.coefficients)):
-                result_coeffs[i+j] = Rational.ADD_QQ_Q(result_coeffs[i+j], Rational.MUL_QQ_Q(self.coefficients[i], other.coefficients[j]))
+                result_coeffs[i + j] = Rational.ADD_QQ_Q(result_coeffs[i + j],
+                                                         Rational.MUL_QQ_Q(self.coefficients[i], other.coefficients[j]))
 
         return Polynomial(' '.join(str(coefficient) for coefficient in result_coeffs))
 
@@ -162,7 +162,6 @@ class Polynomial:
         return simple_polynomial
 
 
-
 # Тестики (нужно допилить)
 def Polynomial_initial_test():
     print('Базовая проверка многочленов:')
@@ -170,19 +169,20 @@ def Polynomial_initial_test():
     y = Polynomial('1 1 22 2 2 2 -2/5')
     z = Rational('2')
     k = Natural('3')
-    print(f'({x})  +  ({y})  =  {Polynomial.ADD_PP_P(x, y)}')  # ADD_PP_P
-    print(f'({x})  -  ({y})  =  {Polynomial.SUB_PP_P(x, y)}')  # SUB_PP_P
-    print(f'({x})  *  ({z})  =  {Polynomial.MUL_PQ_P(x, z)}')  # MUL_PQ_P
-    print(f'({x})  *  x^{k}  =  {Polynomial.MUL_Pxk_P(x, k)}')  # MUL_Pxk_P
+    print(f'({x}) + ({y})  =  {Polynomial.ADD_PP_P(x, y)}')  # ADD_PP_P
+    print(f'({x}) - ({y})  =  {Polynomial.SUB_PP_P(x, y)}')  # SUB_PP_P
+    print(f'({x}) ∙ {z}  =  {Polynomial.MUL_PQ_P(x, z)}')  # MUL_PQ_P
+    print(f'({x}) ∙ x^{k}  =  {Polynomial.MUL_Pxk_P(x, k)}')  # MUL_Pxk_P
     print(f'Старший коэффициент {x}  =  {Polynomial.LED_P_Q(x)}')  # LED_P_Q
-    print(f'DEG {x}  =  {Polynomial.DEG_P_N(x)}')  # DEG_P_N
+    print(f'DEG {x} = {Polynomial.DEG_P_N(x)}')  # DEG_P_N
     print(f'НОД/НОК {x}  =  {Polynomial.FAC_P_Q(x)}')  # FAC_P_Q
-    print(f'({x})  *  ({y})  =  {Polynomial.MUL_PP_P(x, y)}')  # MUL_PP_P
-    print(f'({x})  //  ({y})  =  {Polynomial.DIV_PP_P(x, y)}')  # DIV_PP_P
+    print(f'({x}) ∙ ({y})  =  {Polynomial.MUL_PP_P(x, y)}')  # MUL_PP_P
+    print(f'({x}) // ({y})  =  {Polynomial.DIV_PP_P(x, y)}')  # DIV_PP_P
     # print(f'{x}  %  {y}  =  {Polynomial.MOD_PP_P(x, y)}')       # MOD_PP_P
     # print(f'НОД  ({x};  {y})  =  {Polynomial.GCF_PP_P(y, x)}')  # GCF_PP_P
     print(f'Производная {x}  =  {Polynomial.DER_P_P(x)}')  # DER_P_P
     # print(f'NMP ({x})  =  {Polynomial.NMP_P_P(x)}')             # NMP_P_P
+
 
 def visualize_polynomial(coefficients):
     def to_superscript(n):
@@ -211,6 +211,7 @@ def visualize_polynomial(coefficients):
     expression = result
     expression = expression.replace('+', f'{short_space}+{short_space}').replace('-', f'{short_space}-{short_space}')
     return expression
+
 
 if __name__ == '__main__':
     Polynomial_initial_test()

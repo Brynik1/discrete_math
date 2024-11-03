@@ -94,11 +94,11 @@ def Rational_initial_test():
     print(f'{x} = {x.RED_Q_Q()}')  # RED_Q_Q
     print(f'{x} is int = {x.INT_Q_B()}')  # INT_Q_B
     print(f'{y} is int = {y.INT_Q_B()}')  # INT_Q_B
-    print(f'Integer({z}) -> Rational({Rational.TRANS_Z_Q(z)})')  # TRANS_Z_Q
-    print(f'Rational({y}) -> Integer({y.TRANS_Q_Z()})')  # TRANS_Q_Z
+    print(f'Integer({z}) → Rational({Rational.TRANS_Z_Q(z)})')  # TRANS_Z_Q
+    print(f'Rational({y}) → Integer({y.TRANS_Q_Z()})')  # TRANS_Q_Z
     print(f'{x} + {y} = {x.ADD_QQ_Q(y)}')  # ADD_QQ_Q
     print(f'{x} - {y} = {x.SUB_QQ_Q(y)}')  # SUB_QQ_Q
-    print(f'{x} * {y} = {x.MUL_QQ_Q(y)}')  # MUL_QQ_Q
+    print(f'{x} ∙ {y} = {x.MUL_QQ_Q(y)}')  # MUL_QQ_Q
     print(f'{x} / {y} = {x.DIV_QQ_Q(y)}')  # DIV_QQ_Q
 
 

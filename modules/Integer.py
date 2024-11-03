@@ -128,17 +128,17 @@ class Integer(Natural):
 # Тестики (нужно допилить)
 def Integer_initial_test():
     print('Базовая проверка целых:')
-    x = Integer('10')
-    y = Integer('-10')
+    x = Integer('-10')
+    y = Integer('10')
     z = Natural('10')
     print(f"ABS({y}) = {y.ABS_Z_N()}")  # ABS_Z_N
     print(f"CMP({y},0) = {y.POZ_Z_D()}")  # POZ_Z_D
-    print(f"{y} * -1 = {y.MUL_ZM_Z()}")  # MUL_ZM_Z
-    print(f'Natural({z}) -> Integer({Integer.TRANS_N_Z(z)})')  # TRANS_N_Z
-    print(f'Integer({x}) -> Natural({x.TRANS_Z_N()})')  # TRANS_Z_N
+    print(f"{y} ∙ -1 = {y.MUL_ZM_Z()}")  # MUL_ZM_Z
+    print(f'Natural({z}) → Integer({Integer.TRANS_N_Z(z)})')  # TRANS_N_Z
+    print(f'Integer({y}) → Natural({x.TRANS_Z_N()})')  # TRANS_Z_N
     print(f"{x} + {y} = {x.ADD_ZZ_Z(y)}")  # ADD_ZZ_Z
     print(f"{x} - {y} = {x.SUB_ZZ_Z(y)}")  # SUB_ZZ_Z
-    print(f"{x} * {y} = {x.MUL_ZZ_Z(y)}")  # MUL_ZZ_Z
+    print(f"{x} ∙ {y} = {x.MUL_ZZ_Z(y)}")  # MUL_ZZ_Z
     print(f"{x} // {y} = {x.DIV_ZZ_Z(y)}")  # DIV_ZZ_Z
     print(f"{x} % {y} = {x.MOD_ZZ_Z(y)}")  # MOD_ZZ_Z
 
