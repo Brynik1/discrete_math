@@ -20,7 +20,7 @@ def is_Polynomial(polynomial_str):
     return all(is_Rational(coefficient) for coefficient in coefficients)
 def polynomial_to_coefficients(polynomial_str):
     if is_Polynomial(polynomial_str): return polynomial_str
-    polynomial_str = polynomial_str.replace('-','+-').replace(' ', '')
+    polynomial_str = polynomial_str.replace('-','+-').replace(' ', '').replace('**','^')
     coefficients = {}
     max_degree = 0
     for term in polynomial_str.split("+"):
@@ -64,6 +64,7 @@ def get_Polynomial(string):
     string = polynomial_to_coefficients(string)
     if not is_Polynomial(string): raise ('Введеное число не является многочленом')
     return Polynomial(string)
+
 
 if __name__ == '__main__':
     # Пример инициализации и вывода
