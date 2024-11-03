@@ -1,15 +1,11 @@
 class Natural:
     def __init__(self, number: str):
-        if not self.validate_Natural(number):
-            raise ValueError("Input must be a natural number 😭")
         self.number = list(map(int, number))
-
-    @staticmethod
-    def validate_Natural(number: str):
-        return all(c.isdigit() for c in number) #and number[0] != '0'
 
     def __str__(self):
         return ''.join(map(str, self.number))
+
+
 
     # Сравнение натуральных чисел: 2 - если первое больше второго, 0, если равно, 1 иначе.
     def COM_NN_D(self, other):

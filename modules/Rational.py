@@ -8,13 +8,8 @@ class Rational:
         number = number.replace(':', '/')        # чтобы a:b было эквивалентно a/b
         if number.count('/') == 1: number1, number2 = number.split('/')
         elif number.count('/') == 0: number1, number2 = number, '1'
-        else: raise ValueError("Input must be a rational number 😭")
-        if number2 == '0': raise ValueError("Сan't divide by zero")
-        try:
-            self.numerator = Integer(number1)
-            self.denominator = Natural(number2) if self.numerator.POZ_Z_D() != 0 else Natural('1')
-        except ValueError:
-            raise ValueError("Input must be a rational number 😭")
+        self.numerator = Integer(number1)
+        self.denominator = Natural(number2) if self.numerator.POZ_Z_D() != 0 else Natural('1')
 
     def __str__(self):
         if Natural.COM_NN_D(self.denominator,Natural('1')) == 0:

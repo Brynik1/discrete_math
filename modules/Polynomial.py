@@ -21,15 +21,12 @@ import copy
 class Polynomial:
     def __init__(self, polynomial: str):  # инициализация многочлена
         self.numbers = polynomial.split()
-        try:
-            self.coefficients = [Rational(coefficient) for coefficient in polynomial.split()]
-            while len(self.coefficients) > 1 and self.coefficients[-1].numerator.POZ_Z_D() == 0: self.coefficients = self.coefficients[:-1]
-        except ValueError:
-            raise ValueError("Input must be a polynomial 😭")
+        self.coefficients = [Rational(coefficient) for coefficient in polynomial.split()]
+        while len(self.coefficients) > 1 and self.coefficients[-1].numerator.POZ_Z_D() == 0: self.coefficients = self.coefficients[:-1]
 
     def __str__(self):
         def f(coefficient): return f'{coefficient.numerator}/{coefficient.denominator}' if coefficient.denominator.COM_NN_D(Natural('1')) else str(coefficient.numerator)
-        return ' '.join([f(coefficient) for coefficient in self.coefficients])
+        return visualize_polynomial(' '.join([f(coefficient) for coefficient in self.coefficients]))
 
     # Сложение многочленов
     def ADD_PP_P(self, oth):
@@ -175,19 +172,45 @@ def Polynomial_initial_test():
     k = Natural('3')
     print(f'({x})  +  ({y})  =  {Polynomial.ADD_PP_P(x, y)}')  # ADD_PP_P
     print(f'({x})  -  ({y})  =  {Polynomial.SUB_PP_P(x, y)}')  # SUB_PP_P
-    print(f'({x})  *  {z}  =  {Polynomial.MUL_PQ_P(x, z)}')  # MUL_PQ_P
+    print(f'({x})  *  ({z})  =  {Polynomial.MUL_PQ_P(x, z)}')  # MUL_PQ_P
     print(f'({x})  *  x^{k}  =  {Polynomial.MUL_Pxk_P(x, k)}')  # MUL_Pxk_P
-    print(f'Старший коэффициент ({x})  =  {Polynomial.LED_P_Q(x)}')  # LED_P_Q
-    print(f'DEG ({x})  =  {Polynomial.DEG_P_N(x)}')  # DEG_P_N
-    print(f'НОД/НОК ({x})  =  {Polynomial.FAC_P_Q(x)}')  # FAC_P_Q
-    print(f'{x}  *  {y}  =  {Polynomial.MUL_PP_P(x, y)}')  # MUL_PP_P
-    print(f'{x}  //  {y}  =  {Polynomial.DIV_PP_P(x, y)}')  # DIV_PP_P
+    print(f'Старший коэффициент {x}  =  {Polynomial.LED_P_Q(x)}')  # LED_P_Q
+    print(f'DEG {x}  =  {Polynomial.DEG_P_N(x)}')  # DEG_P_N
+    print(f'НОД/НОК {x}  =  {Polynomial.FAC_P_Q(x)}')  # FAC_P_Q
+    print(f'({x})  *  ({y})  =  {Polynomial.MUL_PP_P(x, y)}')  # MUL_PP_P
+    print(f'({x})  //  ({y})  =  {Polynomial.DIV_PP_P(x, y)}')  # DIV_PP_P
     # print(f'{x}  %  {y}  =  {Polynomial.MOD_PP_P(x, y)}')       # MOD_PP_P
     # print(f'НОД  ({x};  {y})  =  {Polynomial.GCF_PP_P(y, x)}')  # GCF_PP_P
-    print(f'Производная ({x})  =  {Polynomial.DER_P_P(x)}')  # DER_P_P
+    print(f'Производная {x}  =  {Polynomial.DER_P_P(x)}')  # DER_P_P
     # print(f'NMP ({x})  =  {Polynomial.NMP_P_P(x)}')             # NMP_P_P
 
+def visualize_polynomial(coefficients):
+    def to_superscript(n):
+        superscripts = {
+            '0': '⁰', '1': '¹', '2': '²', '3': '³',
+            '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷',
+            '8': '⁸', '9': '⁹'
+        }
+        return ''.join(superscripts[digit] for digit in str(n))
 
+    coefficients = str(coefficients)
+    short_space = chr(0x202F)
+    numbers = coefficients.split()
+    result = numbers[0]
+    for i in range(1, len(numbers)):
+        number = numbers[i]
+        if number != '0':
+            if number[0] == '-':
+                result += f'{short_space}-{short_space}'
+                number = number[1:]
+            else:
+                result += f'{short_space}+{short_space}'
+            if number != '1': result += str(number)
+            result += 'x'
+            if i > 1: result += to_superscript(i)
+    expression = result
+    expression = expression.replace('+', f'{short_space}+{short_space}').replace('-', f'{short_space}-{short_space}')
+    return expression
 
 if __name__ == '__main__':
     Polynomial_initial_test()

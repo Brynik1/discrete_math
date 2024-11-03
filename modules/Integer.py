@@ -4,18 +4,12 @@ import copy
 
 class Integer(Natural):
     def __init__(self, number: str):
-        if not self.validate_Integer(number):
-            raise ValueError("Input must be a integers number 😭")
         if number[0] == '-':
             self.number = list(map(int, number[1:]))
             self.sign = 1
         else:
             self.number = list(map(int, number))
             self.sign = 0
-
-    @staticmethod
-    def validate_Integer(number: str):
-        return all(c.isdigit() for c in number[1:]) and (number[0].isdigit() or number[0] == '-')
 
     def __str__(self):
         return ('-' if self.sign else '') + ''.join(map(str, self.number))
