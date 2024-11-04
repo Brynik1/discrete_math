@@ -2,19 +2,24 @@ from Natural import Natural
 import copy
 
 
-class Integer:
+class Integer(Natural):
     def __init__(self, number: str):
+        if not self.validate_Integer(number):
+            raise ValueError("Input must be a integers number 😭")
         if number[0] == '-':
             self.number = list(map(int, number[1:]))
             self.sign = 1
         else:
             self.number = list(map(int, number))
             self.sign = 0
+   
+
+    @staticmethod
+    def validate_Integer(number: str):
+        return all(c.isdigit() for c in number[1:]) and (number[0].isdigit() or number[0] == '-')
 
     def __str__(self):
         return ('-' if self.sign else '') + ''.join(map(str, self.number))
-
-
 
     # Абсолютная величина числа, результат - натуральное
     def ABS_Z_N(self):
@@ -47,20 +52,20 @@ class Integer:
         result.sign = 0  # устанавливаем знак по умолчанию
         return result
 
-    # Преобразование целого неотрицательного в натуральное
+    # Преобразование целого в натуральное
     def TRANS_Z_N(self):
-        #if self.sign == 1: raise ValueError("Cannot convert a negative integer to natural")
-        return Natural(''.join(map(str, self.number)))  # преобразовыаем с помощью конструктора для модуля Natural
-
+        a = Natural(''.join(map(str, self.number)))
+        return a  # Возвращаем натуральное число
+    
     # Сложение целых чисел
     def ADD_ZZ_Z(self, other):
-        s1 = self.POZ_Z_D()  # выясняем знаки обоих cлагаемых
+        s1 = self.POZ_Z_D()  # выясняем знаки обоих логаемых
         s2 = other.POZ_Z_D()
-        if s1 == 0:  # отдельно выписываем случаи когда одно из слагаемое нулевое
+        if s1 == 0:  # отдельно выписываем случаи когда одно из слогаемых нулевое
             return other
         if s2 == 0:
             return self
-        if s1 == 1:  # ветвимся по первому слагаемому, случаи когда self отрицательный
+        if s1 == 1:  # ветвимся по первому слогаемому, случаи когда self отрицательный
             if s2 == 1:  # other отрицательный
                 return Integer(str(self.ABS_Z_N().ADD_NN_N(
                     other.ABS_Z_N()))).MUL_ZM_Z()  # превращаем self и other в натуральные, складываем их. Результат с помощью конструктора превращаем в целое и меняем знак.
@@ -96,8 +101,8 @@ class Integer:
     # Умножение целых чисел
     def MUL_ZZ_Z(self, other):
         mul_sign = self.sign != other.sign  # 1 если знаки разные, 0 если одинаковы
-        first = Integer.TRANS_Z_N(self.ABS_Z_N())  # переводим 1 число в натуральное
-        second = Integer.TRANS_Z_N(other.ABS_Z_N())  # переводим 2 число в натуральное
+        first = self.ABS_Z_N()  # переводим 1 число в натуральное
+        second = other.ABS_Z_N()  # переводим 2 число в натуральное
 
         result = Natural.MUL_NN_N(first, second)  # здесь находится результат перемножения двух натуральных чисел
         result = Integer.TRANS_N_Z(result)  # переводим результат в целое, добавляя знак, который должен быть
@@ -120,26 +125,27 @@ class Integer:
     def MOD_ZZ_Z(self, other):
         reducer = Integer.MUL_ZZ_Z(Integer.DIV_ZZ_Z(self, other), other)  # перемножаем частное на делитель
         result = Integer.SUB_ZZ_Z(self, reducer)  # вычитаем из делимого (частное * делитель)
-
         return result
+
 
 
 # Тестики (нужно допилить)
 def Integer_initial_test():
     print('Базовая проверка целых:')
-    x = Integer('-10')
-    y = Integer('10')
+    x = Integer('10')
+    y = Integer('-10')
     z = Natural('10')
     print(f"ABS({y}) = {y.ABS_Z_N()}")  # ABS_Z_N
     print(f"CMP({y},0) = {y.POZ_Z_D()}")  # POZ_Z_D
-    print(f"{y} ∙ -1 = {y.MUL_ZM_Z()}")  # MUL_ZM_Z
-    print(f'Natural({z}) → Integer({Integer.TRANS_N_Z(z)})')  # TRANS_N_Z
-    print(f'Integer({y}) → Natural({x.TRANS_Z_N()})')  # TRANS_Z_N
+    print(f"{y} * -1 = {y.MUL_ZM_Z()}")  # MUL_ZM_Z
+    print(f'Natural({z}) -> Integer({Integer.TRANS_N_Z(z)})')  # TRANS_N_Z
+    print(f'Integer({x}) -> Natural({x.TRANS_Z_N()})')  # TRANS_Z_N
     print(f"{x} + {y} = {x.ADD_ZZ_Z(y)}")  # ADD_ZZ_Z
     print(f"{x} - {y} = {x.SUB_ZZ_Z(y)}")  # SUB_ZZ_Z
-    print(f"{x} ∙ {y} = {x.MUL_ZZ_Z(y)}")  # MUL_ZZ_Z
+    print(f"{x} * {y} = {x.MUL_ZZ_Z(y)}")  # MUL_ZZ_Z
     print(f"{x} // {y} = {x.DIV_ZZ_Z(y)}")  # DIV_ZZ_Z
     print(f"{x} % {y} = {x.MOD_ZZ_Z(y)}")  # MOD_ZZ_Z
+
 
 
 if __name__ == '__main__':
