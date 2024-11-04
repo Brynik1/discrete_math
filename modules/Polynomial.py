@@ -28,7 +28,36 @@ class Polynomial:
         def f(coefficient): return f'{coefficient.numerator}/{coefficient.denominator}' if coefficient.denominator.COM_NN_D(
             Natural('1')) else str(coefficient.numerator)
 
-        return visualize_polynomial(' '.join([f(coefficient) for coefficient in self.coefficients]))
+        return self.visualize_polynomial(' '.join([f(coefficient) for coefficient in self.coefficients]))
+
+    def visualize_polynomial(self, coefficients):
+        def to_superscript(n):
+            superscripts = {
+                '0': '⁰', '1': '¹', '2': '²', '3': '³',
+                '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷',
+                '8': '⁸', '9': '⁹'
+            }
+            return ''.join(superscripts[digit] for digit in str(n))
+
+        coefficients = str(coefficients)
+        short_space = chr(0x202F)
+        numbers = coefficients.split()
+        result = numbers[0]
+        for i in range(1, len(numbers)):
+            number = numbers[i]
+            if number != '0':
+                if number[0] == '-':
+                    result += f'{short_space}-{short_space}'
+                    number = number[1:]
+                else:
+                    result += f'{short_space}+{short_space}'
+                if number != '1': result += str(number)
+                result += 'x'
+                if i > 1: result += to_superscript(i)
+        expression = result
+        expression = expression.replace('+', f'{short_space}+{short_space}').replace('-',
+                                                                                     f'{short_space}-{short_space}')
+        return expression
 
     # Сложение многочленов
     def ADD_PP_P(self, oth):
@@ -184,34 +213,66 @@ def Polynomial_initial_test():
     # print(f'NMP ({x})  =  {Polynomial.NMP_P_P(x)}')             # NMP_P_P
 
 
-def visualize_polynomial(coefficients):
-    def to_superscript(n):
-        superscripts = {
-            '0': '⁰', '1': '¹', '2': '²', '3': '³',
-            '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷',
-            '8': '⁸', '9': '⁹'
-        }
-        return ''.join(superscripts[digit] for digit in str(n))
-
-    coefficients = str(coefficients)
-    short_space = chr(0x202F)
-    numbers = coefficients.split()
-    result = numbers[0]
-    for i in range(1, len(numbers)):
-        number = numbers[i]
-        if number != '0':
-            if number[0] == '-':
-                result += f'{short_space}-{short_space}'
-                number = number[1:]
+def is_Natural(number):
+    return (number != '' and (type(number) == str) and all(c.isdigit() for c in number))
+def is_Integer(number):
+    if number != '' and type(number) == str:
+        if number[0] == '-': return (len(number) > 1) and is_Natural(number[1:])
+        else: return is_Natural(number)
+    else: return False
+def is_Rational(number):
+    if number.count('/') > 1: return False
+    elif number.count('/') == 1: num1, num2 = number.split('/')
+    else: num1, num2 = number, '1'
+    return is_Integer(num1) and is_Natural(num2) and num2 != '0'
+def is_Polynomial(polynomial_str):
+    coefficients = polynomial_str.split()
+    return all(is_Rational(coefficient) for coefficient in coefficients)
+def polynomial_to_coefficients(polynomial_str):
+    if is_Polynomial(polynomial_str): return polynomial_str
+    polynomial_str = polynomial_str.replace('-','+-').replace(' ', '').replace('**','^')
+    coefficients = {}
+    max_degree = 0
+    for term in polynomial_str.split("+"):
+        if 'x' in term:
+            if "*" in term:
+                coefficient, power = term.split("*")
+                power = power.split("^")[1]
+            elif '^' in term:
+                coefficient, power = term.split("x^")
+                if coefficient == '': coefficient = 1
             else:
-                result += f'{short_space}+{short_space}'
-            if number != '1': result += str(number)
-            result += 'x'
-            if i > 1: result += to_superscript(i)
-    expression = result
-    expression = expression.replace('+', f'{short_space}+{short_space}').replace('-', f'{short_space}-{short_space}')
-    return expression
+                coefficient = term.split("x")[0]
+                power = '1'
+        else:
+            coefficient, power = term, '0'
 
+        if not is_Natural(power): raise ValueError('Степени должны быть натуральными числами')
+        if not is_Rational(coefficient): raise ValueError('Коэффициенты должны быть рациональными числами')
+        if power in coefficients: raise ValueError('Дублирование степеней')
 
+        # Добавление коэффициента в словарь
+        power = int(power)
+        coefficients[power] = coefficient
+        max_degree = max(max_degree, power)
+
+    # Формирование массива коэффициентов
+    result = ['0'] * (max_degree + 1)
+    for power, coefficient in coefficients.items():
+        result[power] = coefficient
+    return ' '.join(result)
+def get_Natural(string):
+    if not is_Natural(string): raise ('Введеное число не является натуральным')
+    return Natural(string)
+def get_Integer(string):
+    if not is_Integer(string): raise ('Введеное число не является целым')
+    return Integer(string)
+def get_Rational(string):
+    if not is_Rational(string): raise ('Введеное число не является рациональным')
+    return Rational(string)
+def get_Polynomial(string):
+    string = polynomial_to_coefficients(string)
+    if not is_Polynomial(string): raise ('Введеное число не является многочленом')
+    return Polynomial(string)
 if __name__ == '__main__':
     Polynomial_initial_test()

@@ -227,7 +227,8 @@ def Natural_tests():
     test_LCM_NN_N()
 
 
-
+def is_Natural(number):
+    return (number != '' and (type(number) == str) and all(c.isdigit() for c in number))
 if __name__ == '__main__':
     Natural_tests()
 

@@ -2,7 +2,7 @@ from Natural import Natural
 import copy
 
 
-class Integer(Natural):
+class Integer:
     def __init__(self, number: str):
         if number[0] == '-':
             self.number = list(map(int, number[1:]))
@@ -54,13 +54,13 @@ class Integer(Natural):
 
     # Сложение целых чисел
     def ADD_ZZ_Z(self, other):
-        s1 = self.POZ_Z_D()  # выясняем знаки обоих логаемых
+        s1 = self.POZ_Z_D()  # выясняем знаки обоих cлагаемых
         s2 = other.POZ_Z_D()
-        if s1 == 0:  # отдельно выписываем случаи когда одно из слогаемых нулевое
+        if s1 == 0:  # отдельно выписываем случаи когда одно из слагаемое нулевое
             return other
         if s2 == 0:
             return self
-        if s1 == 1:  # ветвимся по первому слогаемому, случаи когда self отрицательный
+        if s1 == 1:  # ветвимся по первому слагаемому, случаи когда self отрицательный
             if s2 == 1:  # other отрицательный
                 return Integer(str(self.ABS_Z_N().ADD_NN_N(
                     other.ABS_Z_N()))).MUL_ZM_Z()  # превращаем self и other в натуральные, складываем их. Результат с помощью конструктора превращаем в целое и меняем знак.
@@ -123,7 +123,13 @@ class Integer(Natural):
 
         return result
 
-
+def is_Integer(number):
+    if number != '' and type(number) == str:
+        if number[0] == '-': return (len(number) > 1) and is_Natural(number[1:])
+        else: return is_Natural(number)
+    else: return False
+def is_Natural(number):
+    return (number != '' and (type(number) == str) and all(c.isdigit() for c in number))
 
 # Тестики (нужно допилить)
 def Integer_initial_test():
