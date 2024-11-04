@@ -34,10 +34,11 @@ def polynomial_to_coefficients(polynomial_str):
                 elif coefficient == '-': coefficient = '-1'
             else:
                 coefficient = term.split("x")[0]
+                if coefficient == '': coefficient = '1'
+                elif coefficient == '-': coefficient = '-1'
                 power = '1'
         else:
             coefficient, power = term, '0'
-        print(coefficient)
         if not is_Natural(power): raise ValueError('Степени должны быть натуральными числами')
         if not is_Rational(coefficient): raise ValueError('Коэффициенты должны быть рациональными числами')
         if power in coefficients: raise ValueError('Дублирование степеней')
@@ -70,4 +71,4 @@ if __name__ == '__main__':
     print(get_Natural(('123')))
     print(get_Integer(('-123')))
     print(get_Rational(('-123/35')))
-    print(get_Polynomial('1x + 2 - x^2'))
+    print(get_Polynomial('1x + 2 - x^2 - x'))
