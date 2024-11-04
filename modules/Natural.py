@@ -1,15 +1,11 @@
 class Natural:
     def __init__(self, number: str):
-        if not self.validate_Natural(number):
-            raise ValueError("Input must be a natural number 😭")
         self.number = list(map(int, number))
-
-    @staticmethod
-    def validate_Natural(number: str):
-        return all(c.isdigit() for c in number) #and number[0] != '0'
 
     def __str__(self):
         return ''.join(map(str, self.number))
+
+
 
     # Сравнение натуральных чисел: 2 - если первое больше второго, 0, если равно, 1 иначе.
     def COM_NN_D(self, other):
@@ -154,11 +150,8 @@ class Natural:
         return self.MUL_NN_N(other).DIV_NN_N(self.GCF_NN_N(other))
 
 
-
-
-
-# Тестики
-def tests():
+# Тестики (нужно допилить)
+def Natural_tests():
     num1 = Natural("123")
     num2 = Natural("456")
     num3 = Natural("1000")
@@ -173,8 +166,8 @@ def tests():
         print()
     def test_NZER_N_B():
         print("Проверка на ноль:")
-        print(f"{num1} != 0: {num1.NZER_N_B()}")       # True
-        print(f"{num5} != 0: {num5.NZER_N_B()}")       # False
+        print(f"{num1} ≠ 0: {num1.NZER_N_B()}")       # True
+        print(f"{num5} ≠ 0: {num5.NZER_N_B()}")       # False
         print()
     def test_ADD_NN_N():
         print("Сложение:")
@@ -189,17 +182,17 @@ def tests():
         print()
     def test_MUL_NN_N():
         print("Умножение:")
-        print(f"{num1} * 2 = {num1.MUL_ND_N(2)}")      # 246
-        print(f"{num1} * 9 = {num1.MUL_ND_N(9)}")      # 1107
-        print(f"{num1} * 10**3 = {num1.MUL_Nk_N(3)}")  # 123000
-        print(f"{num1} * 10**0 = {num1.MUL_Nk_N(0)}")  # 123
-        print(f"{num1} * {num3} = {num1.MUL_NN_N(num3)}")   # 123000
-        print(f"{num1} * {num2} = {num1.MUL_NN_N(num2)}")   # 56088
+        print(f"{num1} ∙ 2 = {num1.MUL_ND_N(2)}")      # 246
+        print(f"{num1} ∙ 9 = {num1.MUL_ND_N(9)}")      # 1107
+        print(f"{num1} ∙ 10^3 = {num1.MUL_Nk_N(3)}")  # 123000
+        print(f"{num1} ∙ 10^0 = {num1.MUL_Nk_N(0)}")  # 123
+        print(f"{num1} ∙ {num3} = {num1.MUL_NN_N(num3)}")   # 123000
+        print(f"{num1} ∙ {num2} = {num1.MUL_NN_N(num2)}")   # 56088
         print()
     def test_SUB_NDN_N():
         print("Вычитание с умножением:")
-        print(f"{num3} - ({num1} * 2) = {num3.SUB_NDN_N(num1, 2)}")  # 754
-        print(f"{num3} - ({num4} * 1) = {num3.SUB_NDN_N(num4, 1)}")  # 1
+        print(f"{num3} - ({num1} ∙ 2) = {num3.SUB_NDN_N(num1, 2)}")  # 754
+        print(f"{num3} - ({num4} ∙ 1) = {num3.SUB_NDN_N(num4, 1)}")  # 1
         print()
     def test_DIV_NN_N():
         print("Деление:")
@@ -220,7 +213,7 @@ def tests():
     def test_LCM_NN_N():
         print("Наименьшее общее кратное (НОК):")
         print(f"НОК({num2}, {num3}) = {num2.LCM_NN_N(num3)}")   # 57000
-
+    print("\n______ПРОВЕРКА НАТУРАЛЬНЫХ______\n")
     test_COM_NN_D()
     test_NZER_N_B()
     test_ADD_NN_N()
@@ -232,8 +225,9 @@ def tests():
     test_GCF_NN_N()
     test_LCM_NN_N()
 
+
 if __name__ == '__main__':
-    tests()
+    Natural_tests()
 
 
 
