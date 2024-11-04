@@ -123,13 +123,6 @@ class Integer:
 
         return result
 
-def is_Integer(number):
-    if number != '' and type(number) == str:
-        if number[0] == '-': return (len(number) > 1) and is_Natural(number[1:])
-        else: return is_Natural(number)
-    else: return False
-def is_Natural(number):
-    return (number != '' and (type(number) == str) and all(c.isdigit() for c in number))
 
 # Тестики (нужно допилить)
 def Integer_initial_test():
@@ -147,7 +140,6 @@ def Integer_initial_test():
     print(f"{x} ∙ {y} = {x.MUL_ZZ_Z(y)}")  # MUL_ZZ_Z
     print(f"{x} // {y} = {x.DIV_ZZ_Z(y)}")  # DIV_ZZ_Z
     print(f"{x} % {y} = {x.MOD_ZZ_Z(y)}")  # MOD_ZZ_Z
-
 
 
 if __name__ == '__main__':

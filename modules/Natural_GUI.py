@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from Natural import *
+from additionally import *
 
 
 class NaturalApp:
@@ -89,7 +90,7 @@ class NaturalApp:
             messagebox.showerror("Ошибка", "Первое число должно быть натуральным.")
             return
 
-        first_number = Natural(first_number_str)
+        first_number = get_Natural(first_number_str)
 
         if method_name in ["Сравнение чисел",
                            "Сложение двух чисел",
@@ -106,7 +107,7 @@ class NaturalApp:
                 messagebox.showerror("Ошибка", "Второе число должно быть натуральным.")
                 return
 
-            second_number = Natural(second_number_str)
+            second_number = get_Natural(second_number_str)
 
             if method_name == "Сравнение чисел":
                 comparison_result = first_number.COM_NN_D(second_number)

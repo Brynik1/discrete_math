@@ -3,6 +3,7 @@ from tkinter import messagebox
 from Natural import *
 from Integer import *
 from Rational import *
+from additionally import *
 
 
 class RationalApp:
@@ -80,7 +81,7 @@ class RationalApp:
             messagebox.showerror("Ошибка", "Первое число должно быть рациональным.")
             return
 
-        first_number = Rational(first_number_str)
+        first_number = get_Rational(first_number_str)
         if method_name in ["Сложение дробей",
                         "Вычитание дробей",
                         "Умножение дробей",
@@ -90,7 +91,7 @@ class RationalApp:
                 messagebox.showerror("Ошибка", "Второе число должно быть рациональным.")
                 return
 
-            second_number = Rational(second_number_str)
+            second_number = get_Rational(second_number_str)
 
             if method_name == "Сложение дробей":
                 result = first_number.ADD_QQ_Q(second_number)
@@ -131,7 +132,7 @@ class RationalApp:
                 if not is_Integer(first_number_str):
                     messagebox.showerror("Ошибка", "Первое число должно быть целым.")
                     return
-                first_number = Integer(first_number_str)
+                first_number = get_Integer(first_number_str)
                 result = Rational.TRANS_Z_Q(first_number)
                 self.result_label.config(text=f"Результат: {result}")
 

@@ -4,6 +4,7 @@ from Natural import *
 from Integer import *
 from Rational import *
 from Polynomial import *
+from additionally import *
 
 
 class PolynomialApp:
@@ -96,7 +97,7 @@ class PolynomialApp:
             #"НОК знаменателей и НОД числителей",
             #"Производная",
             #"Кратные корни в простые"
-        first_number = Polynomial(first_number_str)
+        first_number = get_Polynomial(first_number_str)
         if method_name in ["Сложение многочленов",
                         "Вычитание многочленов",
                         "Умножение многочленов",
@@ -108,7 +109,7 @@ class PolynomialApp:
                 messagebox.showerror("Ошибка", "Второе число должно быть многочленом.")
                 return
 
-            second_number = Polynomial(second_number_str)
+            second_number = get_Polynomial(second_number_str)
 
             if method_name == "Сложение многочленов":
                 result = first_number.ADD_PP_P(second_number)
@@ -151,7 +152,7 @@ class PolynomialApp:
                 if not is_Rational(number_str):
                     messagebox.showerror("Ошибка", "Первое число должно быть рациональным.")
                     return
-                number = Rational(number_str)
+                number = get_Rational(number_str)
                 result = first_number.MUL_PQ_P(number)
                 self.result_label.config(text=f"Результат: {result}")
             elif method_name == "Умножение на x^k":

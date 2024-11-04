@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 from Natural import *
 from Integer import *
+from additionally import *
 
 
 class IntegerApp:
@@ -86,7 +87,7 @@ class IntegerApp:
             messagebox.showerror("Ошибка", "Первое число должно быть целым.")
             return
 
-        first_number = Integer(first_number_str)
+        first_number = get_Integer(first_number_str)
         if method_name in ["Сложение двух чисел",
                         "Вычитание двух чисел",
                         "Умножение двух чисел",
@@ -97,7 +98,7 @@ class IntegerApp:
                 messagebox.showerror("Ошибка", "Второе число должно быть целым.")
                 return
 
-            second_number = Integer(second_number_str)
+            second_number = get_Integer(second_number_str)
 
             if method_name == "Сложение двух чисел":
                 result = first_number.ADD_ZZ_Z(second_number)
@@ -151,7 +152,7 @@ class IntegerApp:
                 if not is_Natural(first_number_str):
                     messagebox.showerror("Ошибка", "Первое число должно быть натуральным.")
                     return
-                natural = Natural(first_number_str)
+                natural = get_Natural(first_number_str)
                 result = Integer.TRANS_N_Z(natural)
                 self.result_label.config(text=f"Результат: {result}")
 

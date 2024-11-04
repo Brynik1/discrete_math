@@ -102,17 +102,6 @@ def Rational_initial_test():
     print(f'{x} / {y} = {x.DIV_QQ_Q(y)}')  # DIV_QQ_Q
 
 
-def is_Natural(number):
-    return (number != '' and (type(number) == str) and all(c.isdigit() for c in number))
-def is_Integer(number):
-    if number != '' and type(number) == str:
-        if number[0] == '-': return (len(number) > 1) and is_Natural(number[1:])
-        else: return is_Natural(number)
-    else: return False
-def is_Rational(number):
-    if number.count('/') > 1: return False
-    elif number.count('/') == 1: num1, num2 = number.split('/')
-    else: num1, num2 = number, '1'
-    return is_Integer(num1) and is_Natural(num2) and num2 != '0'
+
 if __name__ == '__main__':
     Rational_initial_test()

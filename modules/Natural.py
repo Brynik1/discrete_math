@@ -150,7 +150,6 @@ class Natural:
         return self.MUL_NN_N(other).DIV_NN_N(self.GCF_NN_N(other))
 
 
-
 # Тестики (нужно допилить)
 def Natural_tests():
     num1 = Natural("123")
@@ -227,8 +226,6 @@ def Natural_tests():
     test_LCM_NN_N()
 
 
-def is_Natural(number):
-    return (number != '' and (type(number) == str) and all(c.isdigit() for c in number))
 if __name__ == '__main__':
     Natural_tests()
 
