@@ -102,27 +102,27 @@ class IntegerApp:
 
             if method_name == "Сложение двух чисел":
                 result = first_number.ADD_ZZ_Z(second_number)
-                self.result_label.config(text=f"Результат: {result}")
+                self.result_label.config(text=f"{first_number} + {second_number} = {result}")
 
             elif method_name == "Вычитание двух чисел":
                 try:
                     result = first_number.SUB_ZZ_Z(second_number)
-                    self.result_label.config(text=f"Результат: {result}")
+                    self.result_label.config(text=f"{first_number} - {second_number} = {result}")
                 except ValueError as e:
                     messagebox.showerror("Ошибка", str(e))
                     return
 
             elif method_name == "Умножение двух чисел":
                 result = first_number.MUL_ZZ_Z(second_number)
-                self.result_label.config(text=f"Результат: {result}")
+                self.result_label.config(text=f"{first_number} ∙ {second_number} = {result}")
 
             elif method_name == "Деление целочисленное":
                 result = first_number.DIV_ZZ_Z(second_number)
-                self.result_label.config(text=f"Результат: {result}")
+                self.result_label.config(text=f"{first_number} div {second_number} = {result}")
 
             elif method_name == "Деление с остатком":
                 result = first_number.MOD_ZZ_Z(second_number)
-                self.result_label.config(text=f"Результат: {result}")
+                self.result_label.config(text=f"{first_number} mod {second_number} = {result}")
 
 
         #"Модуль числа",

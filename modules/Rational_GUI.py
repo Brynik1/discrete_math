@@ -95,23 +95,23 @@ class RationalApp:
 
             if method_name == "Сложение дробей":
                 result = first_number.ADD_QQ_Q(second_number)
-                self.result_label.config(text=f"Результат: {result}")
+                self.result_label.config(text=f"{first_number} + {second_number} = {result}")
 
             elif method_name == "Вычитание дробей":
                 try:
                     result = first_number.SUB_QQ_Q(second_number)
-                    self.result_label.config(text=f"Результат: {result}")
+                    self.result_label.config(text=f"{first_number} - {second_number} = {result}")
                 except ValueError as e:
                     messagebox.showerror("Ошибка", str(e))
                     return
 
             elif method_name == "Умножение дробей":
                 result = first_number.MUL_QQ_Q(second_number)
-                self.result_label.config(text=f"Результат: {result}")
+                self.result_label.config(text=f"{first_number} ∙ {second_number} = {result}")
 
             elif method_name == "Деление дробей":
                 result = first_number.DIV_QQ_Q(second_number)
-                self.result_label.config(text=f"Результат: {result}")
+                self.result_label.config(text=f"{first_number} ∶ {second_number} = {result}")
 
 
         # "Сокращение дроби",
@@ -121,7 +121,7 @@ class RationalApp:
         else:
             if method_name == "Сокращение дроби":
                 result = first_number.RED_Q_Q()
-                self.result_label.config(text=f"Результат: {result}")
+                self.result_label.config(text=f"{first_number} = {result}")
 
             elif method_name == "Проверка сокращенного на целое":
                 result = first_number.INT_Q_B()

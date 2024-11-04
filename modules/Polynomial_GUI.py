@@ -16,7 +16,7 @@ class PolynomialApp:
         self.hover_color = "#3c3f42"  # Цвет при наведении
 
         self.root = root
-        self.root.title("Rational Number Operations")
+        self.root.title("Polynomial Number Operations")
         self.root.geometry("374x420")
         self.root.configure(bg=self.bg_color)
         self.root.attributes('-alpha', 0.98)
@@ -173,8 +173,9 @@ class PolynomialApp:
                 result = first_number.DER_P_P()
                 self.result_label.config(text=f"Результат: {result}")
             elif method_name == "Кратные корни в простые":
-                result = first_number.NMP_P_P()
-                self.result_label.config(text=f"Результат: {result}")
+                self.result_label.config(text=f"Answer")
+                #result = first_number.NMP_P_P()
+                #self.result_label.config(text=f"Результат: {result}")
 
 
 if __name__ == "__main__":

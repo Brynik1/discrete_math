@@ -120,19 +120,19 @@ class NaturalApp:
 
             elif method_name == "Сложение двух чисел":
                 result = first_number.ADD_NN_N(second_number)
-                self.result_label.config(text=f"Результат: {result}")
+                self.result_label.config(text=f"{first_number} + {second_number} = {result}")
 
             elif method_name == "Вычитание двух чисел":
                 try:
                     result = first_number.SUB_NN_N(second_number)
-                    self.result_label.config(text=f"Результат: {result}")
+                    self.result_label.config(text=f"{first_number} - {second_number} = {result}")
                 except ValueError as e:
                     messagebox.showerror("Ошибка", str(e))
                     return
 
             elif method_name == "Умножение двух чисел":
                 result = first_number.MUL_NN_N(second_number)
-                self.result_label.config(text=f"Результат: {result}")
+                self.result_label.config(text=f"{first_number} ∙ {second_number} = {result}")
 
             elif method_name == "Вычитание умноженного на цифру":
                 digit_str = self.digit_entry.get()
@@ -140,7 +140,6 @@ class NaturalApp:
                     messagebox.showerror("Ошибка", "Цифра должна быть от 0 до 9.")
                     return
                 digit = int(digit_str)
-                print(digit)
                 try:
                     result = first_number.SUB_NDN_N(second_number, digit)
                     self.result_label.config(text=f"Результат: {result}")
@@ -163,11 +162,11 @@ class NaturalApp:
 
             elif method_name == "Деление целочисленное":
                 result = first_number.DIV_NN_N(second_number)
-                self.result_label.config(text=f"Результат: {result}")
+                self.result_label.config(text=f"{first_number} div {second_number} = {result}")
 
             elif method_name == "Деление с остатком":
                 result = first_number.MOD_NN_N(second_number)
-                self.result_label.config(text=f"Результат: {result}")
+                self.result_label.config(text=f"{first_number} mod {second_number} = {result}")
 
             elif method_name == "НОД":
                 result = first_number.GCF_NN_N(second_number)
