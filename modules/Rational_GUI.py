@@ -49,13 +49,11 @@ class RationalApp:
         # Настройка событий для изменения цвета фона
         self.method_menu.bind("<Enter>", lambda e: self.method_menu.config(bg=self.hover_color))
         self.method_menu.bind("<Leave>", lambda e: self.method_menu.config(bg=self.window_color))
-
         self.method_menu.pack(side=tk.LEFT)
 
         # Ввод первого числа
         tk.Label(root, text="Введите первую дробь:", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(pady=5)
-        self.first_number_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, insertbackground='white',
-                                           font=("Arial", 14))
+        self.first_number_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, insertbackground='white', font=("Arial", 14))
         self.first_number_entry.pack(pady=5)
 
         # Ввод второго числа
@@ -63,14 +61,12 @@ class RationalApp:
         self.second_number_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, insertbackground='white', font=("Arial", 14))
         self.second_number_entry.pack(pady=5)
 
-
         # Метка для результата
         self.result_label = tk.Label(root, text="", bg=self.bg_color, fg=self.text_color, font=("Arial", 14))
         self.result_label.pack(pady=10)
 
         # Кнопка для выполнения операции
-        self.calculate_button = tk.Button(root, text="Выполнить", command=self.calculate, bg="#4CAF50",
-                                          fg=self.text_color, font=("Arial", 14), height=1, width=15)
+        self.calculate_button = tk.Button(root, text="Выполнить", command=self.calculate, bg="#4CAF50", fg=self.text_color, font=("Arial", 14), height=1, width=15)
         self.calculate_button.pack(pady=10)
         self.calculate_button.bind("<Enter>", lambda e: self.calculate_button.config(bg="#61e867"))
         self.calculate_button.bind("<Leave>", lambda e: self.calculate_button.config(bg="#4CAF50"))
@@ -78,34 +74,33 @@ class RationalApp:
     def calculate(self):
         method_name = self.method_var.get()
         first_number_str = self.first_number_entry.get()
-
-        if not is_Rational(first_number_str):
+        try:
+            first_number = get_Rational(first_number_str)
+        except ValueError:
             messagebox.showerror("Ошибка", "Первое число должно быть рациональным.")
             return
 
-        first_number = get_Rational(first_number_str)
         if method_name in ["Сложение дробей",
-                        "Вычитание дробей",
-                        "Умножение дробей",
-                        "Деление дробей",]:
+                           "Вычитание дробей",
+                           "Умножение дробей",
+                           "Деление дробей",]:
+
             second_number_str = self.second_number_entry.get()
-            if not is_Rational(second_number_str):
+            try:
+                second_number = get_Rational(second_number_str)
+            except ValueError:
                 messagebox.showerror("Ошибка", "Второе число должно быть рациональным.")
                 return
 
-            second_number = get_Rational(second_number_str)
-
             if method_name == "Сложение дробей":
                 result = first_number.ADD_QQ_Q(second_number)
-                self.result_label.config(text=f"{first_number} + {second_number} = {result}")
+                if len(second_number_str) > 0 and second_number_str[0] == '-': self.result_label.config(text=f"{first_number} - {second_number_str[1:]} = {result}")
+                else: self.result_label.config(text=f"{first_number} + {second_number} = {result}")
 
             elif method_name == "Вычитание дробей":
-                try:
-                    result = first_number.SUB_QQ_Q(second_number)
-                    self.result_label.config(text=f"{first_number} - {second_number} = {result}")
-                except ValueError as e:
-                    messagebox.showerror("Ошибка", str(e))
-                    return
+                result = first_number.SUB_QQ_Q(second_number)
+                if len(second_number_str) > 0 and second_number_str[0] == '-': self.result_label.config(text=f"{first_number} + {second_number_str[1:]} = {result}")
+                else: self.result_label.config(text=f"{first_number} - {second_number} = {result}")
 
             elif method_name == "Умножение дробей":
                 result = first_number.MUL_QQ_Q(second_number)
@@ -116,10 +111,6 @@ class RationalApp:
                 self.result_label.config(text=f"{first_number} ∶ {second_number} = {result}")
 
 
-        # "Сокращение дроби",
-        # "Проверка сокращенного на целое",
-        # "Целое -> дробное",
-        # "Дробное -> целое",
         else:
             if method_name == "Сокращение дроби":
                 result = first_number.RED_Q_Q()
@@ -127,14 +118,15 @@ class RationalApp:
 
             elif method_name == "Проверка сокращенного на целое":
                 result = first_number.INT_Q_B()
-                if result: self.result_label.config(text=f"Дробь является целым")
-                else: self.result_label.config(text=f"Дробь не является целым")
+                if result: self.result_label.config(text=f"Является целым")
+                else: self.result_label.config(text=f"Не является целым")
 
             elif method_name == "Целое -> дробное":
-                if not is_Integer(first_number_str):
+                try:
+                    first_number = get_Integer(first_number_str)
+                except ValueError:
                     messagebox.showerror("Ошибка", "Первое число должно быть целым.")
                     return
-                first_number = get_Integer(first_number_str)
                 result = Rational.TRANS_Z_Q(first_number)
                 self.result_label.config(text=f"Результат: {result}")
 

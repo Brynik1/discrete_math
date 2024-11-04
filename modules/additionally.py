@@ -53,17 +53,17 @@ def polynomial_to_coefficients(polynomial_str):
         result[power] = coefficient
     return ' '.join(result)
 def get_Natural(string):
-    if not is_Natural(string): raise ('Введеное число не является натуральным')
+    if not is_Natural(string): raise ValueError('Введенное число не является натуральным')
     return Natural(string)
 def get_Integer(string):
-    if not is_Integer(string): raise ('Введеное число не является целым')
+    if not is_Integer(string): raise ValueError('Введенное число не является целым')
     return Integer(string)
 def get_Rational(string):
-    if not is_Rational(string): raise ('Введеное число не является рациональным')
+    if not is_Rational(string): raise ValueError('Введенное число не является рациональным')
     return Rational(string)
 def get_Polynomial(string):
     string = polynomial_to_coefficients(string)
-    if not is_Polynomial(string): raise ('Введеное число не является многочленом')
+    if not is_Polynomial(string): raise ValueError('Введенное число не является многочленом')
     return Polynomial(string)
 
 if __name__ == '__main__':

@@ -55,8 +55,7 @@ class IntegerApp:
 
         # Ввод первого числа
         tk.Label(root, text="Введите первое число:", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(pady=5)
-        self.first_number_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, insertbackground='white',
-                                           font=("Arial", 14))
+        self.first_number_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, insertbackground='white', font=("Arial", 14))
         self.first_number_entry.pack(pady=5)
 
         # Ввод второго числа
@@ -66,8 +65,7 @@ class IntegerApp:
 
         # Ввод цифры
         tk.Label(root, text="Введите цифру (для методов с цифрой):", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(pady=5)
-        self.digit_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, insertbackground='white',
-                                    font=("Arial", 14))
+        self.digit_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, insertbackground='white', font=("Arial", 14))
         self.digit_entry.pack(pady=5)
 
         # Метка для результата
@@ -75,8 +73,7 @@ class IntegerApp:
         self.result_label.pack(pady=10)
 
         # Кнопка для выполнения операции
-        self.calculate_button = tk.Button(root, text="Выполнить", command=self.calculate, bg="#4CAF50",
-                                          fg=self.text_color, font=("Arial", 14), height=1, width=15)
+        self.calculate_button = tk.Button(root, text="Выполнить", command=self.calculate, bg="#4CAF50", fg=self.text_color, font=("Arial", 14), height=1, width=15)
         self.calculate_button.pack(pady=10)
         self.calculate_button.bind("<Enter>", lambda e: self.calculate_button.config(bg="#61e867"))
         self.calculate_button.bind("<Leave>", lambda e: self.calculate_button.config(bg="#4CAF50"))
@@ -85,34 +82,35 @@ class IntegerApp:
         method_name = self.method_var.get()
         first_number_str = self.first_number_entry.get()
 
-        if not is_Integer(first_number_str):
+        try:
+            first_number = get_Integer(first_number_str)
+        except ValueError:
             messagebox.showerror("Ошибка", "Первое число должно быть целым.")
             return
 
-        first_number = get_Integer(first_number_str)
         if method_name in ["Сложение двух чисел",
-                        "Вычитание двух чисел",
-                        "Умножение двух чисел",
-                        "Деление целочисленное",
-                        "Деление с остатком"]:
+                           "Вычитание двух чисел",
+                           "Умножение двух чисел",
+                           "Деление целочисленное",
+                           "Деление с остатком"]:
+
             second_number_str = self.second_number_entry.get()
-            if not is_Integer(second_number_str):
+
+            try:
+                second_number = get_Integer(second_number_str)
+            except ValueError:
                 messagebox.showerror("Ошибка", "Второе число должно быть целым.")
                 return
 
-            second_number = get_Integer(second_number_str)
-
             if method_name == "Сложение двух чисел":
                 result = first_number.ADD_ZZ_Z(second_number)
-                self.result_label.config(text=f"{first_number} + {second_number} = {result}")
+                if len(second_number_str) > 0 and second_number_str[0] == '-': self.result_label.config(text=f"{first_number} - {second_number_str[1:]} = {result}")
+                else: self.result_label.config(text=f"{first_number} + {second_number} = {result}")
 
             elif method_name == "Вычитание двух чисел":
-                try:
-                    result = first_number.SUB_ZZ_Z(second_number)
-                    self.result_label.config(text=f"{first_number} - {second_number} = {result}")
-                except ValueError as e:
-                    messagebox.showerror("Ошибка", str(e))
-                    return
+                result = first_number.SUB_ZZ_Z(second_number)
+                if len(second_number_str) > 0 and second_number_str[0] == '-': self.result_label.config(text=f"{first_number} + {second_number_str[1:]} = {result}")
+                else: self.result_label.config(text=f"{first_number} - {second_number} = {result}")
 
             elif method_name == "Умножение двух чисел":
                 result = first_number.MUL_ZZ_Z(second_number)
@@ -126,12 +124,6 @@ class IntegerApp:
                 result = first_number.MOD_ZZ_Z(second_number)
                 self.result_label.config(text=f"{first_number} mod {second_number} = {result}")
 
-
-        #"Модуль числа",
-        #"Определение знака",
-        #"Умножение на -1",
-        #"Натуральное -> целое",
-        #"Целое -> натуральное",
 
         else:
             if method_name == "Модуль числа":
@@ -149,12 +141,12 @@ class IntegerApp:
                 result = first_number.MUL_ZM_Z()
                 self.result_label.config(text=f"Результат: {result}")
 
-
             elif method_name == "Натуральное -> целое":
-                if not is_Natural(first_number_str):
+                try:
+                    natural = get_Natural(first_number_str)
+                except ValueError:
                     messagebox.showerror("Ошибка", "Первое число должно быть натуральным.")
                     return
-                natural = get_Natural(first_number_str)
                 result = Integer.TRANS_N_Z(natural)
                 self.result_label.config(text=f"Результат: {result}")
 
