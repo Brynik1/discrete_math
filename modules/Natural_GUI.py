@@ -49,11 +49,6 @@ class NaturalApp:
 
         self.method_menu = tk.OptionMenu(method_frame, self.method_var, *methods)
         self.method_menu.config(bg=self.window_color, fg=self.text_color, highlightbackground=self.window_color)
-
-        # Настройка событий для изменения цвета фона
-        self.method_menu.bind("<Enter>", lambda e: self.method_menu.config(bg=self.hover_color))
-        self.method_menu.bind("<Leave>", lambda e: self.method_menu.config(bg=self.window_color))
-
         self.method_menu.pack(side=tk.LEFT)
 
         # Ввод первого числа
@@ -81,6 +76,8 @@ class NaturalApp:
         self.calculate_button = tk.Button(root, text="Выполнить", command=self.calculate, bg="#4CAF50",
                                           fg=self.text_color, font=("Arial", 14), height=1, width=15)
         self.calculate_button.pack(pady=10)
+        self.calculate_button.bind("<Enter>", lambda e: self.calculate_button.config(bg="#61e867"))
+        self.calculate_button.bind("<Leave>", lambda e: self.calculate_button.config(bg="#4CAF50"))
 
     def calculate(self):
         method_name = self.method_var.get()

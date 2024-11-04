@@ -2,32 +2,48 @@ import tkinter as tk
 import subprocess
 import os
 
+
 class App:
     def __init__(self, root):
+        # Определяем цвета
+        self.bg_color = "#2E2E2E"  # Темный фон
+        self.title_color = "#FFFFFF"  # Цвет заголовка
+        self.button_bg_color = "#4B4B4B"  # Цвет фона кнопок
+        self.button_fg_color = "#FFFFFF"  # Цвет текста кнопок
+        self.button_hover_color = "#808080"  # Цвет кнопок при наведении
+        self.font_family = "Arial"
+        self.title_font_size = 16
+        self.button_font_size = 12
+
+        # Создание окна
         self.root = root
         self.root.title("Выбор модуля")
         self.root.geometry("400x300")
-        self.root.configure(bg="#2E2E2E")  # Темный фон
+        self.root.configure(bg=self.bg_color)
+        self.root.attributes('-alpha', 1)
+        self.root.resizable(False, False)
 
         # Заголовок
-        self.title_label = tk.Label(root, text="Выберите модуль", bg="#2E2E2E", fg="#FFFFFF", font=("Arial", 16))
+        self.title_label = tk.Label(root, text="Выберите модуль", bg=self.bg_color, fg=self.title_color,
+                                    font=(self.font_family, self.title_font_size))
         self.title_label.pack(pady=20)
 
-        # Кнопка 1
-        self.button1 = tk.Button(root, text="Модуль натуральных чисел", command=self.run_file1, bg="#4B4B4B", fg="#FFFFFF", font=("Arial", 12), relief=tk.FLAT)
-        self.button1.pack(pady=10, padx=20, fill=tk.X)
+        # Кнопки
+        self.create_button("Модуль натуральных чисел", self.run_file1)
+        self.create_button("Модуль целых чисел", self.run_file2)
+        self.create_button("Модуль рациональных чисел", self.run_file3)
+        self.create_button("Модуль многочленов", self.run_file4)
 
-        # Кнопка 2
-        self.button2 = tk.Button(root, text="Модуль целых чисел", command=self.run_file2, bg="#4B4B4B", fg="#FFFFFF", font=("Arial", 12), relief=tk.FLAT)
-        self.button2.pack(pady=10, padx=20, fill=tk.X)
+    def create_button(self, text, command):
+        button = tk.Button(self.root, text=text, command=command,
+                           bg=self.button_bg_color, fg=self.button_fg_color,
+                           font=(self.font_family, self.button_font_size), relief=tk.FLAT)
 
-        # Кнопка 3
-        self.button3 = tk.Button(root, text="Модуль рациональных чисел", command=self.run_file3, bg="#4B4B4B", fg="#FFFFFF", font=("Arial", 12), relief=tk.FLAT)
-        self.button3.pack(pady=10, padx=20, fill=tk.X)
+        button.pack(pady=10, padx=20, fill=tk.X)
 
-        # Кнопка 4
-        self.button4 = tk.Button(root, text="Модуль многочленов", command=self.run_file4, bg="#4B4B4B", fg="#FFFFFF", font=("Arial", 12), relief=tk.FLAT)
-        self.button4.pack(pady=10, padx=20, fill=tk.X)
+        # Привязываем события наведения мыши
+        button.bind("<Enter>", lambda e: button.config(bg=self.button_hover_color))
+        button.bind("<Leave>", lambda e: button.config(bg=self.button_bg_color))
 
     def run_file1(self):
         file_path = "modules/Natural_GUI.py"  # Укажите путь к вашему файлу
@@ -52,6 +68,8 @@ class App:
         else:
             print(f"Файл {file_path} не найден.")
 
+
+# Запуск приложения
 if __name__ == "__main__":
     root = tk.Tk()
     app = App(root)

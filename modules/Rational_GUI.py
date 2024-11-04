@@ -16,7 +16,7 @@ class RationalApp:
 
         self.root = root
         self.root.title("Rational Number Operations")
-        self.root.geometry("374x420")
+        self.root.geometry("374x350")
         self.root.configure(bg=self.bg_color)
         self.root.attributes('-alpha', 0.98)
 
@@ -72,6 +72,8 @@ class RationalApp:
         self.calculate_button = tk.Button(root, text="Выполнить", command=self.calculate, bg="#4CAF50",
                                           fg=self.text_color, font=("Arial", 14), height=1, width=15)
         self.calculate_button.pack(pady=10)
+        self.calculate_button.bind("<Enter>", lambda e: self.calculate_button.config(bg="#61e867"))
+        self.calculate_button.bind("<Leave>", lambda e: self.calculate_button.config(bg="#4CAF50"))
 
     def calculate(self):
         method_name = self.method_var.get()
