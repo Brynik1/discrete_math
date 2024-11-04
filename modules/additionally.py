@@ -34,10 +34,11 @@ def polynomial_to_coefficients(polynomial_str):
                 elif coefficient == '-': coefficient = '-1'
             else:
                 coefficient = term.split("x")[0]
+                if coefficient == '': coefficient = '1'
+                elif coefficient == '-': coefficient = '-1'
                 power = '1'
         else:
             coefficient, power = term, '0'
-        print(coefficient)
         if not is_Natural(power): raise ValueError('Степени должны быть натуральными числами')
         if not is_Rational(coefficient): raise ValueError('Коэффициенты должны быть рациональными числами')
         if power in coefficients: raise ValueError('Дублирование степеней')
@@ -53,21 +54,21 @@ def polynomial_to_coefficients(polynomial_str):
         result[power] = coefficient
     return ' '.join(result)
 def get_Natural(string):
-    if not is_Natural(string): raise ('Введеное число не является натуральным')
+    if not is_Natural(string): raise ValueError('Введенное число не является натуральным')
     return Natural(string)
 def get_Integer(string):
-    if not is_Integer(string): raise ('Введеное число не является целым')
+    if not is_Integer(string): raise ValueError('Введенное число не является целым')
     return Integer(string)
 def get_Rational(string):
-    if not is_Rational(string): raise ('Введеное число не является рациональным')
+    if not is_Rational(string): raise ValueError('Введенное число не является рациональным')
     return Rational(string)
 def get_Polynomial(string):
     string = polynomial_to_coefficients(string)
-    if not is_Polynomial(string): raise ('Введеное число не является многочленом')
+    if not is_Polynomial(string): raise ValueError('Введенное число не является многочленом')
     return Polynomial(string)
 
 if __name__ == '__main__':
     print(get_Natural(('123')))
     print(get_Integer(('-123')))
     print(get_Rational(('-123/35')))
-    print(get_Polynomial('1x + 2 - x^2'))
+    print(get_Polynomial('1x + 2 - x^2 - x'))

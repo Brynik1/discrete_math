@@ -42,21 +42,21 @@ class Polynomial:
         coefficients = str(coefficients)
         short_space = chr(0x202F)
         numbers = coefficients.split()
-        result = numbers[0]
+        if numbers[0] != '0': result = numbers[0]
+        else: result = ''
         for i in range(1, len(numbers)):
             number = numbers[i]
             if number != '0':
                 if number[0] == '-':
                     result += f'{short_space}-{short_space}'
                     number = number[1:]
-                else:
+                elif result != '':
                     result += f'{short_space}+{short_space}'
                 if number != '1': result += str(number)
                 result += 'x'
                 if i > 1: result += to_superscript(i)
         expression = result
-        expression = expression.replace('+', f'{short_space}+{short_space}').replace('-',
-                                                                                     f'{short_space}-{short_space}')
+        expression = expression.replace('+', f'{short_space}+{short_space}').replace('-',f'{short_space}-{short_space}')
         return expression
 
     # Сложение многочленов

@@ -32,7 +32,7 @@ class NaturalApp:
             "Сложение двух чисел",
             "Вычитание двух чисел",
             "Умножение на цифру",
-            "Умножение на 10^k",
+            "Умножение на 10ⁿ",
             "Умножение двух чисел",
             "Вычитание умноженного на цифру",
             "DIV_NN_Dk",
@@ -53,8 +53,7 @@ class NaturalApp:
 
         # Ввод первого числа
         tk.Label(root, text="Введите первое число:", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(pady=5)
-        self.first_number_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, insertbackground='white',
-                                           font=("Arial", 14))
+        self.first_number_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, insertbackground='white', font=("Arial", 14))
         self.first_number_entry.pack(pady=5)
 
         # Ввод второго числа
@@ -64,8 +63,7 @@ class NaturalApp:
 
         # Ввод цифры
         tk.Label(root, text="Введите цифру (для методов с цифрой):", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(pady=5)
-        self.digit_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, insertbackground='white',
-                                    font=("Arial", 14))
+        self.digit_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, insertbackground='white', font=("Arial", 14))
         self.digit_entry.pack(pady=5)
 
         # Метка для результата
@@ -73,8 +71,7 @@ class NaturalApp:
         self.result_label.pack(pady=10)
 
         # Кнопка для выполнения операции
-        self.calculate_button = tk.Button(root, text="Выполнить", command=self.calculate, bg="#4CAF50",
-                                          fg=self.text_color, font=("Arial", 14), height=1, width=15)
+        self.calculate_button = tk.Button(root, text="Выполнить", command=self.calculate, bg="#4CAF50", fg=self.text_color, font=("Arial", 14), height=1, width=15)
         self.calculate_button.pack(pady=10)
         self.calculate_button.bind("<Enter>", lambda e: self.calculate_button.config(bg="#61e867"))
         self.calculate_button.bind("<Leave>", lambda e: self.calculate_button.config(bg="#4CAF50"))
@@ -83,11 +80,11 @@ class NaturalApp:
         method_name = self.method_var.get()
         first_number_str = self.first_number_entry.get()
 
-        if not is_Natural(first_number_str):
+        try:
+            first_number = get_Natural(first_number_str)
+        except ValueError:
             messagebox.showerror("Ошибка", "Первое число должно быть натуральным.")
             return
-
-        first_number = get_Natural(first_number_str)
 
         if method_name in ["Сравнение чисел",
                            "Сложение двух чисел",
@@ -99,19 +96,21 @@ class NaturalApp:
                            "Деление с остатком",
                            "НОД",
                            "НОК"]:
+
             second_number_str = self.second_number_entry.get()
-            if not is_Natural(second_number_str):
+
+            try:
+                second_number = get_Natural(second_number_str)
+            except ValueError:
                 messagebox.showerror("Ошибка", "Второе число должно быть натуральным.")
                 return
-
-            second_number = get_Natural(second_number_str)
 
             if method_name == "Сравнение чисел":
                 comparison_result = first_number.COM_NN_D(second_number)
                 comparison_texts = {
-                    2: f"{first_number} больше {second_number}",
-                    1: f"{first_number} меньше {second_number}",
-                    0: f"{first_number} равно {second_number}"
+                    2: f"{first_number} > {second_number}",
+                    1: f"{first_number} < {second_number}",
+                    0: f"{first_number} == {second_number}"
                 }
                 self.result_label.config(text=comparison_texts[comparison_result])
 
@@ -123,8 +122,8 @@ class NaturalApp:
                 try:
                     result = first_number.SUB_NN_N(second_number)
                     self.result_label.config(text=f"{first_number} - {second_number} = {result}")
-                except ValueError as e:
-                    messagebox.showerror("Ошибка", str(e))
+                except ValueError:
+                    messagebox.showerror("Ошибка", "Результат должен быть натуральным.")
                     return
 
             elif method_name == "Умножение двух чисел":
@@ -174,18 +173,17 @@ class NaturalApp:
                 self.result_label.config(text=f"Результат: {result}")
 
 
-
         else:
             if method_name == "Прибавление единицы":
                 result = first_number.ADD_1N_N()
-                self.result_label.config(text=f"Результат: {result}")
+                self.result_label.config(text=f"{first_number} + 1 = {result}")
 
             elif method_name == "Проверка на ноль":
                 is_non_zero = first_number.NZER_N_B()
                 if is_non_zero:
-                    self.result_label.config(text=f"{first_number} не равно нулю")
+                    self.result_label.config(text=f"{first_number} ≠ 0")
                 else:
-                    self.result_label.config(text=f"{first_number} равно нулю")
+                    self.result_label.config(text=f"{first_number} = 0")
 
             elif method_name == "Умножение на цифру":
                 digit_str = self.digit_entry.get()
@@ -195,15 +193,17 @@ class NaturalApp:
                 digit = int(digit_str)
                 try:
                     result = first_number.MUL_ND_N(digit)
-                    self.result_label.config(text=f"Результат: {result}")
+                    self.result_label.config(text=f"{first_number} ∙ {digit} = {result}")
                 except ValueError as e:
                     messagebox.showerror("Ошибка", str(e))
                     return
 
-            elif method_name == "Умножение на 10^k":
+            elif method_name == "Умножение на 10ⁿ":
                 digit_str = self.digit_entry.get()
-                if not digit_str.isdigit() or not (0 <= int(digit_str) <= 9):
-                    messagebox.showerror("Ошибка", "Цифра должна быть от 0 до 9.")
+                try:
+                    get_Natural(digit_str)
+                except ValueError:
+                    messagebox.showerror("Ошибка", "Число должно быть натуральным.")
                     return
                 digit = int(digit_str)
                 try:
