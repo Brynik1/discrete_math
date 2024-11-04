@@ -1,16 +1,23 @@
 class Natural:
     def __init__(self, number: str):
         self.number = list(map(int, number))
+        while len(self.number) > 1 and self.number[0] == 0:
+            self.number.pop(0)
 
     def __str__(self):
         return ''.join(map(str, self.number))
 
-
+    def __eq__(self, other):
+        if isinstance(other, Natural):
+            return self.number == other.number  # Сравниваем значения
+        return False
 
     # Сравнение натуральных чисел: 2 - если первое больше второго, 0, если равно, 1 иначе.
     def COM_NN_D(self, other):
-        if len(self.number) > len(other.number): return 2
-        elif len(self.number) < len(other.number): return 1
+        if len(self.number) > len(other.number):
+            return 2
+        elif len(self.number) < len(other.number):
+            return 1
         else:
             for a, b in zip(self.number, other.number):
                 if a > b:
@@ -57,8 +64,8 @@ class Natural:
 
     # Вычитание из первого большего натурального числа второго меньшего или равного
     def SUB_NN_N(self, other):
-        if self.COM_NN_D(other) == 1: # если второе больше первого
-            raise ValueError("Cannot subtract a larger number from a smaller one")
+        if self.COM_NN_D(other) == 1:  # если второе больше первого
+            return Natural('0')  # Возвращаем 0 вместо выбрасывания исключения
         result = []
         borrow = 0
         for i in range(len(self.number)):
@@ -110,17 +117,23 @@ class Natural:
     # Вычитание из натурального другого натурального, умноженного на цифру для случая с неотрицательным результатом
     def SUB_NDN_N(self, other, digit):
         return self.SUB_NN_N(other.MUL_ND_N(digit))
-
+    
     # Вычисление первой цифры деления большего натурального на меньшее, домноженное на 10^k, где k - номер позиции этой цифры (номер считается с нуля)
     def DIV_NN_Dk(self, other, k):
-        if other.COM_NN_D(self) == 2:
-            raise ValueError("Cannot divide a larger number by a smaller one")
-        divisor = other.MUL_Nk_N(k)
-        for i in range(10):
-            if divisor.MUL_ND_N(i).COM_NN_D(self) == 2:
-                return i - 1
-        return 9
+        if self.COM_NN_D(other) == 1:  # если other больше self
+            return 0
 
+        if self.COM_NN_D(other) != 2:  # Проверяем, что self больше other
+            raise ValueError("Cannot divide a larger number by a smaller one")
+
+        # Находим делитель
+        divisor = other.MUL_NN_N(Natural(str(10**k)))  # Умножаем на 10^k
+
+        for i in range(10):  # Проверяем числа от 0 до 9
+            product = divisor.MUL_ND_N(i)  # Умножаем на i
+            if product.COM_NN_D(self) != 1:  # Проверяем, меньше ли это произведение
+                return i - 1  # Возвращаем предыдущее значение
+        return 9  # Если цикл завершился, возвращаем 9
     # Неполное частное от деления первого натурального числа на второе с остатком (делитель отличен от нуля)
     def DIV_NN_N(self, other):
         quotient = Natural('0')
@@ -132,7 +145,10 @@ class Natural:
 
     # Остаток от деления первого натурального числа на второе натуральное (делитель отличен от нуля)
     def MOD_NN_N(self, other):
-        if self.COM_NN_D(other) == 1: return self
+        if not other.NZER_N_B():
+            raise ValueError("Cannot divide by zero")
+        if self.COM_NN_D(other) == 1: 
+            return self  # Если первое число меньше второго, возвращаем первое число
         quotient = self.DIV_NN_N(other)
         return self.SUB_NN_N(quotient.MUL_NN_N(other))
 
@@ -140,7 +156,8 @@ class Natural:
     def GCF_NN_N(self, other):
         a = Natural(str(self))
         b = Natural(str(other))
-        if self.COM_NN_D(other) == 2: a,b = b,a
+        if self.COM_NN_D(other) == 2: 
+            a, b = b, a
         while a.NZER_N_B() and b.NZER_N_B():
             a, b = b, a.MOD_NN_N(b)
         return a
