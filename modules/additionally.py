@@ -17,7 +17,7 @@ def is_Rational(number):
     return is_Integer(num1) and is_Natural(num2) and num2 != '0'
 def is_Polynomial(polynomial_str):
     coefficients = polynomial_str.split()
-    return all(is_Rational(coefficient) for coefficient in coefficients)
+    return len(coefficients) > 0 and all(is_Rational(coefficient) for coefficient in coefficients)
 def polynomial_to_coefficients(polynomial_str):
     if is_Polynomial(polynomial_str): return polynomial_str
     polynomial_str = polynomial_str.replace('-','+-').replace(' ', '').replace('**','^')
