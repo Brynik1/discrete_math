@@ -11,7 +11,7 @@ class NaturalApp:
         if theme == 'light':
             self.bg_color = "#FFFFFF"  # Цвет фона
             self.window_color = "#EAEAEA"  # Цвет окон
-            self.text_color = "#333333"  # Цвет текста
+            self.text_color = "#2e2e2e"  # Цвет текста
             self.hover_color = "#C0C0C0"  # Цвет при наведении
             self.button_color = "#5ebf62"  # Цвет для кнопки
         else:  # Темная тема по умолчанию
@@ -54,10 +54,13 @@ class NaturalApp:
         method_frame = tk.Frame(root, bg=self.bg_color)
         method_frame.pack(pady=10)
 
-        tk.Label(method_frame, text="Выберите метод:", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(side=tk.LEFT)
+        tk.Label(method_frame, text="Операция:  ", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(side=tk.LEFT)
 
         self.method_menu = tk.OptionMenu(method_frame, self.method_var, *methods)
-        self.method_menu.config(bg=self.bg_color, fg=self.text_color, highlightbackground=self.window_color, relief=tk.FLAT)
+        self.method_menu.config(bg=self.bg_color, fg=self.text_color, highlightbackground=self.button_color,
+                                relief=tk.FLAT, activebackground=self.window_color, activeforeground=self.text_color,
+                                highlightthickness=2, font=("Arial", 10))
+        self.method_menu.pack(side=tk.LEFT)
 
         # Настройка событий для изменения цвета фона
         self.method_menu.bind("<Enter>", lambda e: self.method_menu.config(bg=self.hover_color))
@@ -89,14 +92,26 @@ class NaturalApp:
         self.calculate_button.bind("<Enter>", lambda e: self.calculate_button.config(bg="#61e867"))
         self.calculate_button.bind("<Leave>", lambda e: self.calculate_button.config(bg=self.button_color))
 
+    def to_superscript(self, n):
+        superscripts = {
+            '0': '⁰', '1': '¹', '2': '²', '3': '³',
+            '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷',
+            '8': '⁸', '9': '⁹'
+        }
+        return ''.join(superscripts[digit] for digit in str(n))
+
     def calculate(self):
+        self.result_label.config(text='', fg=self.text_color, font=("Arial", 14))
         method_name = self.method_var.get()
         first_number_str = self.first_number_entry.get()
 
         try:
             first_number = get_Natural(first_number_str)
         except ValueError:
-            messagebox.showerror("Ошибка", "Первое число должно быть натуральным.")
+            if first_number_str == '':
+                messagebox.showerror("Ошибка", f"Первое число не введено.")
+            else:
+                messagebox.showerror("Ошибка", f"Первое число должно быть натуральным.")
             return
 
         if method_name in ["Сравнение чисел",
@@ -115,7 +130,10 @@ class NaturalApp:
             try:
                 second_number = get_Natural(second_number_str)
             except ValueError:
-                messagebox.showerror("Ошибка", "Второе число должно быть натуральным.")
+                if second_number_str == '':
+                    messagebox.showerror("Ошибка", f"Второе число не введено.")
+                else:
+                    messagebox.showerror("Ошибка", f"Второе число должно быть натуральным.")
                 return
 
             if method_name == "Сравнение чисел":
@@ -136,7 +154,7 @@ class NaturalApp:
                     result = first_number.SUB_NN_N(second_number)
                     self.result_label.config(text=f"{first_number} - {second_number} = {result}")
                 except ValueError:
-                    messagebox.showerror("Ошибка", "Результат должен быть натуральным.")
+                    messagebox.showerror("Ошибка", f"Результат должен быть натуральным.")
                     return
 
             elif method_name == "Умножение двух чисел":
@@ -158,7 +176,7 @@ class NaturalApp:
 
             elif method_name == "DIV_NN_Dk":
                 k_str = self.digit_entry.get()
-                if not k_str.isdigit():
+                if k_str == '' or not all(c.isdigit() for c in k_str):
                     messagebox.showerror("Ошибка", "k должно быть неотрицательным целым числом.")
                     return
                 k = int(k_str)
@@ -200,7 +218,7 @@ class NaturalApp:
 
             elif method_name == "Умножение на цифру":
                 digit_str = self.digit_entry.get()
-                if not digit_str.isdigit() or not (0 <= int(digit_str) <= 9):
+                if digit_str == '' or not digit_str.isdigit() or not (0 <= int(digit_str) <= 9):
                     messagebox.showerror("Ошибка", "Цифра должна быть от 0 до 9.")
                     return
                 digit = int(digit_str)
@@ -215,13 +233,18 @@ class NaturalApp:
                 digit_str = self.digit_entry.get()
                 try:
                     get_Natural(digit_str)
+                    digit = int(digit_str)
                 except ValueError:
-                    messagebox.showerror("Ошибка", "Число должно быть натуральным.")
-                    return
-                digit = int(digit_str)
+                    second_number_str = self.second_number_entry.get()
+                    try:
+                        get_Natural(second_number_str)
+                        digit = int(second_number_str)
+                    except ValueError:
+                        messagebox.showerror("Ошибка", "Степень должна быть натуральным числом.")
+                        return
                 try:
                     result = first_number.MUL_Nk_N(digit)
-                    self.result_label.config(text=f"Результат: {result}")
+                    self.result_label.config(text=f"{first_number} ∙ 10{self.to_superscript(digit)} = {result}")
                 except ValueError as e:
                     messagebox.showerror("Ошибка", str(e))
                     return

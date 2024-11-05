@@ -47,9 +47,9 @@ class App:
         # Кнопка для смены темы
         self.theme_button = tk.Button(self.root, text="☀", command=self.toggle_theme,
                                       bg=self.current_theme["bg"], fg=self.current_theme["button_fg"],
-                                      font=("Arial", 12), relief=tk.FLAT, width=3, height=1, anchor=tk.CENTER)
+                                      font=("Arial", 14), relief=tk.FLAT, width=3, height=1, anchor=tk.CENTER)
         # Позиционируем кнопку в правом верхнем углу
-        self.theme_button.place(x=353, y=10)
+        self.theme_button.place(x=350, y=10)
         self.theme_button.tkraise()
         self.theme_button.bind("<Enter>", lambda e: self.theme_button.config(bg=self.current_theme["button_hover"]))
         self.theme_button.bind("<Leave>", lambda e: self.theme_button.config(bg=self.current_theme["bg"]))
