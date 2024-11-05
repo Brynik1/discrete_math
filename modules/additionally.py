@@ -71,4 +71,4 @@ if __name__ == '__main__':
     print(get_Natural(('123')))
     print(get_Integer(('-123')))
     print(get_Rational(('-123/35')))
-    print(get_Polynomial('1x + 2 - x^2 - x'))
+    print(get_Polynomial('1x + 2 - x^2 - x^4'))
