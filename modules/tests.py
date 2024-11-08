@@ -1,8 +1,8 @@
 import unittest
-from Natural import *
-from Integer import *
-from Rational import *
-from Polynomial import *
+from Natural import Natural
+from Integer import Integer
+from Rational import Rational
+from Polynomial import Polynomial
 
 
 # Тесты класса натуральных
@@ -10,47 +10,44 @@ class TestNatural(unittest.TestCase):
     def test_init(self):
         # Лучший случай:
         n = Natural('5')
-        self.assertEqual(n.number, [5], msg=f"Natural('5') expected [5], returned {n.number}")
+        self.assertEqual(n.number, [5], msg=f"Natural('5')")
 
         # Средний случай:
         n = Natural('123')
-        self.assertEqual(n.number, [1, 2, 3], msg=f"Natural('123') expected [1, 2, 3], returned {n.number}")
+        self.assertEqual([1, 2, 3], n.number,  msg=f"Natural('123')")
 
         # Худший случай: число с ведущими нулями
-        n = Natural('0123')
-        self.assertEqual(n.number, [1, 2, 3], msg=f"Natural('0123') expected [1, 2, 3], returned {n.number}")
+        n = Natural('000123')
+        self.assertEqual([1, 2, 3], n.number,  msg=f"Natural('0123')")
 
     def test_str(self):
         # Лучший случай:
         n = Natural('5')
-        self.assertEqual(str(n), '5', msg=f"str(Natural('5')) expected '5', returned {str(n)}")
+        self.assertEqual('5', str(n),  msg=f"str(Natural('5'))")
 
         # Средний случай:
         n = Natural('123')
-        self.assertEqual(str(n), '123', msg=f"str(Natural('123')) expected '123', returned {str(n)}")
+        self.assertEqual('123', str(n),  msg=f"str(Natural('123'))")
 
         # Худший случай:
         n = Natural('0123')
-        self.assertEqual(str(n), '123', msg=f"str(Natural('0123')) expected '123', returned {str(n)}")
+        self.assertEqual('123', str(n),  msg=f"str(Natural('0123'))")
 
     def test_COM_NN_D(self):
         # Худший случай: сравнение двух равных чисел
         n1 = Natural('123')
         n2 = Natural('123')
-        self.assertEqual(n1.COM_NN_D(n2), 0, msg=f"COM_NN_D(Natural('123'), Natural('123')) expected 0, "
-                                                 f"returned {n1.COM_NN_D(n2)}")
+        self.assertEqual(0, n1.COM_NN_D(n2),  msg=f"COM_NN_D(Natural('123'), Natural('123'))")
 
         # Средний случай: сравнение двух неравных чисел
         n1 = Natural('123')
         n2 = Natural('456')
-        self.assertEqual(n1.COM_NN_D(n2), 1, msg=f"COM_NN_D(Natural('123'), Natural('456')) expected 1, "
-                                                 f"returned {n1.COM_NN_D(n2)}")
+        self.assertEqual(1, n1.COM_NN_D(n2),  msg=f"COM_NN_D(Natural('123'), Natural('456'))")
 
         # Лучший случай: сравнение двух чисел с разной длиной
         n1 = Natural('123')
         n2 = Natural('1234')
-        self.assertEqual(n1.COM_NN_D(n2), 1, msg=f"COM_NN_D(Natural('123'), Natural('1234')) expected 1, "
-                                                 f"returned {n1.COM_NN_D(n2)}")
+        self.assertEqual(1, n1.COM_NN_D(n2), msg=f"COM_NN_D(Natural('123'), Natural('1234'))")
 
     def test_NZER_N_B(self):
         # Лучший случай: число не равно нулю
@@ -68,237 +65,221 @@ class TestNatural(unittest.TestCase):
     def test_ADD_1N_N(self):
         # Лучший случай: прибавление 1 к числу, не оканчивающемуся на 9
         n = Natural('123')
-        self.assertEqual(str(n.ADD_1N_N()), '124', msg=f"ADD_1N_N(Natural('123')) expected '124', "
-                                                       f"returned {str(n.ADD_1N_N())}")
+        self.assertEqual('124', str(n.ADD_1N_N()), msg=f"ADD_1N_N(Natural('123'))")
 
         # Средний случай: прибавление 1 к числу, оканчивающемуся на 9
         n = Natural('129')
-        self.assertEqual(str(n.ADD_1N_N()), '130', msg=f"ADD_1N_N(Natural('129')) expected '130', "
-                                                       f"returned {str(n.ADD_1N_N())}")
+        self.assertEqual('130', str(n.ADD_1N_N()), msg=f"ADD_1N_N(Natural('129'))")
 
         # Худший случай: прибавление 1 к числу, состоящему только из 9
         n = Natural('999')
-        self.assertEqual(str(n.ADD_1N_N()), '1000', msg=f"ADD_1N_N(Natural('999')) expected '1000', "
-                                                        f"returned {str(n.ADD_1N_N())}")
+        self.assertEqual('1000', str(n.ADD_1N_N()), msg=f"ADD_1N_N(Natural('999'))")
 
     def test_ADD_NN_N(self):
         # Лучший случай: сложение двух чисел без переноса
         n1 = Natural('123')
         n2 = Natural('456')
-        self.assertEqual(str(n1.ADD_NN_N(n2)), '579', msg=f"ADD_NN_N(Natural('123'), Natural('456')) expected '579', "
-                                                          f"returned {str(n1.ADD_NN_N(n2))}")
+        self.assertEqual('579', str(n1.ADD_NN_N(n2)), msg=f"ADD_NN_N(Natural('123'), Natural('456'))")
 
         # Средний случай: сложение двух чисел с переносом
         n1 = Natural('129')
         n2 = Natural('456')
-        self.assertEqual(str(n1.ADD_NN_N(n2)), '585', msg=f"ADD_NN_N(Natural('129'), Natural('456')) expected '585', "
-                                                          f"returned {str(n1.ADD_NN_N(n2))}")
+        self.assertEqual('585', str(n1.ADD_NN_N(n2)),  msg=f"ADD_NN_N(Natural('129'), Natural('456'))")
 
         # Худший случай: сложение двух чисел с разной длиной
         n1 = Natural('123')
         n2 = Natural('1234')
-        self.assertEqual(str(n1.ADD_NN_N(n2)), '1357', msg=f"ADD_NN_N(Natural('123'), Natural('1234')) "
-                                                           f"expected '1357', returned {str(n1.ADD_NN_N(n2))}")
+        self.assertEqual('1357',  str(n1.ADD_NN_N(n2)),  msg=f"ADD_NN_N(Natural('123'), Natural('1234')) ")
 
     def test_SUB_NN_N(self):
         # Лучший случай: без заема
         n1 = Natural('456')
         n2 = Natural('123')
-        self.assertEqual(str(n1.SUB_NN_N(n2)), '333', msg=f"SUB_NN_N(Natural('456'), Natural('123')) expected '333', "
-                                                          f"returned {str(n1.SUB_NN_N(n2))}")
+        self.assertEqual('333', str(n1.SUB_NN_N(n2)), msg=f"SUB_NN_N(Natural('456'), Natural('123')) ")
 
         # Средний случай: с займом
         n1 = Natural('456')
         n2 = Natural('279')
-        self.assertEqual(str(n1.SUB_NN_N(n2)), '177', msg=f"SUB_NN_N(Natural('456'), Natural('279')) expected '177', "
-                                                          f"returned {str(n1.SUB_NN_N(n2))}")
+        self.assertEqual('177', str(n1.SUB_NN_N(n2)),  msg=f"SUB_NN_N(Natural('456'), Natural('279')) ")
 
         # Худший случай: вычитание равных чисел
         n1 = Natural('123')
         n2 = Natural('123')
-        self.assertEqual(str(n1.SUB_NN_N(n2)), '0', msg=f"SUB_NN_N(Natural('123'), Natural('123')) expected '0', "
-                                                        f"returned {str(n1.SUB_NN_N(n2))}")
+        self.assertEqual('0', str(n1.SUB_NN_N(n2)),  msg=f"SUB_NN_N(Natural('123'), Natural('123'))")
 
     def test_MUL_ND_N(self):
         # Лучший случай: умножение числа на 0
         n = Natural('123')
-        self.assertEqual(str(n.MUL_ND_N(0)), '0', msg=f"MUL_ND_N(Natural('123'), 0) expected '0', "
-                                                      f"returned {str(n.MUL_ND_N(0))}")
+        self.assertEqual('0', str(n.MUL_ND_N(0)), msg=f"MUL_ND_N(Natural('123'), 0)")
 
         # Средний случай: умножение числа на цифру
         n = Natural('123')
-        self.assertEqual(str(n.MUL_ND_N(5)), '615', msg=f"MUL_ND_N(Natural('123'), 5) expected '615', "
-                                                        f"returned {str(n.MUL_ND_N(5))}")
+        self.assertEqual('615', str(n.MUL_ND_N(5)),  msg=f"MUL_ND_N(Natural('123'), 5)")
 
         # Худший случай: умножение числа на 9
         n = Natural('123')
-        self.assertEqual(str(n.MUL_ND_N(9)), '1107', msg=f"MUL_ND_N(Natural('123'), 9) expected '1107', "
-                                                         f"returned {str(n.MUL_ND_N(9))}")
+        self.assertEqual('1107', str(n.MUL_ND_N(9)), msg=f"MUL_ND_N(Natural('123'), 9)")
 
     def test_MUL_Nk_N(self):
         # Лучший случай: умножение числа на 10^0
         n = Natural('123')
-        self.assertEqual(str(n.MUL_Nk_N(0)), '123', msg=f"MUL_Nk_N(Natural('123'), 0) expected '123', "
-                                                        f"returned {str(n.MUL_Nk_N(0))}")
+        self.assertEqual('123', str(n.MUL_Nk_N(0)), msg=f"MUL_Nk_N(Natural('123'), 0)")
 
         # Средний случай: умножение числа на 10^k
         n = Natural('123')
-        self.assertEqual(str(n.MUL_Nk_N(3)), '123000', msg=f"MUL_Nk_N(Natural('123'), 3) expected '123000', "
-                                                           f"returned {str(n.MUL_Nk_N(3))}")
+        self.assertEqual('123000', str(n.MUL_Nk_N(3)),  msg=f"MUL_Nk_N(Natural('123'), 3)")
 
         # Худший случай: умножение числа на 10^10
         n = Natural('123')
-        self.assertEqual(str(n.MUL_Nk_N(10)), '1230000000000',
-                         msg=f"MUL_Nk_N(Natural('123'), 10) expected '1230000000000', "
-                             f"returned {str(n.MUL_Nk_N(10))}")
+        self.assertEqual('1230000000000', str(n.MUL_Nk_N(10)), msg=f"MUL_Nk_N(Natural('123'), 10)")
 
     def test_MUL_NN_N(self):
         # Лучший случай: умножение двух чисел, одно из которых 0
         n1 = Natural('123')
         n2 = Natural('0')
-        self.assertEqual(str(n1.MUL_NN_N(n2)), '0', msg=f"MUL_NN_N(Natural('123'), Natural('0')) expected '0', "
-                                                        f"returned {str(n1.MUL_NN_N(n2))}")
+        self.assertEqual('0', str(n1.MUL_NN_N(n2)),  msg=f"MUL_NN_N(Natural('123'), Natural('0'))")
 
         # Средний случай: умножение двух чисел
         n1 = Natural('123')
         n2 = Natural('456')
-        self.assertEqual(str(n1.MUL_NN_N(n2)), '56088',
-                         msg=f"MUL_NN_N(Natural('123'), Natural('456')) expected '56088', "
-                             f"returned {str(n1.MUL_NN_N(n2))}")
+        self.assertEqual('56088', str(n1.MUL_NN_N(n2)), msg=f"MUL_NN_N(Natural('123'), Natural('456'))")
 
         # Худший случай: умножение двух больших чисел
         n1 = Natural('123456')
         n2 = Natural('789012')
-        self.assertEqual(str(n1.MUL_NN_N(n2)), '97408265472', msg=f"MUL_NN_N(Natural('123456'), Natural('789012')) "
-                                                                  f"expected '97408265472', returned {str(n1.MUL_NN_N(n2))}")
+        self.assertEqual('97408265472', str(n1.MUL_NN_N(n2)), msg=f"MUL_NN_N(Natural('123456'), Natural('789012'))")
 
     def test_SUB_NDN_N(self):
         # Лучший случай: вычитание числа, умноженного на 0
         n1 = Natural('123')
         n2 = Natural('456')
-        self.assertEqual(str(n1.SUB_NDN_N(n2, 0)), '123',
-                         msg=f"SUB_NDN_N(Natural('123'), Natural('456'), 0) expected '123', "
-                             f"returned {str(n1.SUB_NDN_N(n2, 0))}")
+        self.assertEqual('123', str(n1.SUB_NDN_N(n2, 0)), msg=f"SUB_NDN_N(Natural('123'), Natural('456'), 0)")
 
         # Средний случай: вычитание числа, умноженного на цифру
         n1 = Natural('123')
         n2 = Natural('45')
-        self.assertEqual(str(n1.SUB_NDN_N(n2, 2)), '33',
-                         msg=f"SUB_NDN_N(Natural('123'), Natural('45'), 2) expected '33', "
-                             f"returned {str(n1.SUB_NDN_N(n2, 2))}")
+        self.assertEqual('33', str(n1.SUB_NDN_N(n2, 2)), msg=f"SUB_NDN_N(Natural('123'), Natural('45'), 2)")
 
         # Худший случай: вычитание числа, умноженного на 9
         n1 = Natural('123')
         n2 = Natural('10')
-        self.assertEqual(str(n1.SUB_NDN_N(n2, 9)), '33',
-                         msg=f"SUB_NDN_N(Natural('123'), Natural('10'), 9) expected '33', "
-                             f"returned {str(n1.SUB_NDN_N(n2, 9))}")
+        self.assertEqual('33', str(n1.SUB_NDN_N(n2, 9)), msg=f"SUB_NDN_N(Natural('123'), Natural('10'), 9)")
 
     def test_DIV_NN_Dk(self):
-        # этот тест не проходит
-        # Лучший случай: деление числа на 1
+        # Лучший случай: деление числа на 100
         n1 = Natural('123')
         n2 = Natural('1')
-        self.assertEqual(n1.DIV_NN_Dk(n2, 0), 1, msg=f"DIV_NN_Dk(Natural('123'), Natural('1'), 0) expected 1, "
-                                                     f"returned {n1.DIV_NN_Dk(n2, 0)}")
+        self.assertEqual(1, n1.DIV_NN_Dk(n2, 2),  msg=f"DIV_NN_Dk(Natural('123'), Natural('1'), 2)")
 
         # Средний случай: деление числа на делитель
         n1 = Natural('123')
         n2 = Natural('12')
+        self.assertEqual(1, n1.DIV_NN_Dk(n2, 1),  msg=f"DIV_NN_Dk(Natural('123'), Natural('12'), 1)")
 
-        self.assertEqual(n1.DIV_NN_Dk(n2, 1), 1, msg=f"DIV_NN_Dk(Natural('123'), Natural('12'), 1) expected 1, "
-                                                     f"returned {n1.DIV_NN_Dk(n2, 1)}")
+    def test_DIV_NN_N(self):
+        # Лучший случай: деление на 1
+        n1 = Natural('123')
+        n2 = Natural('1')
+        self.assertEqual('123', str(n1.DIV_NN_N(n2)),  msg=f"DIV_NN_N(Natural('123'), Natural('1'))")
 
+        # Средний случай: деление с остатком
+        n1 = Natural('123')
+        n2 = Natural('12')
+        self.assertEqual('10', str(n1.DIV_NN_N(n2)),  msg=f"DIV_NN_N(Natural('123'), Natural('12'))")
+
+        # Худший случай: деление на число большее
+        n1 = Natural('123456')
+        n2 = Natural('789012')
+        self.assertEqual('0', str(n1.DIV_NN_N(n2)),  msg=f"DIV_NN_N(Natural('123456'), Natural('789012'))")
+
+        # Деление на само себя
+        n1 = Natural('123')
+        n2 = Natural('123')
+        self.assertEqual('1', str(n1.DIV_NN_N(n2)),  msg=f"DIV_NN_N(Natural('123'), Natural('123'))")
+
+        # Деление на число, кратное данному
+        n1 = Natural('246')
+        n2 = Natural('123')
+        self.assertEqual('2', str(n1.DIV_NN_N(n2)),  msg=f"DIV_NN_N(Natural('123'), Natural('246'))")
 
     def test_MOD_NN_N(self):
         # Лучший случай: остаток от деления числа на 1
         n1 = Natural('123')
         n2 = Natural('1')
-        self.assertEqual(str(n1.MOD_NN_N(n2)), '0', msg=f"MOD_NN_N(Natural('123'), Natural('1')) expected '0', "
-                                                        f"returned {str(n1.MOD_NN_N(n2))}")
+        self.assertEqual('0', str(n1.MOD_NN_N(n2)), msg=f"MOD_NN_N(Natural('123'), Natural('1'))")
 
         # Средний случай: остаток от деления числа на делитель
         n1 = Natural('123')
         n2 = Natural('12')
-        self.assertEqual(str(n1.MOD_NN_N(n2)), '3', msg=f"MOD_NN_N(Natural('123'), Natural('12')) expected '3', "
-                                                        f"returned {str(n1.MOD_NN_N(n2))}")
+        self.assertEqual('3', str(n1.MOD_NN_N(n2)), msg=f"MOD_NN_N(Natural('123'), Natural('12'))")
 
         # Худший случай: остаток от деления числа на большое число
         n1 = Natural('123456')
         n2 = Natural('789012')
-        self.assertEqual(str(n1.MOD_NN_N(n2)), '123456', msg=f"MOD_NN_N(Natural('123456'), Natural('78901')) "
-                                                             f"expected '123456', returned {str(n1.MOD_NN_N(n2))}")
+        self.assertEqual('123456', str(n1.MOD_NN_N(n2)), msg=f"MOD_NN_N(Natural('123456'), Natural('78901'))")
 
         # Деление на само себя
         n1 = Natural('123')
         n2 = Natural('123')
-        self.assertEqual(str(n1.MOD_NN_N(n2)), '0', msg=f"MOD_NN_N(Natural('123'), Natural('123')) expected '0', "
-                                                        f"returned {str(n1.MOD_NN_N(n2))}")
+        self.assertEqual('0', str(n1.MOD_NN_N(n2)), msg=f"MOD_NN_N(Natural('123'), Natural('123'))")
 
         # Деление на число, кратное данному
         n1 = Natural('123')
         n2 = Natural('246')
-        self.assertEqual(str(n1.MOD_NN_N(n2)), '123', msg=f"MOD_NN_N(Natural('123'), Natural('246')) expected '123', "
-                                                          f"returned {str(n1.MOD_NN_N(n2))}")
+        self.assertEqual('123', str(n1.MOD_NN_N(n2)),  msg=f"MOD_NN_N(Natural('123'), Natural('246'))")
 
     def test_GCF_NN_N(self):
         # Лучший случай: НОД двух одинаковых чисел
         n1 = Natural('123')
         n2 = Natural('123')
-        self.assertEqual(str(n1.GCF_NN_N(n2)), '123', msg=f"GCF_NN_N(Natural('123'), Natural('123')) expected '123', "
-                                                          f"returned {str(n1.GCF_NN_N(n2))}")
+        self.assertEqual('123', str(n1.GCF_NN_N(n2)), msg=f"GCF_NN_N(Natural('123'), Natural('123'))")
 
         # Средний случай: НОД двух разных чисел
         n1 = Natural('12')
         n2 = Natural('18')
-        self.assertEqual(str(n1.GCF_NN_N(n2)), '6', msg=f"GCF_NN_N(Natural('12'), Natural('18')) expected '6', "
-                                                        f"returned {str(n1.GCF_NN_N(n2))}")
+        self.assertEqual('6', str(n1.GCF_NN_N(n2)), msg=f"GCF_NN_N(Natural('12'), Natural('18'))")
 
         # Худший случай: НОД двух больших чисел
         n1 = Natural('123456')
         n2 = Natural('789012')
-        self.assertEqual(str(n1.GCF_NN_N(n2)), '12',
-                         msg=f"GCF_NN_N(Natural('123456'), Natural('789012')) expected '12', "
-                             f"returned {str(n1.GCF_NN_N(n2))}")
+        self.assertEqual('12', str(n1.GCF_NN_N(n2)), msg=f"GCF_NN_N(Natural('123456'), Natural('789012'))")
 
         # НОД числа и 1
         n1 = Natural('123')
         n2 = Natural('1')
-        self.assertEqual(str(n1.GCF_NN_N(n2)), '1', msg=f"GCF_NN_N(Natural('123'), Natural('1')) expected '1', "
-                                                        f"returned {str(n1.GCF_NN_N(n2))}")
+        self.assertEqual('1', str(n1.GCF_NN_N(n2)), msg=f"GCF_NN_N(Natural('123'), Natural('1'))")
 
         # НОД двух простых чисел
         n1 = Natural('23')
         n2 = Natural('37')
-        self.assertEqual(str(n1.GCF_NN_N(n2)), '1', msg=f"GCF_NN_N(Natural('23'), Natural('37')) expected '1', "
-                                                        f"returned {str(n1.GCF_NN_N(n2))}")
+        self.assertEqual('1', str(n1.GCF_NN_N(n2)), msg=f"GCF_NN_N(Natural('23'), Natural('37'))")
 
     def test_LCM_NN_N(self):
         # Лучший случай: НОК двух одинаковых чисел
         n1 = Natural('123')
         n2 = Natural('123')
-        self.assertEqual(str(n1.LCM_NN_N(n2)), '123', msg=f"Natural('123').LCM_NN_N(Natural('123'))")
+        self.assertEqual('123', str(n1.LCM_NN_N(n2)), msg=f"Natural('123').LCM_NN_N(Natural('123'))")
 
         # Средний случай: НОК двух разных чисел
         n1 = Natural('12')
         n2 = Natural('18')
-        self.assertEqual(str(n1.LCM_NN_N(n2)), '36', msg=f"Natural('12').LCM_NN_N(Natural('18'))")
+        self.assertEqual('36', str(n1.LCM_NN_N(n2)), msg=f"Natural('12').LCM_NN_N(Natural('18'))")
 
-        # этот тест выполняется бесконечно выполняется
+
         # Худший случай: НОК двух больших чисел
-        # n1 = Natural('123456')
-        # n2 = Natural('789012')
-        # self.assertEqual(str(n1.LCM_NN_N(n2)), '80828102448', msg=f"Natural('123456').LCM_NN_N(Natural('789012'))")
+        n1 = Natural('123456')
+        n2 = Natural('789012')
+        self.assertEqual('8117355456', str(n1.LCM_NN_N(n2)),  msg=f"Natural('123456').LCM_NN_N(Natural('789012'))")
 
         # НОК числа и 1
         n1 = Natural('123')
         n2 = Natural('1')
-        self.assertEqual(str(n1.LCM_NN_N(n2)), '123')
+        self.assertEqual('123', str(n1.LCM_NN_N(n2)), msg=f"Natural('123').LCM_NN_N(Natural('1'))")
 
         # НОК двух простых чисел
         n1 = Natural('23')
         n2 = Natural('37')
-        self.assertEqual(str(n1.LCM_NN_N(n2)), '851')
+        self.assertEqual('851', str(n1.LCM_NN_N(n2)), msg=f"Natural('23').LCM_NN_N(Natural('37'))")
 
 
 # Тесты класса целых
@@ -306,233 +287,205 @@ class TestInteger(unittest.TestCase):
     def test_ABS_Z_N(self):
         # Лучший случай: положительное число
         a = Integer('12345')
-        expected = '12345'
-        self.assertEqual(expected, str(a.ABS_Z_N()))
+        self.assertEqual('12345', str(a.ABS_Z_N()), msg=f"Integer('12345').ABS_Z_N()")
 
         # Средний случай: отрицательное число
         a = Integer('-12345')
-        expected = '12345'
-        self.assertEqual(expected, str(a.ABS_Z_N()))
+        self.assertEqual('12345', str(a.ABS_Z_N()), msg=f"Integer('-12345').ABS_Z_N()")
 
         # Крайний случай: ноль
         a = Integer('0')
-        expected = '0'
-        self.assertEqual(expected, str(a.ABS_Z_N()))
+        self.assertEqual('0', str(a.ABS_Z_N()), msg=f"Integer('0').ABS_Z_N()")
 
     def test_POZ_Z_D(self):
         # Лучший случай: положительное число
         a = Integer('12345')
-        self.assertEqual(2, a.POZ_Z_D(), msg="POZ_Z_D of positive number expected 2")
+        self.assertEqual(2, a.POZ_Z_D(), msg="Integer('12345').POZ_Z_D()")
 
         # Средний случай: отрицательное число
         a = Integer('-12345')
-        self.assertEqual(1, a.POZ_Z_D(), msg="POZ_Z_D of negative number expected 1")
+        self.assertEqual(1, a.POZ_Z_D(), msg="Integer('-12345').POZ_Z_D()")
 
         # Крайний случай: ноль
         a = Integer('0')
-        self.assertEqual(0, a.POZ_Z_D(), msg="POZ_Z_D of zero expected 0")
+        self.assertEqual(0, a.POZ_Z_D(), msg="Integer('0').POZ_Z_D()")
 
     def test_MUL_ZM_Z(self):
         # Лучший случай: положительное число
         a = Integer('12345')
-        expected = '-12345'
-        self.assertEqual(expected, str(a.MUL_ZM_Z()), msg="Positive number multiplication case failed")
+        self.assertEqual('-12345', str(a.MUL_ZM_Z()), msg="Integer('12345').MUL_ZM_Z()")
 
         # Средний случай: отрицательное число
         a = Integer('-12345')
-        expected = '12345'
-        self.assertEqual(expected, str(a.MUL_ZM_Z()), msg="Negative number multiplication case failed")
+        self.assertEqual('12345', str(a.MUL_ZM_Z()), msg="Integer('-12345').MUL_ZM_Z()")
 
         # Крайний случай: ноль
         a = Integer('0')
         expected = '0'
-        self.assertEqual(expected, str(a.MUL_ZM_Z()), msg="Zero multiplication case failed")
+        self.assertEqual(expected, str(a.MUL_ZM_Z()), msg="Integer('0').MUL_ZM_Z()")
 
     def test_TRANS_N_Z(self):
         # Лучший случай: натуральное число
         a = Natural('12345')
-        expected = '12345'
-        self.assertEqual(str(Integer.TRANS_N_Z(a)), expected, msg="TRANS_N_Z of natural number failed")
+        self.assertEqual('12345', str(Integer.TRANS_N_Z(a)), msg="Integer.TRANS_N_Z(Natural('12345'))")
 
         # Средний случай: натуральное число с указанным знаком
         a = Natural('12345')
-        expected = '-12345'
-        self.assertEqual(str(Integer.TRANS_N_Z(a, 1)), expected, msg="TRANS_N_Z with sign parameter failed")
+        self.assertEqual('-12345', str(Integer.TRANS_N_Z(a, 1)), msg="Integer.TRANS_N_Z(Natural('-12345'))")
 
         # Крайний случай: ноль
         a = Natural('0')
-        expected = '0'
-        self.assertEqual(str(Integer.TRANS_N_Z(a)), expected, msg="TRANS_N_Z of zero failed")
+        self.assertEqual('0', str(Integer.TRANS_N_Z(a)), msg="Integer.TRANS_N_Z(Natural('0'))")
 
     def test_TRANS_Z_N(self):
         # Лучший случай: положительное число
         a = Integer('12345')
-        expected = '12345'
-        self.assertEqual(str(a.TRANS_Z_N()), expected, msg="TRANS_Z_N of positive number failed")
+        self.assertEqual('12345', str(a.TRANS_Z_N()), msg="Integer('12345').TRANS_Z_N()")
 
         # Худший случай: отрицательное число
         a = Integer('-12345')
-        expected = '12345'
-        self.assertEqual(str(a.TRANS_Z_N()), expected, msg="TRANS_Z_N of negative number failed")
+        self.assertEqual('12345', str(a.TRANS_Z_N()), msg="Integer('-12345').TRANS_Z_N()")
 
         # Крайний случай: ноль
         a = Integer('0')
-        expected = '0'
-        self.assertEqual(str(a.TRANS_Z_N()), expected, msg="TRANS_Z_N of zero failed")
+        self.assertEqual('0', str(a.TRANS_Z_N()), msg="Integer('0').TRANS_Z_N()")
 
     def test_ADD_ZZ_Z(self):
         # Лучший случай: сложение положительных чисел
         a = Integer('12345')
         b = Integer('67890')
-        expected = '80235'
-        self.assertEqual(str(a.ADD_ZZ_Z(b)), expected, msg="ADD_ZZ_Z of positive numbers failed")
+        self.assertEqual('80235', str(a.ADD_ZZ_Z(b)), msg="Integer('12345').ADD_ZZ_Z(Integer('67890'))")
 
         # Средний случай: сложение отрицательных чисел
         a = Integer('-12345')
         b = Integer('-67890')
-        expected = '-80235'
-        self.assertEqual(str(a.ADD_ZZ_Z(b)), expected, msg="ADD_ZZ_Z of negative numbers failed")
+        self.assertEqual('-80235', str(a.ADD_ZZ_Z(b)), msg="Integer('-12345').ADD_ZZ_Z(Integer('-67890'))")
 
         # Худший случай: сложение чисел с разными знаками
         a = Integer('12345')
         b = Integer('-67890')
-        expected = '-55545'
-        self.assertEqual(str(a.ADD_ZZ_Z(b)), expected, msg="ADD_ZZ_Z of numbers with different signs failed")
+        self.assertEqual('-55545', str(a.ADD_ZZ_Z(b)), msg="Integer('12345').ADD_ZZ_Z(Integer('-67890'))")
 
         # Крайний случай: сложение с нулем
         a = Integer('12345')
         b = Integer('0')
-        expected = '12345'
-        self.assertEqual(str(a.ADD_ZZ_Z(b)), expected, msg="ADD_ZZ_Z with zero failed")
+        self.assertEqual('12345', str(a.ADD_ZZ_Z(b)), msg="Integer('12345').ADD_ZZ_Z(Integer('0'))")
 
     def test_SUB_ZZ_Z(self):
         # Лучший случай: вычитание положительных чисел
         a = Integer('12345')
         b = Integer('67890')
-        expected = '-55545'
-        self.assertEqual(str(a.SUB_ZZ_Z(b)), expected, msg="SUB_ZZ_Z of positive numbers failed")
+        self.assertEqual('-55545',str(a.SUB_ZZ_Z(b)), msg="12345 - 67890")
 
         # Средний случай: вычитание отрицательных чисел
         a = Integer('-12345')
         b = Integer('-67890')
-        expected = '55545'
-        self.assertEqual(str(a.SUB_ZZ_Z(b)), expected, msg="SUB_ZZ_Z of negative numbers failed")
+        self.assertEqual('55545', str(a.SUB_ZZ_Z(b)), msg="-12345 - -67890")
 
         # Худший случай: вычитание чисел с разными знаками
         a = Integer('12345')
         b = Integer('-67890')
-        expected = '80235'
-        self.assertEqual(str(a.SUB_ZZ_Z(b)), expected, msg="SUB_ZZ_Z of numbers with different signs failed")
+        self.assertEqual('80235', str(a.SUB_ZZ_Z(b)), msg="12345 - -67890")
 
         # Крайний случай: вычитание нуля
         a = Integer('12345')
         b = Integer('0')
-        expected = '12345'
-        self.assertEqual(str(a.SUB_ZZ_Z(b)), expected, msg="SUB_ZZ_Z with zero failed")
+        self.assertEqual('12345', str(a.SUB_ZZ_Z(b)), msg="12345 - 0")
 
     def test_MUL_ZZ_Z(self):
         # Лучший случай: умножение положительных чисел
         a = Integer('12345')
         b = Integer('67890')
-        expected = '838102050'
-        self.assertEqual(str(a.MUL_ZZ_Z(b)), expected, msg="MUL_ZZ_Z of positive numbers failed")
+        self.assertEqual('838102050', str(a.MUL_ZZ_Z(b)), msg="12345 * 67890")
 
         # Средний случай: умножение отрицательных чисел
         a = Integer('-12345')
         b = Integer('-67890')
-        expected = '838102050'
-        self.assertEqual(str(a.MUL_ZZ_Z(b)), expected, msg="MUL_ZZ_Z of negative numbers failed")
+        self.assertEqual('838102050', str(a.MUL_ZZ_Z(b)), msg="-12345 * -67890")
 
         # Худший случай: умножение чисел с разными знаками
         a = Integer('12345')
         b = Integer('-67890')
-        expected = '-838102050'
-        self.assertEqual(str(a.MUL_ZZ_Z(b)), expected, msg="MUL_ZZ_Z of numbers with different signs failed")
+        self.assertEqual('-838102050', str(a.MUL_ZZ_Z(b)), msg="12345 * -67890")
 
         # Крайний случай: умножение на ноль
         a = Integer('12345')
         b = Integer('0')
-        expected = '0'
-        self.assertEqual(str(a.MUL_ZZ_Z(b)), expected, msg="MUL_ZZ_Z with zero failed")
+        self.assertEqual('0', str(a.MUL_ZZ_Z(b)), msg="12345 * 0")
 
     def test_DIV_ZZ_Z(self):
         # Лучший случай: деление положительных чисел
         a = Integer('12345')
         b = Integer('123')
-        expected = '100'
-        self.assertEqual(str(a.DIV_ZZ_Z(b)), expected, msg="DIV_ZZ_Z of positive numbers failed")
+        self.assertEqual('100', str(a.DIV_ZZ_Z(b)), msg="12345 // 123")
 
         # Средний случай: деление отрицательных чисел
         a = Integer('-12345')
         b = Integer('-123')
-        expected = '100'
-        self.assertEqual(str(a.DIV_ZZ_Z(b)), expected, msg="DIV_ZZ_Z of negative numbers failed")
+        self.assertEqual('100', str(a.DIV_ZZ_Z(b)), msg="-12345 // -123")
 
         # Худший случай: деление чисел с разными знаками
         a = Integer('12345')
         b = Integer('-123')
-        expected = '-100'
-        self.assertEqual(str(a.DIV_ZZ_Z(b)), expected, msg="DIV_ZZ_Z of numbers with different signs failed")
+        self.assertEqual('-100', str(a.DIV_ZZ_Z(b)), msg="12345 // -123")
 
         # Крайний случай: деление на единицу
         a = Integer('12345')
         b = Integer('1')
-        expected = '12345'
-        self.assertEqual(str(a.DIV_ZZ_Z(b)), expected, msg="DIV_ZZ_Z of division by one failed")
+        self.assertEqual('12345', str(a.DIV_ZZ_Z(b)), msg="12345 // 1")
 
     def test_MOD_ZZ_Z(self):
         # Лучший случай: деление без остатка
         a = Integer('12345')
         b = Integer('12345')
-        expected = '0'
-        self.assertEqual(str(a.MOD_ZZ_Z(b)), expected, msg="MOD_ZZ_Z of division without remainder failed")
+        self.assertEqual('0', str(a.MOD_ZZ_Z(b)), msg="12345 % 12345")
 
         # Средний случай: деление с остатком
         a = Integer('12345')
         b = Integer('123')
-        expected = '45'
-        self.assertEqual(str(a.MOD_ZZ_Z(b)), expected, msg="MOD_ZZ_Z of division with remainder failed")
+        self.assertEqual('45', str(a.MOD_ZZ_Z(b)), msg="12345 % 123")
 
         # Худший случай: деление на отрицательное число
         a = Integer('12345')
         b = Integer('-123')
-        expected = '45'
-        self.assertEqual(str(a.MOD_ZZ_Z(b)), expected, msg="MOD_ZZ_Z of division by negative number failed")
+        self.assertEqual('45', str(a.MOD_ZZ_Z(b)), msg="12345 % -123")
 
         # Крайний случай: деление на единицу
         a = Integer('12345')
         b = Integer('1')
-        expected = '0'
-        self.assertEqual(str(a.MOD_ZZ_Z(b)), expected, msg="MOD_ZZ_Z of division by one failed")
+        self.assertEqual('0', str(a.MOD_ZZ_Z(b)), msg="12345 % 1")
+
 
 # Тесты класса рациональных
 class TestRational(unittest.TestCase):
     def test_init(self):
         # Лучший случай: корректное рациональное число
         a = Rational('123/456')
-        self.assertEqual(str(a.numerator), '123')
-        self.assertEqual(str(a.denominator), '456')
+        self.assertEqual('123', str(a.numerator))
+        self.assertEqual('456', str(a.denominator))
 
         # Средний случай: рациональное число с разделителем '|'
         a = Rational('123|456')
-        self.assertEqual(str(a.numerator), '123')
-        self.assertEqual(str(a.denominator), '456')
+        self.assertEqual('123', str(a.numerator))
+        self.assertEqual('456', str(a.denominator))
 
         # Средний случай: рациональное число с разделителем ':'
         a = Rational('123:456')
-        self.assertEqual(str(a.numerator), '123')
-        self.assertEqual(str(a.denominator), '456')
+        self.assertEqual('123', str(a.numerator))
+        self.assertEqual('456', str(a.denominator))
 
         # Средний случай: целое число
         a = Rational('123')
-        self.assertEqual(str(a.numerator), '123')
-        self.assertEqual(str(a.denominator), '1')
+        self.assertEqual('123', str(a.numerator))
+        self.assertEqual('1', str(a.denominator))
 
         # Крайний случай: ноль
         a = Rational('0')
-        self.assertEqual(str(a.numerator), '0')
-        self.assertEqual(str(a.denominator), '1')
+        self.assertEqual('0', str(a.numerator))
+        self.assertEqual('1', str(a.denominator))
 
+#ниже поменять надо местами первый и второй аргумент ассерта. 
+    # Тк в случае неудачи он вывод как 1е ожидаемое, 2е полученное
     def test_str(self):
         # Лучший случай: рациональное число
         a = Rational('123/456')
@@ -574,7 +527,6 @@ class TestRational(unittest.TestCase):
         # Крайний случай: ноль
         a = Rational('0/123')
         self.assertTrue(a.INT_Q_B(), msg=f"Failed for input {a}: expected True, got {a.INT_Q_B()}")
-
 
     def test_TRANS_Z_Q(self):
         # Лучший случай: целое число
@@ -825,7 +777,7 @@ class TestPolynomial(unittest.TestCase):
         # Лучший случай: деление многочлена на многочлен, дающее ненулевое частное
         p1 = Polynomial("1 0 -2 1")  # x^3 - 2x^2 + 1
         p2 = Polynomial("1 1")  # x + 1
-        expected = Polynomial("3 -3 1")  #  (x^2 - 3x + 3).
+        expected = Polynomial("3 -3 1")  # (x^2 - 3x + 3).
         self.assertEqual(str(expected), str(p1.DIV_PP_P(p2)), msg=f"Failed for inputs {p1} and {p2}")
 
         # Случай, когда делимое меньше делителя по степени
@@ -976,10 +928,12 @@ class TestPolynomial(unittest.TestCase):
 
         # Проверка на многочлен, который после преобразования станет константой
         # Это теоретический случай, так как обычно многочлен не превращается в константу после удаления кратных корней,
-        # но для полноты теста включим этот случай, предполагая, что реализация может обрабатывать такие экстремальные случаи
+        # но для полноты теста включим этот случай, предполагая,
+        # что реализация может обрабатывать такие экстремальные случаи
         p1 = Polynomial("1 3 3 1")  # (x + 1)^3, но если предположить, что после обработки он станет константой
         expected = Polynomial("1")  # для демонстрации, что функция может вернуть константу
         self.assertEqual(str(expected), str(p1.NMP_P_P()), msg=f"Failed for polynomial reducing to constant")
+
 
 if __name__ == '__main__':
     # запускаем все тесты которые есть

@@ -1,6 +1,9 @@
 class Natural:
     def __init__(self, number: str):
-        self.number = list(map(int, number))
+        number = list(map(int, number))
+        while len(number) > 1 and number[0] == 0:
+            number = number[1:]
+        self.number = number
 
     def __str__(self):
         return ''.join(map(str, self.number))
@@ -115,20 +118,46 @@ class Natural:
     def DIV_NN_Dk(self, other, k):
         if other.COM_NN_D(self) == 2:
             raise ValueError("Cannot divide a larger number by a smaller one")
-        divisor = other.MUL_Nk_N(k)
+        divisor = other.MUL_Nk_N(k)  # дописываем нолики в конец
+        # if len(self.number) > len(divisor.number):
+        #     raise ValueError("parameter k is too small")
         for i in range(10):
-            if divisor.MUL_ND_N(i).COM_NN_D(self) == 2:
+            if divisor.MUL_ND_N(i).COM_NN_D(self) == 2:  # умножаем на i, сравниваем числа
                 return i - 1
         return 9
 
     # Неполное частное от деления первого натурального числа на второе с остатком (делитель отличен от нуля)
     def DIV_NN_N(self, other):
-        quotient = Natural('0')
-        remainder = Natural(str(self))
-        while remainder.COM_NN_D(other) == 2 or remainder.COM_NN_D(other) == 0:
-            remainder = remainder.SUB_NN_N(other)
-            quotient = quotient.ADD_1N_N()
-        return quotient
+        if other.COM_NN_D(Natural('0')) == 0:  # если делитель равен нулю выкидываем предупреждение
+            raise ValueError("Сan not divide by zero")
+        if other.COM_NN_D(Natural('1')) == 0: return self  # если делитель равен нулю, то частное равно делимому
+        socmp = self.COM_NN_D(other)
+        if socmp == 1: return Natural('0')  # если делитель больше делимого, то частное равно 0
+        if socmp == 0: return Natural('1')  # если делитель  делимого, то частное равно 0
+        n = len(self.number)  # длина делимого
+        m = len(other.number)  # длина делителя
+        dl1 = Natural('0')
+        dl2 = Natural('0')
+        result = Natural('0')
+        result.number = []
+        dl1.number = self.number[:m]  # отрезаем от делимого(self) часть длиной делителя(m)
+        dl2.number = self.number[m:]  # отрезаем оставщуюся часть от делимого после прошлого действия
+        el = Natural('0')
+        for i in range(0, n - m + 1):
+            while len(dl1.number) > 1 and dl1.number[0] == 0:
+                dl1.number.pop(0)
+            if dl1.COM_NN_D(other) == 1:
+                x = 0
+            else:
+                x = dl1.DIV_NN_Dk(other, 0)
+                el = dl1.SUB_NDN_N(other, x)
+                dl1 = el
+            if len(result.number) != 0 or x != 0:
+                result.number.append(x)
+            if len(dl2.number) != 0:
+                dl1.number.append(dl2.number[0])
+                dl2.number = dl2.number[1:]
+        return result
 
     # Остаток от деления первого натурального числа на второе натуральное (делитель отличен от нуля)
     def MOD_NN_N(self, other):
