@@ -12,14 +12,14 @@ class NaturalApp:
             self.bg_color = "#FFFFFF"  # Цвет фона
             self.window_color = "#EAEAEA"  # Цвет окон
             self.text_color = "#2e2e2e"  # Цвет текста
-            self.hover_color = "#C0C0C0"  # Цвет при наведении
-            self.button_color = "#5ebf62"  # Цвет для кнопки
+            self.hover_color = "#c991d3"  # Цвет при наведении
+            self.button_color = "#9966CC"  # Цвет для кнопки
         else:  # Темная тема по умолчанию
             self.bg_color = "#232323"  # Цвет фона
             self.window_color = "#3A3A3A"  # Цвет окон
             self.text_color = "#F5F5F5"  # Цвет текста
-            self.hover_color = "#4B4B4B"  # Цвет при наведении
-            self.button_color = "#4CAF50"  # Цвет для кнопки
+            self.hover_color = "#c991d3"  # Цвет при наведении
+            self.button_color = "#9966CC"  # Цвет для кнопки
 
         self.root = root
         self.root.title("Natural Operations")
@@ -89,7 +89,7 @@ class NaturalApp:
         # Кнопка для выполнения операции
         self.calculate_button = tk.Button(root, text="Выполнить", command=self.calculate, bg=self.button_color, fg="white", font=("Arial", 14), height=1, width=15, relief=tk.FLAT)
         self.calculate_button.pack(pady=10)
-        self.calculate_button.bind("<Enter>", lambda e: self.calculate_button.config(bg="#61e867"))
+        self.calculate_button.bind("<Enter>", lambda e: self.calculate_button.config(bg=self.hover_color))
         self.calculate_button.bind("<Leave>", lambda e: self.calculate_button.config(bg=self.button_color))
 
     def to_superscript(self, n):
