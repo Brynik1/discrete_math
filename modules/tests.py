@@ -675,8 +675,8 @@ class TestPolynomial(unittest.TestCase):
         self.assertEqual(str(expected), str(p1.LED_P_Q()), msg=f"Failed for polynomial {p1}")
 
         # Крайний случай: многочлен с единственным коэффициентом
-        p1 = Polynomial("5")
-        expected = Rational("5")
+        p1 = Polynomial("1")
+        expected = Rational("1")
         self.assertEqual(str(expected), str(p1.LED_P_Q()), msg=f"Failed for polynomial {p1}")
 
         # Крайний случай: многочлен с нулевыми коэффициентами, кроме последнего

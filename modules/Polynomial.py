@@ -70,37 +70,55 @@ class Polynomial:
 
     # Вычитание многочленов
     def SUB_PP_P(self, oth):
+        # Корируем коэффициенты многочлена, который будем вычитать
         b = copy.deepcopy(oth.coefficients)
         for i in range(len(b)):
-            b[i] = Rational(f'{b[i].numerator.MUL_ZM_Z()}/{b[i].denominator}')  # Изменяем знаки коэффициентов
+            # Изменяем знаки коэффициентов (домножаем числитель на -1)
+            b[i] = Rational(f'{b[i].numerator.MUL_ZM_Z()}/{b[i].denominator}')
+        # Складываем два многочлена, второй создаем из коэффициентов b
         return Polynomial.ADD_PP_P(self, Polynomial(' '.join(str(coefficient) for coefficient in b)))
 
     # Умножение многочлена на рациональное число
     def MUL_PQ_P(self, q):
+        # Копируем коэффициенты self
         a = copy.deepcopy(self.coefficients)
         for i in range(len(a)):
+            # Домножаем каждый коэффициент на q
             a[i] = Rational.MUL_QQ_Q(a[i], q)
+
+        # Возвращвем многочлен из коэффициентов a
         return Polynomial(' '.join(str(coefficient) for coefficient in a))
 
     # Умножение многочлена на x^k, k-натуральное или 0
     def MUL_Pxk_P(self, k):
+        # Копируем коэффициенты self
         a = copy.deepcopy(self.coefficients)
+
+        # Переводим k в число и добавляем k нулей в начало списка коэффициетов
+        # Каждый проход цикла равносилен домножению многочлена на x
         for i in range(int(str(k))):
             a.insert(0, Rational('0'))
         return Polynomial(' '.join(str(coefficient) for coefficient in a))
 
     # Старший коэффициент многочлена
     def LED_P_Q(self):
-        # Возвращаем старший коэффициент, наверное не нулевой, правда,я надеюсь
-        # Возвращаем <object Rational>
+        # Возвращаем старший коэффициент
+
+        # Если многочлен пустой выводим ошибку
         if not self.coefficients:
             raise ValueError("Polynomial has no coefficients.")
-        for i in range(len(self.coefficients) - 1, 0, -1):
-            if self.coefficients[-1].numerator.POZ_Z_D() != 0:
-                return self.coefficients[-1]
+
+        # Просматриваем все коэффициенты многочлена, находим максимальный не равный нулю
+        for i in range(len(self.coefficients)-1, -1, -1):
+            # POZ_Z_D() возвращает 0, если значание равно 0
+            if self.coefficients[i].numerator.POZ_Z_D():
+                return self.coefficients[i]
+        # Если все коэффициенты равны 0
+        raise ValueError("Polynomial has no coefficients.")
 
     # Степень многочлена
     def DEG_P_N(self):
+        # Степень многочлена на единицу меньше длины списка коэффициентов, то есть индекс максимального элемента
         return len(self.coefficients) - 1
 
     # Вынесение из многочлена НОК знаменателей коэффициентов и НОД числителей
@@ -109,10 +127,14 @@ class Polynomial:
         denominators = []
         # В два списка записываются числители и знаменатели всех коэффициентов
         for coefficient in self.coefficients:
-            numerators.append(coefficient.numerator.ABS_Z_N())
-            denominators.append(coefficient.denominator)
+            # Не учитываем 0 при подсчете НОД и НОК
+            # POZ_Z_D() возвращает 0, если значание равно 0
+            if coefficient.numerator.POZ_Z_D():
+                numerators.append(coefficient.numerator.ABS_Z_N())
+                denominators.append(coefficient.denominator)
+
         # Поочередно берется НОД двух числителей и НОК двух знаменателей
-        # В итоге общий для всех числителей НОД записывается в 0 элемент списка
+        # В итоге общий для всех числителей НОД записывается в элемент списка по индексу 0
         # В случае знаменателей тоже самое
         for i in range(1, len(numerators)):
             for j in range(len(numerators) - i):
