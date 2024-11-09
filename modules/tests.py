@@ -736,6 +736,19 @@ class TestPolynomial(unittest.TestCase):
         expected = Rational("1/3")  # НОД(1, 1, 1) = 1, НОК(3, 3, 3) = 3
         self.assertEqual(str(expected), str(p1.FAC_P_Q()), msg=f"Failed for polynomial {p1}")
 
+        # Смешанные случаи
+        p1 = Polynomial("1 1")
+        expected = Rational("1/1")  # НОД(1, 1) = 1, НОК(1, 1) = 1
+        self.assertEqual(str(expected), str(p1.FAC_P_Q()), msg=f"Failed for polynomial {p1}")
+
+        p1 = Polynomial("1/2 1/3 1/4")
+        expected = Rational("1/12")  # НОД(1, 1, 1) = 1, НОК(2, 3, 4) = 12
+        self.assertEqual(str(expected), str(p1.FAC_P_Q()), msg=f"Failed for polynomial {p1}")
+
+        p1 = Polynomial("0 0 0")
+        expected = Rational("1/1")  # НОД(0, 0, 0) = 1, НОК(1, 1, 1) = 1
+        self.assertEqual(str(expected), str(p1.FAC_P_Q()), msg=f"Failed for polynomial {p1}")
+
     def test_MUL_PP_P(self):
         # Лучший случай: умножение двух многочленов с несколькими коэффициентами
         p1 = Polynomial("1 2")
@@ -868,7 +881,25 @@ class TestPolynomial(unittest.TestCase):
         p2 = Polynomial("3 6 3")  # 3x^2 + 6x + 3, производная от (x + 1)^3
         expected = Polynomial("1 2 1")  # НОД((x + 1)^3, его производная) = x + 1
         self.assertEqual(str(expected), str(p1.GCF_PP_P(p2)), msg=f"Failed for polynomial and its derivative")
-
+        
+        # Случай с большими числами 1     
+        p1 = Polynomial('-35/1 -33/1 -62/1 22/1') # 22x^3 - 62x^2 - 33x -35
+        p2 = Polynomial('207/121 51/22 1207/242') # 1207/242x^2 + 51/22x + 207/121
+        expected = Polynomial("-7243 -4941")  # НОД() = -4941x - 7243
+        self.assertEqual(str(expected), str(p1.GCF_PP_P(p2)), msg=f"Failed for polynomial and its derivative")
+        
+        # Случай с большими числами 2   
+        p1 = Polynomial('-345 33/2 13/3 54/7') # 22x^3 - 62x^2 - 33x -35
+        p2 = Polynomial('534/4 -45/23 -76/5') # 1207/242x^2 + 51/22x + 207/121
+        expected = Polynomial("-6751544545 1792867542")  # НОД() = 1792867542x - 6751544545
+        self.assertEqual(str(expected), str(p1.GCF_PP_P(p2)), msg=f"Failed for polynomial and its derivative")
+        
+        # Случай с большой степенью    
+        p1 = Polynomial('1 3 3 5 17') # 17x^4 + 5x^3 + 3x^2 + 3x + 1
+        p2 = Polynomial('3 0 0 34 24') # 24x^4 + 34x^3 + 3
+        expected = Polynomial("-25871 -12715")  # НОД() = -12715x -25871
+        self.assertEqual(str(expected), str(p1.GCF_PP_P(p2)), msg=f"Failed for polynomial and its derivative")
+        
     def test_DER_P_P(self):
         # Лучший случай: производная многочлена второй степени
         p1 = Polynomial("3 2 1")  # 3 + 2x + x^2
@@ -890,7 +921,6 @@ class TestPolynomial(unittest.TestCase):
         expected = Polynomial("0 6 0 4")  # Производная: 6x + 4x^3
         self.assertEqual(str(expected), str(p1.DER_P_P()), msg=f"Failed for polynomial with zero coefficients")
 
-        # По приколу
         p1 = Polynomial("0 0 0 1")  # x^3
         expected = Polynomial("0 0 3")  # 3x^2
         self.assertEqual(str(expected), str(p1.DER_P_P()), msg=f"Failed for polynomial x^3")
@@ -903,8 +933,8 @@ class TestPolynomial(unittest.TestCase):
         self.assertEqual(str(expected), str(p1.NMP_P_P()), msg=f"Failed for polynomial {p1}")
 
         # Случай, когда многочлен уже имеет простые корни
-        p1 = Polynomial("1 3 3 1")  # (x + 1)^3, но корни не кратные в исходном многочлене
-        expected = p1  # Многочлен не изменится
+        p1 = Polynomial("1 3 3 1")  # (x + 1)^3, 
+        expected = Polynomial("1 1")
         self.assertEqual(str(expected), str(p1.NMP_P_P()), msg=f"Failed for polynomial {p1} with simple roots")
 
         # Крайний случай: многочлен, состоящий только из константы (нет корней)
@@ -923,15 +953,11 @@ class TestPolynomial(unittest.TestCase):
         p1 = Polynomial("1 1 1")  # x^2 + x + 1, корень не кратный
         p2 = Polynomial("1 2 1")  # (x + 1)^2 добавим кратность
         p1 = Polynomial.MUL_PP_P(p1, p2)
-        expected = Polynomial("1 1")  # x + 1, один корень остался кратным
+        expected = Polynomial("1 2 2 1")  # x^3 + 2x^2 + 2x + 1
         self.assertEqual(str(expected), str(p1.NMP_P_P()), msg=f"Failed for polynomial with mixed roots")
-
-        # Проверка на многочлен, который после преобразования станет константой
-        # Это теоретический случай, так как обычно многочлен не превращается в константу после удаления кратных корней,
-        # но для полноты теста включим этот случай, предполагая,
-        # что реализация может обрабатывать такие экстремальные случаи
-        p1 = Polynomial("1 3 3 1")  # (x + 1)^3, но если предположить, что после обработки он станет константой
-        expected = Polynomial("1")  # для демонстрации, что функция может вернуть константу
+        
+        p1 = Polynomial("1 3 3 1")  # (x + 1)^3
+        expected = Polynomial("1 1")  # x + 1
         self.assertEqual(str(expected), str(p1.NMP_P_P()), msg=f"Failed for polynomial reducing to constant")
 
 
