@@ -1,4 +1,5 @@
 class Natural:
+    #created by Никита Брызгалов 3382 (все кроме деления)
     def __init__(self, number: str):
         number = list(map(int, number))
         while len(number) > 1 and number[0] == 0:
@@ -114,6 +115,7 @@ class Natural:
     def SUB_NDN_N(self, other, digit):
         return self.SUB_NN_N(other.MUL_ND_N(digit))
 
+    # created by Мокрушина Вероника 3382
     # Вычисление первой цифры деления большего натурального на меньшее, домноженное на 10^k, где k - номер позиции этой цифры (номер считается с нуля)
     def DIV_NN_Dk(self, other, k):
         if other.COM_NN_D(self) == 2:

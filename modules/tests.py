@@ -14,35 +14,35 @@ class TestNatural(unittest.TestCase):
 
         # Средний случай:
         n = Natural('123')
-        self.assertEqual([1, 2, 3], n.number,  msg=f"Natural('123')")
+        self.assertEqual([1, 2, 3], n.number, msg=f"Natural('123')")
 
         # Худший случай: число с ведущими нулями
         n = Natural('000123')
-        self.assertEqual([1, 2, 3], n.number,  msg=f"Natural('0123')")
+        self.assertEqual([1, 2, 3], n.number, msg=f"Natural('0123')")
 
     def test_str(self):
         # Лучший случай:
         n = Natural('5')
-        self.assertEqual('5', str(n),  msg=f"str(Natural('5'))")
+        self.assertEqual('5', str(n), msg=f"str(Natural('5'))")
 
         # Средний случай:
         n = Natural('123')
-        self.assertEqual('123', str(n),  msg=f"str(Natural('123'))")
+        self.assertEqual('123', str(n), msg=f"str(Natural('123'))")
 
         # Худший случай:
         n = Natural('0123')
-        self.assertEqual('123', str(n),  msg=f"str(Natural('0123'))")
+        self.assertEqual('123', str(n), msg=f"str(Natural('0123'))")
 
     def test_COM_NN_D(self):
         # Худший случай: сравнение двух равных чисел
         n1 = Natural('123')
         n2 = Natural('123')
-        self.assertEqual(0, n1.COM_NN_D(n2),  msg=f"COM_NN_D(Natural('123'), Natural('123'))")
+        self.assertEqual(0, n1.COM_NN_D(n2), msg=f"COM_NN_D(Natural('123'), Natural('123'))")
 
         # Средний случай: сравнение двух неравных чисел
         n1 = Natural('123')
         n2 = Natural('456')
-        self.assertEqual(1, n1.COM_NN_D(n2),  msg=f"COM_NN_D(Natural('123'), Natural('456'))")
+        self.assertEqual(1, n1.COM_NN_D(n2), msg=f"COM_NN_D(Natural('123'), Natural('456'))")
 
         # Лучший случай: сравнение двух чисел с разной длиной
         n1 = Natural('123')
@@ -84,12 +84,12 @@ class TestNatural(unittest.TestCase):
         # Средний случай: сложение двух чисел с переносом
         n1 = Natural('129')
         n2 = Natural('456')
-        self.assertEqual('585', str(n1.ADD_NN_N(n2)),  msg=f"ADD_NN_N(Natural('129'), Natural('456'))")
+        self.assertEqual('585', str(n1.ADD_NN_N(n2)), msg=f"ADD_NN_N(Natural('129'), Natural('456'))")
 
         # Худший случай: сложение двух чисел с разной длиной
         n1 = Natural('123')
         n2 = Natural('1234')
-        self.assertEqual('1357',  str(n1.ADD_NN_N(n2)),  msg=f"ADD_NN_N(Natural('123'), Natural('1234')) ")
+        self.assertEqual('1357', str(n1.ADD_NN_N(n2)), msg=f"ADD_NN_N(Natural('123'), Natural('1234')) ")
 
     def test_SUB_NN_N(self):
         # Лучший случай: без заема
@@ -100,12 +100,12 @@ class TestNatural(unittest.TestCase):
         # Средний случай: с займом
         n1 = Natural('456')
         n2 = Natural('279')
-        self.assertEqual('177', str(n1.SUB_NN_N(n2)),  msg=f"SUB_NN_N(Natural('456'), Natural('279')) ")
+        self.assertEqual('177', str(n1.SUB_NN_N(n2)), msg=f"SUB_NN_N(Natural('456'), Natural('279')) ")
 
         # Худший случай: вычитание равных чисел
         n1 = Natural('123')
         n2 = Natural('123')
-        self.assertEqual('0', str(n1.SUB_NN_N(n2)),  msg=f"SUB_NN_N(Natural('123'), Natural('123'))")
+        self.assertEqual('0', str(n1.SUB_NN_N(n2)), msg=f"SUB_NN_N(Natural('123'), Natural('123'))")
 
     def test_MUL_ND_N(self):
         # Лучший случай: умножение числа на 0
@@ -114,7 +114,7 @@ class TestNatural(unittest.TestCase):
 
         # Средний случай: умножение числа на цифру
         n = Natural('123')
-        self.assertEqual('615', str(n.MUL_ND_N(5)),  msg=f"MUL_ND_N(Natural('123'), 5)")
+        self.assertEqual('615', str(n.MUL_ND_N(5)), msg=f"MUL_ND_N(Natural('123'), 5)")
 
         # Худший случай: умножение числа на 9
         n = Natural('123')
@@ -127,7 +127,7 @@ class TestNatural(unittest.TestCase):
 
         # Средний случай: умножение числа на 10^k
         n = Natural('123')
-        self.assertEqual('123000', str(n.MUL_Nk_N(3)),  msg=f"MUL_Nk_N(Natural('123'), 3)")
+        self.assertEqual('123000', str(n.MUL_Nk_N(3)), msg=f"MUL_Nk_N(Natural('123'), 3)")
 
         # Худший случай: умножение числа на 10^10
         n = Natural('123')
@@ -137,7 +137,7 @@ class TestNatural(unittest.TestCase):
         # Лучший случай: умножение двух чисел, одно из которых 0
         n1 = Natural('123')
         n2 = Natural('0')
-        self.assertEqual('0', str(n1.MUL_NN_N(n2)),  msg=f"MUL_NN_N(Natural('123'), Natural('0'))")
+        self.assertEqual('0', str(n1.MUL_NN_N(n2)), msg=f"MUL_NN_N(Natural('123'), Natural('0'))")
 
         # Средний случай: умножение двух чисел
         n1 = Natural('123')
@@ -169,38 +169,38 @@ class TestNatural(unittest.TestCase):
         # Лучший случай: деление числа на 100
         n1 = Natural('123')
         n2 = Natural('1')
-        self.assertEqual(1, n1.DIV_NN_Dk(n2, 2),  msg=f"DIV_NN_Dk(Natural('123'), Natural('1'), 2)")
+        self.assertEqual(1, n1.DIV_NN_Dk(n2, 2), msg=f"DIV_NN_Dk(Natural('123'), Natural('1'), 2)")
 
         # Средний случай: деление числа на делитель
         n1 = Natural('123')
         n2 = Natural('12')
-        self.assertEqual(1, n1.DIV_NN_Dk(n2, 1),  msg=f"DIV_NN_Dk(Natural('123'), Natural('12'), 1)")
+        self.assertEqual(1, n1.DIV_NN_Dk(n2, 1), msg=f"DIV_NN_Dk(Natural('123'), Natural('12'), 1)")
 
     def test_DIV_NN_N(self):
         # Лучший случай: деление на 1
         n1 = Natural('123')
         n2 = Natural('1')
-        self.assertEqual('123', str(n1.DIV_NN_N(n2)),  msg=f"DIV_NN_N(Natural('123'), Natural('1'))")
+        self.assertEqual('123', str(n1.DIV_NN_N(n2)), msg=f"DIV_NN_N(Natural('123'), Natural('1'))")
 
         # Средний случай: деление с остатком
         n1 = Natural('123')
         n2 = Natural('12')
-        self.assertEqual('10', str(n1.DIV_NN_N(n2)),  msg=f"DIV_NN_N(Natural('123'), Natural('12'))")
+        self.assertEqual('10', str(n1.DIV_NN_N(n2)), msg=f"DIV_NN_N(Natural('123'), Natural('12'))")
 
         # Худший случай: деление на число большее
         n1 = Natural('123456')
         n2 = Natural('789012')
-        self.assertEqual('0', str(n1.DIV_NN_N(n2)),  msg=f"DIV_NN_N(Natural('123456'), Natural('789012'))")
+        self.assertEqual('0', str(n1.DIV_NN_N(n2)), msg=f"DIV_NN_N(Natural('123456'), Natural('789012'))")
 
         # Деление на само себя
         n1 = Natural('123')
         n2 = Natural('123')
-        self.assertEqual('1', str(n1.DIV_NN_N(n2)),  msg=f"DIV_NN_N(Natural('123'), Natural('123'))")
+        self.assertEqual('1', str(n1.DIV_NN_N(n2)), msg=f"DIV_NN_N(Natural('123'), Natural('123'))")
 
         # Деление на число, кратное данному
         n1 = Natural('246')
         n2 = Natural('123')
-        self.assertEqual('2', str(n1.DIV_NN_N(n2)),  msg=f"DIV_NN_N(Natural('123'), Natural('246'))")
+        self.assertEqual('2', str(n1.DIV_NN_N(n2)), msg=f"DIV_NN_N(Natural('123'), Natural('246'))")
 
     def test_MOD_NN_N(self):
         # Лучший случай: остаток от деления числа на 1
@@ -226,7 +226,7 @@ class TestNatural(unittest.TestCase):
         # Деление на число, кратное данному
         n1 = Natural('123')
         n2 = Natural('246')
-        self.assertEqual('123', str(n1.MOD_NN_N(n2)),  msg=f"MOD_NN_N(Natural('123'), Natural('246'))")
+        self.assertEqual('123', str(n1.MOD_NN_N(n2)), msg=f"MOD_NN_N(Natural('123'), Natural('246'))")
 
     def test_GCF_NN_N(self):
         # Лучший случай: НОД двух одинаковых чисел
@@ -265,11 +265,10 @@ class TestNatural(unittest.TestCase):
         n2 = Natural('18')
         self.assertEqual('36', str(n1.LCM_NN_N(n2)), msg=f"Natural('12').LCM_NN_N(Natural('18'))")
 
-
         # Худший случай: НОК двух больших чисел
         n1 = Natural('123456')
         n2 = Natural('789012')
-        self.assertEqual('8117355456', str(n1.LCM_NN_N(n2)),  msg=f"Natural('123456').LCM_NN_N(Natural('789012'))")
+        self.assertEqual('8117355456', str(n1.LCM_NN_N(n2)), msg=f"Natural('123456').LCM_NN_N(Natural('789012'))")
 
         # НОК числа и 1
         n1 = Natural('123')
@@ -329,10 +328,6 @@ class TestInteger(unittest.TestCase):
         a = Natural('12345')
         self.assertEqual('12345', str(Integer.TRANS_N_Z(a)), msg="Integer.TRANS_N_Z(Natural('12345'))")
 
-        # Средний случай: натуральное число с указанным знаком
-        a = Natural('12345')
-        self.assertEqual('-12345', str(Integer.TRANS_N_Z(a, 1)), msg="Integer.TRANS_N_Z(Natural('-12345'))")
-
         # Крайний случай: ноль
         a = Natural('0')
         self.assertEqual('0', str(Integer.TRANS_N_Z(a)), msg="Integer.TRANS_N_Z(Natural('0'))")
@@ -375,7 +370,7 @@ class TestInteger(unittest.TestCase):
         # Лучший случай: вычитание положительных чисел
         a = Integer('12345')
         b = Integer('67890')
-        self.assertEqual('-55545',str(a.SUB_ZZ_Z(b)), msg="12345 - 67890")
+        self.assertEqual('-55545', str(a.SUB_ZZ_Z(b)), msg="12345 - 67890")
 
         # Средний случай: вычитание отрицательных чисел
         a = Integer('-12345')
@@ -422,7 +417,7 @@ class TestInteger(unittest.TestCase):
         # Средний случай: деление отрицательных чисел
         a = Integer('-12345')
         b = Integer('-123')
-        self.assertEqual('100', str(a.DIV_ZZ_Z(b)), msg="-12345 // -123")
+        self.assertEqual('101', str(a.DIV_ZZ_Z(b)), msg="-12345 // -123")
 
         # Худший случай: деление чисел с разными знаками
         a = Integer('12345')
@@ -484,7 +479,7 @@ class TestRational(unittest.TestCase):
         self.assertEqual('0', str(a.numerator))
         self.assertEqual('1', str(a.denominator))
 
-#ниже поменять надо местами первый и второй аргумент ассерта. 
+    # ниже поменять надо местами первый и второй аргумент ассерта.
     # Тк в случае неудачи он вывод как 1е ожидаемое, 2е полученное
     def test_str(self):
         # Лучший случай: рациональное число
@@ -574,32 +569,32 @@ class TestPolynomial(unittest.TestCase):
         p1 = Polynomial("1 0 2/3 0")
         p2 = Polynomial("0 4 0 5/6")
         expected = Polynomial("1 4 2/3 5/6")
-        self.assertEqual(str(expected), str(p1.ADD_PP_P(p2)),  msg=f"Failed for inputs {p1} and {p2}")
+        self.assertEqual(str(expected), str(p1.ADD_PP_P(p2)), msg=f"Failed for inputs {p1} and {p2}")
 
         # Крайний случай: сложение одного многочлена с нулем
         p1 = Polynomial("1 2/3")
         p2 = Polynomial("0")
         expected = Polynomial("1 2/3")
-        self.assertEqual(str(expected), str(p1.ADD_PP_P(p2)),  msg=f"Failed for inputs {p1} and {p2}")
+        self.assertEqual(str(expected), str(p1.ADD_PP_P(p2)), msg=f"Failed for inputs {p1} and {p2}")
 
     def test_SUB_PP_P(self):
         # Лучший случай: вычитание двух многочленов без нулевых коэффициентов
         p1 = Polynomial("1 2/3")
         p2 = Polynomial("4 5/6")
         expected = Polynomial("-3 -1/6")
-        self.assertEqual(str(expected), str(p1.SUB_PP_P(p2)),  msg=f"Failed for inputs {p1} and {p2}")
+        self.assertEqual(str(expected), str(p1.SUB_PP_P(p2)), msg=f"Failed for inputs {p1} and {p2}")
 
         # Средний случай: вычитание многочленов с нулевыми коэффициентами
         p1 = Polynomial("1 0 2/3 0")
         p2 = Polynomial("0 4 0 5/6")
         expected = Polynomial("1 -4 2/3 -5/6")
-        self.assertEqual(str(expected), str(p1.SUB_PP_P(p2)),  msg=f"Failed for inputs {p1} and {p2}")
+        self.assertEqual(str(expected), str(p1.SUB_PP_P(p2)), msg=f"Failed for inputs {p1} and {p2}")
 
         # Крайний случай: вычитание одного многочлена с нулем
         p1 = Polynomial("1 2/3")
         p2 = Polynomial("0")
         expected = Polynomial("1 2/3")
-        self.assertEqual(str(expected), str(p1.SUB_PP_P(p2)),  msg=f"Failed for inputs {p1} and {p2}")
+        self.assertEqual(str(expected), str(p1.SUB_PP_P(p2)), msg=f"Failed for inputs {p1} and {p2}")
 
     def test_MUL_PQ_P(self):
         # Лучший случай: умножение многочлена на рациональное число
@@ -736,6 +731,19 @@ class TestPolynomial(unittest.TestCase):
         expected = Rational("1/3")  # НОД(1, 1, 1) = 1, НОК(3, 3, 3) = 3
         self.assertEqual(str(expected), str(p1.FAC_P_Q()), msg=f"Failed for polynomial {p1}")
 
+        # Смешанные случаи
+        p1 = Polynomial("1 1")
+        expected = Rational("1/1")  # НОД(1, 1) = 1, НОК(1, 1) = 1
+        self.assertEqual(str(expected), str(p1.FAC_P_Q()), msg=f"Failed for polynomial {p1}")
+
+        p1 = Polynomial("1/2 1/3 1/4")
+        expected = Rational("1/12")  # НОД(1, 1, 1) = 1, НОК(2, 3, 4) = 12
+        self.assertEqual(str(expected), str(p1.FAC_P_Q()), msg=f"Failed for polynomial {p1}")
+
+        p1 = Polynomial("0 0 0")
+        expected = Rational("1/1")  # НОД(0, 0, 0) = 1, НОК(1, 1, 1) = 1
+        self.assertEqual(str(expected), str(p1.FAC_P_Q()), msg=f"Failed for polynomial {p1}")
+
     def test_MUL_PP_P(self):
         # Лучший случай: умножение двух многочленов с несколькими коэффициентами
         p1 = Polynomial("1 2")
@@ -869,6 +877,24 @@ class TestPolynomial(unittest.TestCase):
         expected = Polynomial("1 2 1")  # НОД((x + 1)^3, его производная) = x + 1
         self.assertEqual(str(expected), str(p1.GCF_PP_P(p2)), msg=f"Failed for polynomial and its derivative")
 
+        # Случай с большими числами 1
+        p1 = Polynomial('-35/1 -33/1 -62/1 22/1')  # 22x^3 - 62x^2 - 33x -35
+        p2 = Polynomial('207/121 51/22 1207/242')  # 1207/242x^2 + 51/22x + 207/121
+        expected = Polynomial("-7243 -4941")  # НОД() = -4941x - 7243
+        self.assertEqual(str(expected), str(p1.GCF_PP_P(p2)), msg=f"Failed for polynomial and its derivative")
+
+        # Случай с большими числами 2
+        p1 = Polynomial('-345 33/2 13/3 54/7')  # 22x^3 - 62x^2 - 33x -35
+        p2 = Polynomial('534/4 -45/23 -76/5')  # 1207/242x^2 + 51/22x + 207/121
+        expected = Polynomial("-6751544545 1792867542")  # НОД() = 1792867542x - 6751544545
+        self.assertEqual(str(expected), str(p1.GCF_PP_P(p2)), msg=f"Failed for polynomial and its derivative")
+
+        # Случай с большой степенью
+        p1 = Polynomial('1 3 3 5 17')  # 17x^4 + 5x^3 + 3x^2 + 3x + 1
+        p2 = Polynomial('3 0 0 34 24')  # 24x^4 + 34x^3 + 3
+        expected = Polynomial("-25871 -12715")  # НОД() = -12715x -25871
+        self.assertEqual(str(expected), str(p1.GCF_PP_P(p2)), msg=f"Failed for polynomial and its derivative")
+
     def test_DER_P_P(self):
         # Лучший случай: производная многочлена второй степени
         p1 = Polynomial("3 2 1")  # 3 + 2x + x^2
@@ -890,21 +916,19 @@ class TestPolynomial(unittest.TestCase):
         expected = Polynomial("0 6 0 4")  # Производная: 6x + 4x^3
         self.assertEqual(str(expected), str(p1.DER_P_P()), msg=f"Failed for polynomial with zero coefficients")
 
-        # По приколу
         p1 = Polynomial("0 0 0 1")  # x^3
         expected = Polynomial("0 0 3")  # 3x^2
         self.assertEqual(str(expected), str(p1.DER_P_P()), msg=f"Failed for polynomial x^3")
 
     def test_NMP_P_P(self):
-
         # Лучший случай: многочлен с кратными корнями
         p1 = Polynomial("1 4 6 4 1")  # (x + 1)^4
         expected = Polynomial("1 1")  # x + 1, после преобразования кратные корни становятся простыми
         self.assertEqual(str(expected), str(p1.NMP_P_P()), msg=f"Failed for polynomial {p1}")
 
         # Случай, когда многочлен уже имеет простые корни
-        p1 = Polynomial("1 3 3 1")  # (x + 1)^3, но корни не кратные в исходном многочлене
-        expected = p1  # Многочлен не изменится
+        p1 = Polynomial("1 3 3 1")  # (x + 1)^3,
+        expected = Polynomial("1 1")
         self.assertEqual(str(expected), str(p1.NMP_P_P()), msg=f"Failed for polynomial {p1} with simple roots")
 
         # Крайний случай: многочлен, состоящий только из константы (нет корней)
@@ -923,15 +947,11 @@ class TestPolynomial(unittest.TestCase):
         p1 = Polynomial("1 1 1")  # x^2 + x + 1, корень не кратный
         p2 = Polynomial("1 2 1")  # (x + 1)^2 добавим кратность
         p1 = Polynomial.MUL_PP_P(p1, p2)
-        expected = Polynomial("1 1")  # x + 1, один корень остался кратным
+        expected = Polynomial("1 2 2 1")  # x^3 + 2x^2 + 2x + 1
         self.assertEqual(str(expected), str(p1.NMP_P_P()), msg=f"Failed for polynomial with mixed roots")
 
-        # Проверка на многочлен, который после преобразования станет константой
-        # Это теоретический случай, так как обычно многочлен не превращается в константу после удаления кратных корней,
-        # но для полноты теста включим этот случай, предполагая,
-        # что реализация может обрабатывать такие экстремальные случаи
-        p1 = Polynomial("1 3 3 1")  # (x + 1)^3, но если предположить, что после обработки он станет константой
-        expected = Polynomial("1")  # для демонстрации, что функция может вернуть константу
+        p1 = Polynomial("1 3 3 1")  # (x + 1)^3
+        expected = Polynomial("1 1")  # x + 1
         self.assertEqual(str(expected), str(p1.NMP_P_P()), msg=f"Failed for polynomial reducing to constant")
 
 
