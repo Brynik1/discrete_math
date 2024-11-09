@@ -130,10 +130,10 @@ class Natural:
     def DIV_NN_N(self, other):
         if other.COM_NN_D(Natural('0')) == 0:  # если делитель равен нулю выкидываем предупреждение
             raise ValueError("Сan not divide by zero")
-        if other.COM_NN_D(Natural('1')) == 0: return self  # если делитель равен нулю, то частное равно делимому
+        if other.COM_NN_D(Natural('1')) == 0: return self  # если делитель равен 1, то частное равно делимому
         socmp = self.COM_NN_D(other)
-        if socmp == 1: return Natural('0')  # если делитель больше делимого, то частное равно 0
-        if socmp == 0: return Natural('1')  # если делитель  делимого, то частное равно 0
+        if socmp == 1: return Natural('0')  # если делитель > делимого, частное 0
+        if socmp == 0: return Natural('1')  # если делитель = делимому, частное 1
         n = len(self.number)  # длина делимого
         m = len(other.number)  # длина делителя
         dl1 = Natural('0')
@@ -142,7 +142,6 @@ class Natural:
         result.number = []
         dl1.number = self.number[:m]  # отрезаем от делимого(self) часть длиной делителя(m)
         dl2.number = self.number[m:]  # отрезаем оставщуюся часть от делимого после прошлого действия
-        el = Natural('0')
         for i in range(0, n - m + 1):
             while len(dl1.number) > 1 and dl1.number[0] == 0:
                 dl1.number.pop(0)
@@ -150,8 +149,7 @@ class Natural:
                 x = 0
             else:
                 x = dl1.DIV_NN_Dk(other, 0)
-                el = dl1.SUB_NDN_N(other, x)
-                dl1 = el
+                dl1 = dl1.SUB_NDN_N(other, x)
             if len(result.number) != 0 or x != 0:
                 result.number.append(x)
             if len(dl2.number) != 0:
@@ -167,6 +165,8 @@ class Natural:
 
     # НОД натуральных чисел
     def GCF_NN_N(self, other):
+        if self.COM_NN_D(Natural('0')) == 0: return Natural('1')
+        if other.COM_NN_D(Natural('0')) == 0: return Natural('1')
         a = Natural(str(self))
         b = Natural(str(other))
         if self.COM_NN_D(other) == 2: a,b = b,a
@@ -257,6 +257,5 @@ def Natural_tests():
 
 if __name__ == '__main__':
     Natural_tests()
-
 
 

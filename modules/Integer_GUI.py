@@ -24,7 +24,7 @@ class IntegerApp:
 
         self.root = root
         self.root.title("Integer Operations")
-        self.root.geometry("360x420")
+        self.root.geometry("360x360")
         self.root.configure(bg=self.bg_color)
         self.root.attributes('-alpha', 1)
 
@@ -73,11 +73,6 @@ class IntegerApp:
         tk.Label(root, text="Введите второе число (если необходимо):", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(pady=5)
         self.second_number_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, width=26, insertbackground='black' if theme == 'light' else 'white', font=("Arial", 14))
         self.second_number_entry.pack(pady=5)
-
-        # Ввод цифры
-        tk.Label(root, text="Введите цифру (для методов с цифрой):", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(pady=5)
-        self.digit_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, insertbackground='black' if theme == 'light' else 'white', font=("Arial", 14))
-        self.digit_entry.pack(pady=5)
 
         # Метка для результата
         self.result_label = tk.Label(root, text="", bg=self.bg_color, fg=self.text_color, font=("Arial", 14))
@@ -157,7 +152,7 @@ class IntegerApp:
 
             elif method_name == "Умножение на -1":
                 result = first_number.MUL_ZM_Z()
-                self.result_label.config(text=f"Результат: {result}")
+                self.result_label.config(text=f"-1 ∙ {first_number} = {result}")
 
             elif method_name == "Натуральное -> целое":
                 try:
@@ -169,7 +164,10 @@ class IntegerApp:
                 self.result_label.config(text=f"Результат: {result}")
 
             elif method_name == "Целое -> натуральное":
-                result = Integer.TRANS_N_Z(first_number)
+                if first_number.POZ_Z_D() == 1:
+                    messagebox.showerror("Ошибка", "Первое число должно быть неотрицательным.")
+                    return
+                result = Integer.TRANS_Z_N(first_number)
                 self.result_label.config(text=f"Результат: {result}")
 
 

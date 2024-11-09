@@ -79,7 +79,7 @@ class NaturalApp:
 
         # Ввод цифры
         tk.Label(root, text="Введите цифру (для методов с цифрой):", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(pady=5)
-        self.digit_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, insertbackground='black' if theme == 'light' else 'white', font=("Arial", 14))
+        self.digit_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, width=10, insertbackground='black' if theme == 'light' else 'white', font=("Arial", 14))
         self.digit_entry.pack(pady=5)
 
         # Метка для результата
@@ -169,7 +169,7 @@ class NaturalApp:
                 digit = int(digit_str)
                 try:
                     result = first_number.SUB_NDN_N(second_number, digit)
-                    self.result_label.config(text=f"Результат: {result}")
+                    self.result_label.config(text=f"{first_number} - {second_number}∙{digit} = {result}")
                 except ValueError as e:
                     messagebox.showerror("Ошибка", "Результат должен быть натуральным.")
                     return
@@ -197,11 +197,11 @@ class NaturalApp:
 
             elif method_name == "НОД":
                 result = first_number.GCF_NN_N(second_number)
-                self.result_label.config(text=f"Результат: {result}")
+                self.result_label.config(text=f"НОД{chr(0x202F)}({first_number};{chr(0x202F)}{second_number}) = {result}")
 
             elif method_name == "НОК":
                 result = first_number.LCM_NN_N(second_number)
-                self.result_label.config(text=f"Результат: {result}")
+                self.result_label.config(text=f"НОК{chr(0x202F)}({first_number};{chr(0x202F)}{second_number}) = {result}")
 
 
         else:
