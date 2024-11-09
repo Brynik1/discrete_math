@@ -25,7 +25,7 @@ class RationalApp:
 
         self.root = root
         self.root.title("Rational Operations")
-        self.root.geometry("360x420")
+        self.root.geometry("360x360")
         self.root.configure(bg=self.bg_color)
         self.root.attributes('-alpha', 1)
 
@@ -72,11 +72,6 @@ class RationalApp:
         tk.Label(root, text="Введите вторую дробь (если необходимо):", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(pady=5)
         self.second_number_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, width=26, insertbackground='black' if theme == 'light' else 'white', font=("Arial", 14))
         self.second_number_entry.pack(pady=5)
-
-        # Ввод цифры
-        tk.Label(root, text="Введите цифру (для методов с цифрой):", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(pady=5)
-        self.digit_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, insertbackground='black' if theme == 'light' else 'white', font=("Arial", 14))
-        self.digit_entry.pack(pady=5)
 
         # Метка для результата
         self.result_label = tk.Label(root, text="", bg=self.bg_color, fg=self.text_color, font=("Arial", 14))
