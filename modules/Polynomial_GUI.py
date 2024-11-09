@@ -14,7 +14,7 @@ class PolynomialApp:
         if theme == 'light':
             self.bg_color = "#FFFFFF"  # Цвет фона
             self.window_color = "#EAEAEA"  # Цвет окон
-            self.text_color = "#2e2e2e"  # Цвет текста
+            self.text_color = "#333333"  # Цвет текста
             self.hover_color = "#C0C0C0"  # Цвет при наведении
             self.button_color = "#5ebf62"  # Цвет для кнопки
         else:  # Темная тема по умолчанию
@@ -34,7 +34,7 @@ class PolynomialApp:
 
         # Заголовок
         title_label = tk.Label(root, text="Операции с многочленами", bg=self.bg_color, fg=self.text_color, font=("Arial", 16))
-        title_label.pack(pady=12)
+        title_label.pack(pady=10)
 
         # Выбор метода
         methods = [
@@ -55,12 +55,14 @@ class PolynomialApp:
         method_frame = tk.Frame(root, bg=self.bg_color)
         method_frame.pack(pady=10)
 
-        tk.Label(method_frame, text="Операция:  ", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(side=tk.LEFT)
+        tk.Label(method_frame, text="Выберите метод:", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(side=tk.LEFT)
 
         self.method_menu = tk.OptionMenu(method_frame, self.method_var, *methods)
-        self.method_menu.config(bg=self.bg_color, fg=self.text_color, highlightbackground=self.button_color,
-                                relief=tk.FLAT, activebackground=self.window_color, activeforeground=self.text_color,
-                                highlightthickness=2, font=("Arial", 10))
+        self.method_menu.config(bg=self.bg_color, fg=self.text_color, highlightbackground=self.window_color, relief=tk.FLAT)
+
+        # Настройка событий для изменения цвета фона
+        self.method_menu.bind("<Enter>", lambda e: self.method_menu.config(bg=self.hover_color))
+        self.method_menu.bind("<Leave>", lambda e: self.method_menu.config(bg=self.bg_color))
         self.method_menu.pack(side=tk.LEFT)
 
         # Ввод первого числа
@@ -97,12 +99,8 @@ class PolynomialApp:
         try:
             first_polynomial = get_Polynomial(first_polynomial_str)
         except ValueError:
-            if first_polynomial_str == '':
-                messagebox.showerror("Ошибка", f"Первый многочлен не введен.")
-            else:
-                messagebox.showerror("Ошибка", f"Неверный ввод первого многочлена.")
+            messagebox.showerror("Ошибка", "Первое число должно быть многочленом.")
             return
-
 
         if method_name in ["Сложение многочленов",
                            "Вычитание многочленов",
@@ -115,12 +113,8 @@ class PolynomialApp:
             try:
                 second_polynomial = get_Polynomial(second_polynomial_str)
             except ValueError:
-                if second_polynomial_str == '':
-                    messagebox.showerror("Ошибка", f"Второй многочлен не введен.")
-                else:
-                    messagebox.showerror("Ошибка", f"Неверный ввод второго многочлена.")
+                messagebox.showerror("Ошибка", "Второе число должно быть многочленом.")
                 return
-
 
             if method_name == "Сложение многочленов":
                 result = first_polynomial.ADD_PP_P(second_polynomial)

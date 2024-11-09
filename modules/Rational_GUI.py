@@ -13,7 +13,7 @@ class RationalApp:
         if theme == 'light':
             self.bg_color = "#FFFFFF"  # Цвет фона
             self.window_color = "#EAEAEA"  # Цвет окон
-            self.text_color = "#2e2e2e"  # Цвет текста
+            self.text_color = "#333333"  # Цвет текста
             self.hover_color = "#C0C0C0"  # Цвет при наведении
             self.button_color = "#5ebf62"  # Цвет для кнопки
         else:  # Темная тема по умолчанию
@@ -50,13 +50,10 @@ class RationalApp:
         method_frame = tk.Frame(root, bg=self.bg_color)
         method_frame.pack(pady=10)
 
-        tk.Label(method_frame, text="Операция:  ", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(side=tk.LEFT)
+        tk.Label(method_frame, text="Выберите метод:", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(side=tk.LEFT)
 
         self.method_menu = tk.OptionMenu(method_frame, self.method_var, *methods)
-        self.method_menu.config(bg=self.bg_color, fg=self.text_color, highlightbackground=self.button_color,
-                                relief=tk.FLAT, activebackground=self.window_color, activeforeground=self.text_color,
-                                highlightthickness=2, font=("Arial", 10))
-        self.method_menu.pack(side=tk.LEFT)
+        self.method_menu.config(bg=self.bg_color, fg=self.text_color, highlightbackground=self.window_color, relief=tk.FLAT)
 
         # Настройка событий для изменения цвета фона
         self.method_menu.bind("<Enter>", lambda e: self.method_menu.config(bg=self.hover_color))
@@ -94,10 +91,7 @@ class RationalApp:
         try:
             first_number = get_Rational(first_number_str)
         except ValueError:
-            if first_number_str == '':
-                messagebox.showerror("Ошибка", f"Первое число не введено.")
-            else:
-                messagebox.showerror("Ошибка", f"Первое число должно быть рациональным.")
+            messagebox.showerror("Ошибка", "Первое число должно быть рациональным.")
             return
 
         if method_name in ["Сложение дробей",
@@ -109,10 +103,7 @@ class RationalApp:
             try:
                 second_number = get_Rational(second_number_str)
             except ValueError:
-                if second_number_str == '':
-                    messagebox.showerror("Ошибка", f"Второе число не введено.")
-                else:
-                    messagebox.showerror("Ошибка", f"Второе число должно быть рациональным.")
+                messagebox.showerror("Ошибка", "Второе число должно быть рациональным.")
                 return
 
             if method_name == "Сложение дробей":
