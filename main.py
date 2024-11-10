@@ -7,16 +7,16 @@ class App:
     def __init__(self, root):
         # Определяем цвета
         self.dark_theme = {
-            "bg": "#2E2E2E",
+            "bg": "#272830",
             "title": "#FFFFFF",
-            "button_bg": "#4B4B4B",
+            "button_bg": "#3e404d",
             "button_fg": "#FFFFFF",
-            "button_hover": "#808080"
+            "button_hover": "#80839c"
         }
 
         self.light_theme = {
             "bg": "#FFFFFF",
-            "title": "#000000",
+            "title": "#2e2e2e",
             "button_bg": "#DDDDDD",
             "button_fg": "#000000",
             "button_hover": "#AAAAAA"
