@@ -5,7 +5,7 @@ import os
 
 class App:
     def __init__(self, root):
-        # Определяем цвета
+        # Определяем цвета темы
         self.dark_theme = {
             "bg": "#272830",
             "title": "#FFFFFF",
