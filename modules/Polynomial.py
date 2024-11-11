@@ -1,20 +1,11 @@
+# created by Миллер Сергей, Спиридонов Александр, Копасова Ксения 3382
+
 from modules.Rational import Rational
 from modules.Integer import Integer
 from modules.Natural import Natural
 import copy
 
-'''    
-    Найти и исправить
 
-    У функции деления нацело и всех от нее зависимых результат верный, но очень долгие вычисления!
-
-    Пример (считается дольше пяти минут):
-    x = Polynomial('-35/1 -33/1 -62/1 22/1')
-    y = Polynomial('207/121 51/22 1207/242')
-    print(f'{x}  %  {y}  =  {Polynomial.MOD_PP_P(x, y)}')
-
-    Ps: можно менять другие функции, если нужно
-'''
 
 
 class Polynomial:
@@ -258,7 +249,7 @@ class Polynomial:
         return simple_polynomial
 
 
-# Тестики (нужно допилить)
+# Тестики (базовая демонстрация работы)
 def Polynomial_initial_test():
     print('Базовая проверка многочленов:')
     x = Polynomial('2 1/2 4 -3 1')
@@ -278,7 +269,3 @@ def Polynomial_initial_test():
     print(f'НОД  ({x};  {y})  =  {Polynomial.GCF_PP_P(y, x)}')  # GCF_PP_P
     print(f'Производная {x}  =  {Polynomial.DER_P_P(x)}')  # DER_P_P
     print(f'NMP ({x})  =  {Polynomial.NMP_P_P(x)}')             # NMP_P_P
-
-
-if __name__ == '__main__':
-    Polynomial_initial_test()
