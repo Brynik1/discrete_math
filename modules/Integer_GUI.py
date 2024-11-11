@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
-from Natural import *
-from Integer import *
-from additionally import *
+from modules.Natural import *
+from modules.Integer import *
+from modules.additionally import *
 import argparse
 
 
@@ -187,7 +187,10 @@ class IntegerApp:
                 result = Integer.TRANS_Z_N(first_number)
                 self.result_label.config(text=f"Результат: {result}")
 
-
+def create_IntegerApp(root, theme):
+    new_root = tk.Toplevel(root)
+    app = IntegerApp(new_root, theme=theme)
+    return app
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Polynomial Operations App')

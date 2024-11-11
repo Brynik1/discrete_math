@@ -1,4 +1,4 @@
-from Natural import Natural
+from modules.Natural import Natural
 import copy
 
 

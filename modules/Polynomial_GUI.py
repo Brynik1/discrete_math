@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import messagebox
-from Natural import *
-from Integer import *
-from Rational import *
-from Polynomial import *
-from additionally import *
+from modules.Natural import *
+from modules.Integer import *
+from modules.Rational import *
+from modules.Polynomial import *
+from modules.additionally import *
 import argparse
 
 
@@ -213,10 +213,10 @@ class PolynomialApp:
                 self.result_label.config(text=f"Результат: {result}")
 
 
-def start():
-    root = tk.Tk()
-    app = PolynomialApp(root)
-    root.mainloop()
+def create_PolynomialApp(root, theme):
+    new_root = tk.Toplevel(root)
+    app = PolynomialApp(new_root, theme=theme)
+    return app
 
 
 if __name__ == "__main__":

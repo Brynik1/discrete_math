@@ -1,7 +1,7 @@
-from Natural import *
-from Integer import *
-from Rational import *
-from Polynomial import *
+from modules.Natural import *
+from modules.Integer import *
+from modules.Rational import *
+from modules.Polynomial import *
 
 def is_Natural(number):
     return (number != '' and (type(number) == str) and all(c.isdigit() for c in number))

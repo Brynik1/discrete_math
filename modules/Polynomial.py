@@ -1,6 +1,6 @@
-from Rational import Rational
-from Integer import Integer
-from Natural import Natural
+from modules.Rational import Rational
+from modules.Integer import Integer
+from modules.Natural import Natural
 import copy
 
 '''    

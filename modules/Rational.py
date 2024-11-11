@@ -1,5 +1,5 @@
-from Integer import Integer
-from Natural import Natural
+from modules.Integer import Integer
+from modules.Natural import Natural
 
 
 class Rational:
