@@ -102,9 +102,9 @@ class RationalApp:
             first_number = get_Rational(first_number_str)
         except ValueError:
             if first_number_str == '':
-                messagebox.showerror("Ошибка", f"Первое число не введено.")
+                messagebox.showerror("Ошибка", f"Первое число не введено  ( ´•︵•` )")
             else:
-                messagebox.showerror("Ошибка", f"Первое число должно быть рациональным.")
+                messagebox.showerror("Ошибка", f"Первое число должно быть рациональным  ( ´•︵•` )\nПример: -3/4")
             return
 
         if method_name in ["Сложение дробей",
@@ -121,9 +121,9 @@ class RationalApp:
                 second_number = get_Rational(second_number_str)
             except ValueError:
                 if second_number_str == '':
-                    messagebox.showerror("Ошибка", f"Второе число не введено.")
+                    messagebox.showerror("Ошибка", f"Второе число не введено  ( ´•︵•` )")
                 else:
-                    messagebox.showerror("Ошибка", f"Второе число должно быть рациональным.")
+                    messagebox.showerror("Ошибка", f"Второе число должно быть рациональным  ( ´•︵•` )\nПример: -3/4")
                 return
 
             if method_name == "Сложение дробей":
@@ -159,7 +159,7 @@ class RationalApp:
                 try:
                     first_number = get_Integer(first_number_str)
                 except ValueError:
-                    messagebox.showerror("Ошибка", "Первое число должно быть целым.")
+                    messagebox.showerror("Ошибка", "Первое число должно быть целым  ( ´•︵•` )")
                     return
                 result = Rational.TRANS_Z_Q(first_number)
                 self.result_label.config(text=f"Результат: {result}")

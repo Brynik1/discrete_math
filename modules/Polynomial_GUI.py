@@ -128,9 +128,10 @@ class PolynomialApp:
             first_polynomial = get_Polynomial(first_polynomial_str)
         except ValueError:
             if first_polynomial_str == '':
-                messagebox.showerror("Ошибка", f"Первый многочлен не введен.")
+                messagebox.showerror("Ошибка", f"Первый многочлен не введен  ( ´•︵•` )")
             else:
-                messagebox.showerror("Ошибка", f"Неверный ввод первого многочлена.")
+                messagebox.showerror("Ошибка",
+                                     f"Неверный ввод первого многочлена  ( ´•︵•` )\nПример ввода:  3 2  =  {Polynomial('3 2')}\nИли:  3x^10 + 2  =  {get_Polynomial('3x^10 + 2')}")
             return
 
 
@@ -146,9 +147,10 @@ class PolynomialApp:
                 second_polynomial = get_Polynomial(second_polynomial_str)
             except ValueError:
                 if second_polynomial_str == '':
-                    messagebox.showerror("Ошибка", f"Второй многочлен не введен.")
+                    messagebox.showerror("Ошибка", f"Второй многочлен не введен  ( ´•︵•` )")
                 else:
-                    messagebox.showerror("Ошибка", f"Неверный ввод второго многочлена.")
+                    messagebox.showerror("Ошибка",
+                                         f"Неверный ввод второго многочлена  ( ´•︵•` )\nПример ввода:  3 2  =  {Polynomial('3 2')}\nИли:  3x^10 + 2  =  {get_Polynomial('3x^10 + 2')}")
                 return
 
 
@@ -181,7 +183,7 @@ class PolynomialApp:
             if method_name == "Умножение на дробь":
                 number_str = self.digit_entry.get()
                 if not is_Rational(number_str):
-                    messagebox.showerror("Ошибка", "Первое число должно быть рациональным.")
+                    messagebox.showerror("Ошибка", "Первое число должно быть рациональным  ( ´•︵•` )")
                     return
                 number = get_Rational(number_str)
                 result = first_polynomial.MUL_PQ_P(number)
@@ -190,7 +192,7 @@ class PolynomialApp:
             elif method_name == "Умножение на xⁿ":
                 k_str = self.digit_entry.get()
                 if not is_Natural(k_str):
-                    messagebox.showerror("Ошибка", "k должно быть неотрицательным целым числом.")
+                    messagebox.showerror("Ошибка", "k должно быть неотрицательным целым числом  ( ´•︵•` )")
                     return
                 k = int(k_str)
                 result = first_polynomial.MUL_Pxk_P(k)

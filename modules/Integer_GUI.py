@@ -109,9 +109,9 @@ class IntegerApp:
             first_number = get_Integer(first_number_str)
         except ValueError:
             if first_number_str == '':
-                messagebox.showerror("Ошибка", f"Первое число не введено.")
+                messagebox.showerror("Ошибка", f"Первое число не введено  ( ´•︵•` )")
             else:
-                messagebox.showerror("Ошибка", f"Первое число должно быть целым.")
+                messagebox.showerror("Ошибка", f"Первое число должно быть целым  ( ´•︵•` )")
             return
 
         if method_name in ["Сложение двух чисел",
@@ -126,9 +126,9 @@ class IntegerApp:
                 second_number = get_Integer(second_number_str)
             except ValueError:
                 if second_number_str == '':
-                    messagebox.showerror("Ошибка", f"Второе число не введено.")
+                    messagebox.showerror("Ошибка", f"Второе число не введено  ( ´•︵•` )")
                 else:
-                    messagebox.showerror("Ошибка", f"Второе число должно быть целым.")
+                    messagebox.showerror("Ошибка", f"Второе число должно быть целым  ( ´•︵•` )")
                 return
 
 
@@ -175,14 +175,14 @@ class IntegerApp:
                 try:
                     natural = get_Natural(first_number_str)
                 except ValueError:
-                    messagebox.showerror("Ошибка", "Первое число должно быть натуральным.")
+                    messagebox.showerror("Ошибка", "Первое число должно быть натуральным  ( ´•︵•` )")
                     return
                 result = Integer.TRANS_N_Z(natural)
                 self.result_label.config(text=f"Результат: {result}")
 
             elif method_name == "Целое -> натуральное":
                 if first_number.POZ_Z_D() == 1:
-                    messagebox.showerror("Ошибка", "Первое число должно быть неотрицательным.")
+                    messagebox.showerror("Ошибка", "Первое число должно быть неотрицательным  ( ´•︵•` )")
                     return
                 result = Integer.TRANS_Z_N(first_number)
                 self.result_label.config(text=f"Результат: {result}")
