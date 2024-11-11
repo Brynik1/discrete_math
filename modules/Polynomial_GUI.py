@@ -15,12 +15,10 @@ class PolynomialApp:
             self.bg_color = "#FFFFFF"  # Цвет фона
             self.window_color = "#EAEAEA"  # Цвет окон
             self.text_color = "#2e2e2e"  # Цвет текста
-            self.backlight = "#2e2e2e"  # Цвет подсветки текста
         else:  # Темная тема по умолчанию
-            self.bg_color = "#24252b"  # Цвет фона
-            self.window_color = "#3e404d"  # Цвет окон
+            self.bg_color = "#232323"  # Цвет фона
+            self.window_color = "#3A3A3A"  # Цвет окон
             self.text_color = "#F5F5F5"  # Цвет текста
-            self.backlight = "#F5F5F5"  # Цвет подсветки текста
 
         self.hover_color = "#78aaff"  # Цвет при наведении
         self.button_color = "#6495ED"  # Цвет для кнопки
@@ -40,7 +38,7 @@ class PolynomialApp:
         methods = [
             "Сложение многочленов",
             "Вычитание многочленов",
-            "Умножение на дробь",
+            "Умножение на рациональное число",
             "Умножение на xⁿ",
             "Старший коэффициент",
             "НОК знаменателей и НОД числителей",
@@ -57,27 +55,24 @@ class PolynomialApp:
 
         tk.Label(method_frame, text="Операция:  ", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(side=tk.LEFT)
 
-        self.method_menu = tk.OptionMenu(method_frame, self.method_var, *methods, command=self.on_option_change)
+        self.method_menu = tk.OptionMenu(method_frame, self.method_var, *methods)
         self.method_menu.config(bg=self.bg_color, fg=self.text_color, highlightbackground=self.button_color,
                                 relief=tk.FLAT, activebackground=self.window_color, activeforeground=self.text_color,
                                 highlightthickness=2, font=("Arial", 10))
         self.method_menu.pack(side=tk.LEFT)
 
         # Ввод первого числа
-        self.first_polynomial_label = tk.Label(root, text="✔ Введите первый многочлен:", bg=self.bg_color, fg=self.backlight, font=("Arial", 10))
-        self.first_polynomial_label.pack(pady=5)
+        tk.Label(root, text="Введите первый многочлен:", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(pady=5)
         self.first_polynomial_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, width=26, insertbackground='black' if theme == 'light' else 'white', font=("Arial", 14))
         self.first_polynomial_entry.pack(pady=5)
 
         # Ввод второго числа
-        self.second_polynomial_label = tk.Label(root, text="✔ Введите второй многочлен:", bg=self.bg_color, fg=self.backlight, font=("Arial", 10))
-        self.second_polynomial_label.pack(pady=5)
+        tk.Label(root, text="Введите второй многочлен (если необходимо):", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(pady=5)
         self.second_polynomial_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, width=26, insertbackground='black' if theme == 'light' else 'white', font=("Arial", 14))
         self.second_polynomial_entry.pack(pady=5)
 
         # Ввод цифры
-        self.digit_label = tk.Label(root, text="Введите число:", bg=self.bg_color, fg=self.text_color, font=("Arial", 10))
-        self.digit_label.pack(pady=5)
+        tk.Label(root, text="Введите число (для методов с числом):", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(pady=5)
         self.digit_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, insertbackground='black' if theme == 'light' else 'white', font=("Arial", 14))
         self.digit_entry.pack(pady=5)
 
@@ -87,37 +82,10 @@ class PolynomialApp:
 
         # Кнопка для выполнения операции
         self.calculate_button = tk.Button(root, text="Выполнить", command=self.calculate, bg=self.button_color, fg="white", font=("Arial", 14), height=1, width=15, relief=tk.FLAT)
-        self.calculate_button.place(relx=0.5, y=380, anchor=tk.CENTER)
+        self.calculate_button.pack(pady=10)
         self.calculate_button.bind("<Enter>", lambda e: self.calculate_button.config(bg=self.hover_color))
         self.calculate_button.bind("<Leave>", lambda e: self.calculate_button.config(bg=self.button_color))
-        methods = [
-            "Сложение многочленов",
-            "Вычитание многочленов",
-            "Умножение на дробь",
-            "Умножение на xⁿ",
-            "Старший коэффициент",
-            "НОК знаменателей и НОД числителей",
-            "Умножение многочленов",
-            "Частное от деления",
-            "Остаток от деления",
-            "НОД",
-            "Производная",
-            "Кратные корни в простые"
-        ]
-    def on_option_change(self, value):
-        method_name = self.method_var.get()
-        self.second_polynomial_label.config(fg=self.text_color, text="Введите второй многочлен:")
-        self.digit_label.config(fg=self.text_color, text="Введите число:")
-        if method_name in ["Сложение многочленов",
-                           "Вычитание многочленов",
-                           "Умножение многочленов",
-                           "Частное от деления",
-                           "Остаток от деления",
-                           "НОД"]:
-            self.second_polynomial_label.config(fg=self.backlight, text="✔ Введите второй многочлен:")
-        elif method_name in ["Умножение на дробь",
-                             "Умножение на xⁿ"]:
-            self.digit_label.config(fg=self.backlight, text="✔ Введите число:")
+
 
     def calculate(self):
         method_name = self.method_var.get()
@@ -178,7 +146,7 @@ class PolynomialApp:
 
 
         else:
-            if method_name == "Умножение на дробь":
+            if method_name == "Умножение на рациональное число":
                 number_str = self.digit_entry.get()
                 if not is_Rational(number_str):
                     messagebox.showerror("Ошибка", "Первое число должно быть рациональным.")
@@ -209,8 +177,9 @@ class PolynomialApp:
                 self.result_label.config(text=f"Производная: {result}")
 
             elif method_name == "Кратные корни в простые":
-                result = first_polynomial.NMP_P_P()
-                self.result_label.config(text=f"Результат: {result}")
+                self.result_label.config(text=f"Answer")
+                #result = first_polynomial.NMP_P_P()
+                #self.result_label.config(text=f"Результат: {result}")
 
 
 def start():

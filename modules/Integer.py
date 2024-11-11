@@ -1,3 +1,4 @@
+#created by Мокрушина Вероника Дубинин Андрей 3382
 from Natural import Natural
 import copy
 
@@ -151,7 +152,7 @@ class Integer:
         return result
 
 
-# Тестики (нужно допилить)
+# Тестики (базовая демонстрация работы)
 def Integer_initial_test():
     print('Базовая проверка целых:')
     x = Integer('-9')

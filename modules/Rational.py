@@ -1,3 +1,4 @@
+#created by Мокрушина Вероника, Дубинин Андрей 3382
 from Integer import Integer
 from Natural import Natural
 

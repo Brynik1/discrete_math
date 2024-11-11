@@ -1,7 +1,8 @@
+#сделано by Никита Брызгалов 3382, Мокрушина Вероника 3382
 class Natural:
     def __init__(self, number: str):
         number = list(map(int, number))
-        while len(number) > 1 and number[0] == 0:
+        while len(number) > 1 and number[0] == 0: #удаление ведущих нулей
             number = number[1:]
         self.number = number
 
@@ -29,31 +30,32 @@ class Natural:
     # Добавление 1 к натуральному числу
     def ADD_1N_N(self):
         result = Natural(str(self))
-        carry = 1
-        for i in range(len(result.number) - 1, -1, -1):
-            if carry == 0: break
+        carry = 1  # будет использоваться для отслеживания переноса, если при сложении произойдет переход через 10
+        for i in range(len(result.number) - 1, -1, -1): #проходим по каждой цифре числа result справа налево (начиная с младшего разряда)
+            if carry == 0: break #добавляем значение carry к текущей цифре числа result
             result.number[i] += carry
-            if result.number[i] == 10:
+            if result.number[i] == 10: #проверяем, если сумма цифры и переноса привела к значению 10, то текущий разряд обнуляется, а перенос устанавливается в 1 для передачи на следующий разряд
                 result.number[i] = 0
                 carry = 1
             else:
                 carry = 0
-        if carry == 1:
-            result.number.insert(0, 1)
+        if carry == 1: #После завершения цикла проверяем, остался ли перенос, это может произойти, если после прибавления 1 все разряды стали нулями
+            result.number.insert(0, 1) #если carry равен 1, добавляем 1 в начало result
         return result
 
     # Сложение натуральных чисел
     def ADD_NN_N(self, other):
         result = []
         carry = 0
-        max_len = max(len(self.number), len(other.number))
+        max_len = max(len(self.number), len(other.number))#определяем максимальную длину из двух чисел, чтобы обработать все разряды обоих чисел
         for i in range(max_len):
+            # если индекс i меньше длины числа, берется цифра из числа, Если наоборот, берется 0
             digit_a = self.number[-i-1] if i < len(self.number) else 0
             digit_b = other.number[-i-1] if i < len(other.number) else 0
-            total = digit_a + digit_b + carry
-            result.insert(0, total % 10)
-            carry = total // 10
-        if carry:
+            total = digit_a + digit_b + carry  #складываем текущие цифры digit_a и digit_b, а также значение carry
+            result.insert(0, total % 10) #вставляем в начало списка последнюю цифру результата сложения разряда
+            carry = total // 10 #обновляем carry для следующего разряда, разделив total на 10
+        if carry: #если после завершения цикла carry все еще не равен 0, добавляем его в начало result
             result.insert(0, carry)
 
         return Natural(''.join(map(str, result)))
@@ -65,19 +67,23 @@ class Natural:
         result = []
         borrow = 0
         for i in range(len(self.number)):
+            # Извлекаем цифру digit_a из числа self и digit_b из other:
+            # digit_a всегда берется с конца, так как self длиннее или равен other.
+            # Если индекс i превышает длину other, digit_b приравнивается к 0, для разности чисел разной длины.
             digit_a = self.number[-i-1]
             digit_b = other.number[-i-1] if i < len(other.number) else 0
+            # Если digit_a меньше суммы digit_b и borrow, нужно занять 1 из следующего разряда:
+            # К digit_a прибавляется 10, чтобы выполнить вычитание.
+            # Borrow устанавливается в 1, чтобы учесть заем в следующем разряде
             if digit_a < digit_b + borrow:
                 result.insert(0, digit_a + 10 - digit_b - borrow)
                 borrow = 1
-            else:
-                result.insert(0, digit_a - digit_b - borrow)
+            else:  #Если digit_a больше или равен digit_b + borrow, заем не требуется:
+                result.insert(0, digit_a - digit_b - borrow)  #Вычисляем разницу digit_a - digit_b - borrow
                 borrow = 0
 
-        # Удаляем ведущие нули
-        while len(result) > 1 and result[0] == 0:
-            result.pop(0)
         return Natural(''.join(map(str, result)))
+
 
     # Умножение натурального числа на цифру
     def MUL_ND_N(self, digit):
@@ -91,7 +97,7 @@ class Natural:
             carry = total // 10
         while carry:
             result.insert(0, carry % 10)
-            carry //= 10
+            carry //= 10 #Обновляем carry, взяв оставшуюся часть (total // 10). Она будет перенесена в следующий разряд
 
         return Natural(''.join(map(str, result)))
 
@@ -99,13 +105,14 @@ class Natural:
     def MUL_Nk_N(self, k):
         if k < 0:
             raise ValueError("k must be a non-negative integer")
-        return Natural(str(self) + '0' * k)
+        return Natural(str(self) + '0' * k) #приписываем k нулей к строке
 
     # Умножение натуральных чисел
     def MUL_NN_N(self, other):
         result = Natural('0')
         for i in range(len(other.number)):
-            digit = other.number[-i-1]
+            digit = other.number[-i-1] #берем последнюю цифру второго числа
+            # умножаем на цифру и результат умножения смещается на i разрядов влево, чтобы учесть позицию разряда digit в числе other
             temp_result = self.MUL_ND_N(digit).MUL_Nk_N(i)
             result = result.ADD_NN_N(temp_result)
         return result
@@ -119,8 +126,6 @@ class Natural:
         if other.COM_NN_D(self) == 2:
             raise ValueError("Cannot divide a larger number by a smaller one")
         divisor = other.MUL_Nk_N(k)  # дописываем нолики в конец
-        # if len(self.number) > len(divisor.number):
-        #     raise ValueError("parameter k is too small")
         for i in range(10):
             if divisor.MUL_ND_N(i).COM_NN_D(self) == 2:  # умножаем на i, сравниваем числа
                 return i - 1
@@ -161,7 +166,7 @@ class Natural:
     def MOD_NN_N(self, other):
         if self.COM_NN_D(other) == 1: return self
         quotient = self.DIV_NN_N(other)
-        return self.SUB_NN_N(quotient.MUL_NN_N(other))
+        return self.SUB_NN_N(quotient.MUL_NN_N(other))  #умножаем частное на делитель и вычитаем из делителя
 
     # НОД натуральных чисел
     def GCF_NN_N(self, other):
@@ -170,8 +175,8 @@ class Natural:
         a = Natural(str(self))
         b = Natural(str(other))
         if self.COM_NN_D(other) == 2: a,b = b,a
-        while a.NZER_N_B() and b.NZER_N_B():
-            a, b = b, a.MOD_NN_N(b)
+        while a.NZER_N_B() and b.NZER_N_B(): #пока не нули
+            a, b = b, a.MOD_NN_N(b) #находим остатки
         return a
 
     # НОК натуральных чисел
@@ -257,5 +262,4 @@ def Natural_tests():
 
 if __name__ == '__main__':
     Natural_tests()
-
 

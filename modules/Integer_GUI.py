@@ -15,14 +15,12 @@ class IntegerApp:
             self.text_color = "#2e2e2e"  # Цвет текста
             self.hover_color = "#61e867"  # Цвет при наведении
             self.button_color = "#5ebf62"  # Цвет для кнопки
-            self.backlight = "#2e2e2e"  # Цвет подсветки текста
         else:  # Темная тема по умолчанию
-            self.bg_color = "#24252b"  # Цвет фона
-            self.window_color = "#3e404d"  # Цвет окон
+            self.bg_color = "#232323"  # Цвет фона
+            self.window_color = "#3A3A3A"  # Цвет окон
             self.text_color = "#F5F5F5"  # Цвет текста
             self.hover_color = "#61e867"  # Цвет при наведении
             self.button_color = "#4CAF50"  # Цвет для кнопки
-            self.backlight = "#F5F5F5"  # Цвет подсветки текста
 
         self.root = root
         self.root.title("Integer Operations")
@@ -55,7 +53,7 @@ class IntegerApp:
 
         tk.Label(method_frame, text="Операция:  ", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(side=tk.LEFT)
 
-        self.method_menu = tk.OptionMenu(method_frame, self.method_var, *methods, command=self.on_option_change)
+        self.method_menu = tk.OptionMenu(method_frame, self.method_var, *methods)
         self.method_menu.config(bg=self.bg_color, fg=self.text_color, highlightbackground=self.button_color,
                                 relief=tk.FLAT, activebackground=self.window_color, activeforeground=self.text_color,
                                 highlightthickness=2, font=("Arial", 10))
@@ -67,15 +65,12 @@ class IntegerApp:
         self.method_menu.pack(side=tk.LEFT)
 
         # Ввод первого числа
-
-        self.first_number_label = tk.Label(root, text="✔ Введите первое число:", bg=self.bg_color, fg=self.backlight, font=("Arial", 10))
-        self.first_number_label.pack(pady=5)
+        tk.Label(root, text="Введите первое число:", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(pady=5)
         self.first_number_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, width=26, insertbackground='black' if theme == 'light' else 'white', font=("Arial", 14))
         self.first_number_entry.pack(pady=5)
 
         # Ввод второго числа
-        self.second_number_label = tk.Label(root, text="✔ Введите второе число:", bg=self.bg_color, fg=self.backlight, font=("Arial", 10))
-        self.second_number_label.pack(pady=5)
+        tk.Label(root, text="Введите второе число (если необходимо):", bg=self.bg_color, fg=self.text_color, font=("Arial", 10)).pack(pady=5)
         self.second_number_entry = tk.Entry(root, bg=self.window_color, fg=self.text_color, width=26, insertbackground='black' if theme == 'light' else 'white', font=("Arial", 14))
         self.second_number_entry.pack(pady=5)
 
@@ -85,21 +80,9 @@ class IntegerApp:
 
         # Кнопка для выполнения операции
         self.calculate_button = tk.Button(root, text="Выполнить", command=self.calculate, bg=self.button_color, fg="white", font=("Arial", 14), height=1, width=15, relief=tk.FLAT)
-        self.calculate_button.place(relx=0.5, y=320, anchor=tk.CENTER)
+        self.calculate_button.pack(pady=10)
         self.calculate_button.bind("<Enter>", lambda e: self.calculate_button.config(bg=self.hover_color))
         self.calculate_button.bind("<Leave>", lambda e: self.calculate_button.config(bg=self.button_color))
-
-
-    def on_option_change(self, value):
-        method_name = self.method_var.get()
-        if method_name in ["Сложение двух чисел",
-                          "Вычитание двух чисел",
-                          "Умножение двух чисел",
-                          "Деление целочисленное",
-                          "Деление с остатком"]:
-            self.second_number_label.config(fg=self.backlight, text="✔ Введите второе число:")
-        else:
-            self.second_number_label.config(fg=self.text_color, text="Введите второе число:")
 
     def calculate(self):
         method_name = self.method_var.get()
@@ -199,4 +182,3 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = IntegerApp(root, theme=args.theme)  # Передача темы из аргументов командной строки
     root.mainloop()
-

@@ -1,20 +1,8 @@
+# created by Сергей Миллер, Спиридонов Александр, Копасова Ксения
 from Rational import Rational
 from Integer import Integer
 from Natural import Natural
 import copy
-
-'''    
-    Найти и исправить
-
-    У функции деления нацело и всех от нее зависимых результат верный, но очень долгие вычисления!
-
-    Пример (считается дольше пяти минут):
-    x = Polynomial('-35/1 -33/1 -62/1 22/1')
-    y = Polynomial('207/121 51/22 1207/242')
-    print(f'{x}  %  {y}  =  {Polynomial.MOD_PP_P(x, y)}')
-
-    Ps: можно менять другие функции, если нужно
-'''
 
 
 class Polynomial:
