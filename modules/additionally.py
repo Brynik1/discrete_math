@@ -21,6 +21,7 @@ def is_Polynomial(polynomial_str):
 def polynomial_to_coefficients(polynomial_str):
     if is_Polynomial(polynomial_str): return polynomial_str
     polynomial_str = polynomial_str.replace('-','+-').replace(' ', '').replace('**','^')
+    if polynomial_str[0] == '+': polynomial_str = polynomial_str[1:]
     coefficients = {}
     max_degree = 0
     for term in polynomial_str.split("+"):
