@@ -214,6 +214,25 @@ class PolynomialApp:
                 result = first_polynomial.NMP_P_P()
                 self.result_label.config(text=f"Результат: {result}")
 
+'''        if len(self.result_label['text']) > 20:
+            lenght = len(self.result_label['text'])
+            j = 0
+            result = ''
+            current_len = 0
+            for i in range(lenght):
+                symbol = self.result_label['text'][i]
+                current_len += 1
+                if current_len > 20:
+                    if symbol in '+-':
+                        result += self.result_label['text'][j:i+1] + "\n"
+                        j = i
+                        current_len = 0
+            result += self.result_label['text'][j:]
+            print(self.result_label['text'])
+            print(result)
+            self.result_label['text'] = result'''
+
+
 
 def create_PolynomialApp(root, theme):
     new_root = tk.Toplevel(root)

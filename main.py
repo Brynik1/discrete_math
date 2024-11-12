@@ -74,11 +74,11 @@ class App:
         else:
             self.current_theme = self.dark_theme
 
-        # Сохраняем текущую тему
-        self.save_theme()
-
         # Обновляем цвета интерфейса
         self.update_colors()
+
+        # Сохраняем текущую тему
+        self.save_theme()
 
     def update_colors(self):
         # Обновляем цвета всех элементов интерфейса
@@ -90,13 +90,16 @@ class App:
 
     def save_theme(self):
         # Сохраняем текущую тему в файл
-        theme_name = 'light' if self.current_theme == self.light_theme else 'dark'
-        with open('modules/theme.json', 'w') as f:
-            json.dump({"theme": theme_name}, f)
+        try:
+            theme_name = 'light' if self.current_theme == self.light_theme else 'dark'
+            with open('theme.json', 'w') as f:
+                json.dump({"theme": theme_name}, f)
+        except:
+            return
 
     def load_theme(self):
         try:
-            with open('modules/theme.json', 'r') as f:
+            with open('theme.json', 'r') as f:
                 data = json.load(f)
                 if data.get("theme") == 'light':
                     return self.light_theme

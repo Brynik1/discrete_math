@@ -102,7 +102,7 @@ class RationalApp:
             first_number = get_Rational(first_number_str)
         except ValueError:
             if first_number_str == '':
-                messagebox.showerror("Ошибка", f"Первое число не введено  ( ´•︵•` )")
+                messagebox.showerror("Ошибка", f"Первое число не введено  ( ´•︵•` )\nПример: -3/4")
             else:
                 messagebox.showerror("Ошибка", f"Первое число должно быть рациональным  ( ´•︵•` )\nПример: -3/4")
             return
@@ -121,7 +121,7 @@ class RationalApp:
                 second_number = get_Rational(second_number_str)
             except ValueError:
                 if second_number_str == '':
-                    messagebox.showerror("Ошибка", f"Второе число не введено  ( ´•︵•` )")
+                    messagebox.showerror("Ошибка", f"Второе число не введено  ( ´•︵•` )\nПример: -3/4")
                 else:
                     messagebox.showerror("Ошибка", f"Второе число должно быть рациональным  ( ´•︵•` )\nПример: -3/4")
                 return
