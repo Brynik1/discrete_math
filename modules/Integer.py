@@ -1,4 +1,4 @@
-# created by Мокрушина Вероника, Дубинин Андрей 3382
+# created by Мокрушина Вероника, Дубинин Андрей, Миллер Сергей 3382
 
 from modules.Natural import Natural
 import copy
