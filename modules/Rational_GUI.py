@@ -1,9 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox
-from Natural import *
-from Integer import *
-from Rational import *
-from additionally import *
+from modules.Natural import *
+from modules.Integer import *
+from modules.Rational import *
+from modules.additionally import *
 import argparse
 
 
@@ -102,9 +102,9 @@ class RationalApp:
             first_number = get_Rational(first_number_str)
         except ValueError:
             if first_number_str == '':
-                messagebox.showerror("Ошибка", f"Первое число не введено.")
+                messagebox.showerror("Ошибка", f"Первое число не введено  ( ´•︵•` )\nПример: -3/4")
             else:
-                messagebox.showerror("Ошибка", f"Первое число должно быть рациональным.")
+                messagebox.showerror("Ошибка", f"Первое число должно быть рациональным  ( ´•︵•` )\nПример: -3/4")
             return
 
         if method_name in ["Сложение дробей",
@@ -121,9 +121,9 @@ class RationalApp:
                 second_number = get_Rational(second_number_str)
             except ValueError:
                 if second_number_str == '':
-                    messagebox.showerror("Ошибка", f"Второе число не введено.")
+                    messagebox.showerror("Ошибка", f"Второе число не введено  ( ´•︵•` )\nПример: -3/4")
                 else:
-                    messagebox.showerror("Ошибка", f"Второе число должно быть рациональным.")
+                    messagebox.showerror("Ошибка", f"Второе число должно быть рациональным  ( ´•︵•` )\nПример: -3/4")
                 return
 
             if method_name == "Сложение дробей":
@@ -159,7 +159,7 @@ class RationalApp:
                 try:
                     first_number = get_Integer(first_number_str)
                 except ValueError:
-                    messagebox.showerror("Ошибка", "Первое число должно быть целым.")
+                    messagebox.showerror("Ошибка", "Первое число должно быть целым  ( ´•︵•` )")
                     return
                 result = Rational.TRANS_Z_Q(first_number)
                 self.result_label.config(text=f"Результат: {result}")
@@ -170,7 +170,10 @@ class RationalApp:
                 self.result_label.config(text=f"Результат: {result}")
 
 
-
+def create_RationalApp(root, theme):
+    new_root = tk.Toplevel(root)
+    app = RationalApp(new_root, theme=theme)
+    return app
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Polynomial Operations App')

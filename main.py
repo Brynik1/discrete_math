@@ -1,11 +1,13 @@
+from modules.Natural_GUI import create_NaturalApp
+from modules.Integer_GUI import create_IntegerApp
+from modules.Rational_GUI import create_RationalApp
+from modules.Polynomial_GUI import create_PolynomialApp
 import tkinter as tk
-import subprocess
 import json
-import os
 
 class App:
     def __init__(self, root):
-        # Определяем цвета
+        # Определяем цвета темы
         self.dark_theme = {
             "bg": "#272830",
             "title": "#FFFFFF",
@@ -72,66 +74,56 @@ class App:
         else:
             self.current_theme = self.dark_theme
 
-        # Сохраняем текущую тему
-        self.save_theme()
-
         # Обновляем цвета интерфейса
         self.update_colors()
+
+        # Сохраняем текущую тему
+        self.save_theme()
 
     def update_colors(self):
         # Обновляем цвета всех элементов интерфейса
         self.root.configure(bg=self.current_theme["bg"])
         self.title_label.configure(bg=self.current_theme["bg"], fg=self.current_theme["title"])
-
         for widget in self.root.winfo_children():
             if isinstance(widget, tk.Button):
                 widget.configure(bg=self.current_theme["button_bg"], fg=self.current_theme["button_fg"])
 
     def save_theme(self):
         # Сохраняем текущую тему в файл
-        theme_name = 'light' if self.current_theme == self.light_theme else 'dark'
-        with open('modules/theme.json', 'w') as f:
-            json.dump({"theme": theme_name}, f)
+        try:
+            theme_name = 'light' if self.current_theme == self.light_theme else 'dark'
+            with open('theme.json', 'w') as f:
+                json.dump({"theme": theme_name}, f)
+        except:
+            return
 
     def load_theme(self):
-
-        # Загружаем тему из файла, если он существует
-        if os.path.exists('modules/theme.json'):
-            with open('modules/theme.json', 'r') as f:
+        try:
+            with open('theme.json', 'r') as f:
                 data = json.load(f)
                 if data.get("theme") == 'light':
                     return self.light_theme
                 else:
                     return self.dark_theme
-        return None
+        except:
+            return None
 
     def run_file1(self):
-        file_path = "modules/Natural_GUI.py"  # Укажите путь к вашему файлу
         theme = 'light' if self.current_theme == self.light_theme else 'dark'  # Определяем текущую тему
-        self.run_file(file_path, theme)
+        window = create_NaturalApp(root, theme)
 
     def run_file2(self):
-        file_path = "modules/Integer_GUI.py"  # Укажите путь к вашему файлу
         theme = 'light' if self.current_theme == self.light_theme else 'dark'  # Определяем текущую тему
-        self.run_file(file_path, theme)
+        window = create_IntegerApp(root, theme)
 
     def run_file3(self):
-        file_path = "modules/Rational_GUI.py"  # Укажите путь к вашему файлу
         theme = 'light' if self.current_theme == self.light_theme else 'dark'  # Определяем текущую тему
-        self.run_file(file_path, theme)
+        window = create_RationalApp(root, theme)
 
     def run_file4(self):
-        file_path = "modules/Polynomial_GUI.py"  # Укажите путь к вашему файлу
         theme = 'light' if self.current_theme == self.light_theme else 'dark'  # Определяем текущую тему
-        self.run_file(file_path, theme)
+        window = create_PolynomialApp(root, theme)
 
-    def run_file(self, file_path, theme='dark'):
-        # Проверка существования файла перед его запуском
-        if os.path.exists(file_path):
-            # Запуск файла с передачей аргумента темы
-            subprocess.Popen(["python", file_path, "--theme", theme], creationflags=subprocess.CREATE_NO_WINDOW)
-        else:
-            print(f"Файл {file_path} не найден.")
 
 if __name__ == "__main__":
     root = tk.Tk()

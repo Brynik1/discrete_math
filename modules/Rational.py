@@ -1,5 +1,7 @@
-from Integer import Integer
-from Natural import Natural
+# created by Мокрушина Вероника, Дубинин Андрей 3382
+
+from modules.Integer import Integer
+from modules.Natural import Natural
 
 
 class Rational:
@@ -86,7 +88,7 @@ class Rational:
 
 
 
-# Тестики (нужно допилить)
+# Тестики (базовая демонстрация работы)
 def Rational_initial_test():
     print('Базовая проверка рациональных:')
     x = Rational('-6/2')
@@ -102,7 +104,3 @@ def Rational_initial_test():
     print(f'{x} ∙ {y} = {x.MUL_QQ_Q(y)}')  # MUL_QQ_Q
     print(f'{x} / {y} = {x.DIV_QQ_Q(y)}')  # DIV_QQ_Q
 
-
-
-if __name__ == '__main__':
-    Rational_initial_test()

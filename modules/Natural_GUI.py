@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
-from Natural import *
-from additionally import *
+from modules.Natural import *
+from modules.additionally import *
 import argparse
 
 
@@ -138,9 +138,9 @@ class NaturalApp:
             first_number = get_Natural(first_number_str)
         except ValueError:
             if first_number_str == '':
-                messagebox.showerror("Ошибка", f"Первое число не введено.")
+                messagebox.showerror("Ошибка", f"Первое число не введено  ( ´•︵•` )")
             else:
-                messagebox.showerror("Ошибка", f"Первое число должно быть натуральным.")
+                messagebox.showerror("Ошибка", f"Первое число должно быть натуральным  ( ´•︵•` )")
             return
 
         if method_name in ["Сравнение чисел",
@@ -160,9 +160,9 @@ class NaturalApp:
                 second_number = get_Natural(second_number_str)
             except ValueError:
                 if second_number_str == '':
-                    messagebox.showerror("Ошибка", f"Второе число не введено.")
+                    messagebox.showerror("Ошибка", f"Второе число не введено  ( ´•︵•` )")
                 else:
-                    messagebox.showerror("Ошибка", f"Второе число должно быть натуральным.")
+                    messagebox.showerror("Ошибка", f"Второе число должно быть натуральным  ( ´•︵•` )")
                 return
 
             if method_name == "Сравнение чисел":
@@ -183,7 +183,7 @@ class NaturalApp:
                     result = first_number.SUB_NN_N(second_number)
                     self.result_label.config(text=f"{first_number} - {second_number} = {result}")
                 except ValueError:
-                    messagebox.showerror("Ошибка", f"Результат должен быть натуральным.")
+                    messagebox.showerror("Ошибка", f"Результат должен быть натуральным  ( ´•︵•` )")
                     return
 
             elif method_name == "Умножение двух чисел":
@@ -193,20 +193,20 @@ class NaturalApp:
             elif method_name == "Вычитание умноженного на цифру":
                 digit_str = self.digit_entry.get()
                 if not digit_str.isdigit() or not (0 <= int(digit_str) <= 9):
-                    messagebox.showerror("Ошибка", "Цифра должна быть от 0 до 9.")
+                    messagebox.showerror("Ошибка", "Цифра должна быть от 0 до 9  ( ´•︵•` )")
                     return
                 digit = int(digit_str)
                 try:
                     result = first_number.SUB_NDN_N(second_number, digit)
                     self.result_label.config(text=f"{first_number} - {second_number}∙{digit} = {result}")
                 except ValueError as e:
-                    messagebox.showerror("Ошибка", "Результат должен быть натуральным.")
+                    messagebox.showerror("Ошибка", "Результат должен быть натуральным  ( ´•︵•` )")
                     return
 
             elif method_name == "DIV_NN_Dk":
                 k_str = self.digit_entry.get()
                 if k_str == '' or not all(c.isdigit() for c in k_str):
-                    messagebox.showerror("Ошибка", "k должно быть неотрицательным целым числом.")
+                    messagebox.showerror("Ошибка", "k должно быть неотрицательным целым числом  ( ´•︵•` )")
                     return
                 k = int(k_str)
                 try:
@@ -248,7 +248,7 @@ class NaturalApp:
             elif method_name == "Умножение на цифру":
                 digit_str = self.digit_entry.get()
                 if digit_str == '' or not digit_str.isdigit() or not (0 <= int(digit_str) <= 9):
-                    messagebox.showerror("Ошибка", "Цифра должна быть от 0 до 9.")
+                    messagebox.showerror("Ошибка", "Цифра должна быть от 0 до 9  ( ´•︵•` )")
                     return
                 digit = int(digit_str)
                 try:
@@ -269,7 +269,7 @@ class NaturalApp:
                         get_Natural(second_number_str)
                         digit = int(second_number_str)
                     except ValueError:
-                        messagebox.showerror("Ошибка", "Степень должна быть натуральным числом.")
+                        messagebox.showerror("Ошибка", "Степень должна быть натуральным числом  ( ´•︵•` )")
                         return
                 try:
                     result = first_number.MUL_Nk_N(digit)
@@ -278,6 +278,10 @@ class NaturalApp:
                     messagebox.showerror("Ошибка", str(e))
                     return
 
+def create_NaturalApp(root, theme):
+    new_root = tk.Toplevel(root)
+    app = NaturalApp(new_root, theme=theme)
+    return app
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Polynomial Operations App')

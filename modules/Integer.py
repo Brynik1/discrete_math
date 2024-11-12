@@ -1,4 +1,6 @@
-from Natural import Natural
+# created by Мокрушина Вероника, Дубинин Андрей 3382
+
+from modules.Natural import Natural
 import copy
 
 
@@ -151,7 +153,7 @@ class Integer:
         return result
 
 
-# Тестики (нужно допилить)
+# Тестики (базовая демонстрация работы)
 def Integer_initial_test():
     print('Базовая проверка целых:')
     x = Integer('-9')
@@ -167,7 +169,3 @@ def Integer_initial_test():
     print(f"{x} ∙ {y} = {x.MUL_ZZ_Z(y)}")  # MUL_ZZ_Z
     print(f"{x} // {y} = {x.DIV_ZZ_Z(y)}")  # DIV_ZZ_Z
     print(f"{x} % {y} = {x.MOD_ZZ_Z(y)}")  # MOD_ZZ_Z
-
-
-if __name__ == '__main__':
-    Integer_initial_test()
