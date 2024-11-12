@@ -141,7 +141,10 @@ class RationalApp:
                 self.result_label.config(text=f"{first_number} ∙ {second_number} = {result}")
 
             elif method_name == "Деление дробей":
-                result = first_number.DIV_QQ_Q(second_number)
+                try:
+                    result = first_number.DIV_QQ_Q(second_number)
+                except ValueError:
+                    messagebox.showerror("Ошибка", f"Нельзя делить на ноль  ( ´•︵•` )")
                 self.result_label.config(text=f"{first_number} ∶ {second_number} = {result}")
 
 

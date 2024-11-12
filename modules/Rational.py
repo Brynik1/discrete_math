@@ -77,6 +77,8 @@ class Rational:
 
     # Деление дробей (делитель отличен от нуля)
     def DIV_QQ_Q(self, other):
+        if other.numerator.POZ_Z_D() == 0:
+            raise ValueError()
         new_numerator = Integer.TRANS_N_Z(other.denominator)  # Переворачиваем дроби
         new_sign = 1 if other.numerator.POZ_Z_D() == 1 else 0  # Сохраняем знак перевернутой дроби
         if new_sign:
