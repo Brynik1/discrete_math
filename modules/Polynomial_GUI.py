@@ -43,6 +43,7 @@ class PolynomialApp:
             "Умножение на дробь",
             "Умножение на xⁿ",
             "Старший коэффициент",
+            "Степень многочлена",
             "НОК знаменателей и НОД числителей",
             "Умножение многочленов",
             "Частное от деления",
@@ -90,20 +91,7 @@ class PolynomialApp:
         self.calculate_button.place(relx=0.5, y=380, anchor=tk.CENTER)
         self.calculate_button.bind("<Enter>", lambda e: self.calculate_button.config(bg=self.hover_color))
         self.calculate_button.bind("<Leave>", lambda e: self.calculate_button.config(bg=self.button_color))
-        methods = [
-            "Сложение многочленов",
-            "Вычитание многочленов",
-            "Умножение на дробь",
-            "Умножение на xⁿ",
-            "Старший коэффициент",
-            "НОК знаменателей и НОД числителей",
-            "Умножение многочленов",
-            "Частное от деления",
-            "Остаток от деления",
-            "НОД",
-            "Производная",
-            "Кратные корни в простые"
-        ]
+
     def on_option_change(self, value):
         method_name = self.method_var.get()
         self.second_polynomial_label.config(fg=self.text_color, text="Введите второй многочлен:")
@@ -194,6 +182,10 @@ class PolynomialApp:
                 number = get_Rational(number_str)
                 result = first_polynomial.MUL_PQ_P(number)
                 self.result_label.config(text=f"Результат: {result}")
+
+            elif method_name == "Степень многочлена":
+                result = first_polynomial.DEG_P_N()
+                self.result_label.config(text=f"DEG = {result}")
 
             elif method_name == "Умножение на xⁿ":
                 k_str = self.digit_entry.get()
