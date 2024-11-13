@@ -890,19 +890,19 @@ class TestPolynomial(unittest.TestCase):
         # Случай с большими числами 1
         p1 = Polynomial('-35/1 -33/1 -62/1 22/1')  # 22x^3 - 62x^2 - 33x -35
         p2 = Polynomial('207/121 51/22 1207/242')  # 1207/242x^2 + 51/22x + 207/121
-        expected = Polynomial("-7243 -4941")  # НОД() = -4941x - 7243
+        expected = Polynomial("1")  # НОД() = 1
         self.assertEqual(str(expected), str(p1.GCF_PP_P(p2)), msg=f"Failed for polynomial and its derivative")
 
         # Случай с большими числами 2
-        p1 = Polynomial('-345 33/2 13/3 54/7')  # 22x^3 - 62x^2 - 33x -35
-        p2 = Polynomial('534/4 -45/23 -76/5')  # 1207/242x^2 + 51/22x + 207/121
-        expected = Polynomial("-6751544545 1792867542")  # НОД() = 1792867542x - 6751544545
-        self.assertEqual(str(expected), str(p1.GCF_PP_P(p2)), msg=f"Failed for polynomial and its derivative")
+        p1 = Polynomial('51/2 -21 -153/14 9')  # 9x^3 - 153/14x^2 - 21x + 51/2
+        p2 = Polynomial('-799/1044 -2585/7308 47/58')  # 47/58x^2 - 2585/7308x - 799/1044
+        expected = Polynomial("17 -14")  # НОД() = -14x + 17
+        self.assertEqual(str(expected), str(p1.GCF_PP_P(p2)), msg=f"Failed for {p1} and {p2}")
 
         # Случай с большой степенью
         p1 = Polynomial('1 3 3 5 17')  # 17x^4 + 5x^3 + 3x^2 + 3x + 1
         p2 = Polynomial('3 0 0 34 24')  # 24x^4 + 34x^3 + 3
-        expected = Polynomial("-25871 -12715")  # НОД() = -12715x -25871
+        expected = Polynomial("1")  # НОД() = 1
         self.assertEqual(str(expected), str(p1.GCF_PP_P(p2)), msg=f"Failed for polynomial and its derivative")
 
     def test_DER_P_P(self):

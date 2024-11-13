@@ -185,15 +185,16 @@ class Polynomial:
 
         # Реализуем алгоритм Евклида для вычисления НОДа многочленов
         # Пока степень второго многочлена > 0 и его значение не равно 0
-        while coeff_polynom_2.DEG_P_N() > 0 and coeff_polynom_2.numbers != Polynomial('0'):
+        while coeff_polynom_2.DEG_P_N() > 0 and coeff_polynom_2.numbers[0] != '0':
             # Находим остаток от деления первого многочлена на второй
             residue = coeff_polynom_1.MOD_PP_P(coeff_polynom_2)
             # Меняем местами многочлены: теперь первый многочлен = второй многочлен,
             #  а второй многочлен = остаток от деления первого многочлена на второй
+
             coeff_polynom_1, coeff_polynom_2 = coeff_polynom_2, residue
 
         # Если многочлены взаимно простые - их НОД = 1
-        if not '/' in str(coeff_polynom_2.numbers[0]) and str(coeff_polynom_2.numbers[0]) != '0':
+        if coeff_polynom_2.numbers[0] != '0':
             return Polynomial('1')
 
         # Ищем коэф., на который можно упростить многочлен
