@@ -33,31 +33,34 @@ class Natural:
     def ADD_1N_N(self):
         result = Natural(str(self))
         carry = 1  # будет использоваться для отслеживания переноса, если при сложении произойдет переход через 10
-        for i in range(len(result.number) - 1, -1, -1): #проходим по каждой цифре числа result справа налево (начиная с младшего разряда)
-            if carry == 0: break #добавляем значение carry к текущей цифре числа result
+        for i in range(len(result.number) - 1, -1, -1):  # проходим по каждой цифре числа справа налево (начиная с младшего разряда)
+            if carry == 0: break
+            # добавляем значение carry к текущей цифре числа result
             result.number[i] += carry
-            if result.number[i] == 10: #проверяем, если сумма цифры и переноса привела к значению 10, то текущий разряд обнуляется, а перенос устанавливается в 1 для передачи на следующий разряд
+            # если сумма цифры и переноса равна 10, текущий разряд обнуляется, а перенос устанавливается в 1 для передачи в следующий разряд
+            if result.number[i] == 10:
                 result.number[i] = 0
                 carry = 1
             else:
-                carry = 0
-        if carry == 1: #После завершения цикла проверяем, остался ли перенос, это может произойти, если после прибавления 1 все разряды стали нулями
-            result.number.insert(0, 1) #если carry равен 1, добавляем 1 в начало result
+                carry = 0  # иначе обнуляем перенос
+        # после завершения цикла проверяем, остался ли перенос, это может произойти, если после прибавления 1 все разряды стали нулями
+        if carry == 1:
+            result.number.insert(0, 1)  # если carry равен 1, добавляем 1 в начало result
         return result
 
     # Сложение натуральных чисел
     def ADD_NN_N(self, other):
         result = []
         carry = 0
-        max_len = max(len(self.number), len(other.number))#определяем максимальную длину из двух чисел, чтобы обработать все разряды обоих чисел
+        max_len = max(len(self.number), len(other.number))  # определяем максимальную длину из двух чисел, чтобы обработать все разряды чисел
         for i in range(max_len):
             # если индекс i меньше длины числа, берется цифра из числа, Если наоборот, берется 0
             digit_a = self.number[-i-1] if i < len(self.number) else 0
             digit_b = other.number[-i-1] if i < len(other.number) else 0
-            total = digit_a + digit_b + carry  #складываем текущие цифры digit_a и digit_b, а также значение carry
-            result.insert(0, total % 10) #вставляем в начало списка последнюю цифру результата сложения разряда
-            carry = total // 10 #обновляем carry для следующего разряда, разделив total на 10
-        if carry: #если после завершения цикла carry все еще не равен 0, добавляем его в начало result
+            total = digit_a + digit_b + carry  # складываем текущие цифры digit_a и digit_b, а также значение carry
+            result.insert(0, total % 10)  # вставляем в начало списка последнюю цифру результата сложения разряда
+            carry = total // 10  # обновляем carry для следующего разряда, разделив total на 10
+        if carry:  # если после завершения цикла carry все еще не равен 0, добавляем его в начало result
             result.insert(0, carry)
 
         return Natural(''.join(map(str, result)))
@@ -80,26 +83,25 @@ class Natural:
             if digit_a < digit_b + borrow:
                 result.insert(0, digit_a + 10 - digit_b - borrow)
                 borrow = 1
-            else:  #Если digit_a больше или равен digit_b + borrow, заем не требуется:
-                result.insert(0, digit_a - digit_b - borrow)  #Вычисляем разницу digit_a - digit_b - borrow
+            else:  # Если digit_a больше или равен digit_b + borrow, заем не требуется:
+                result.insert(0, digit_a - digit_b - borrow)  # Вычисляем разницу digit_a - digit_b - borrow
                 borrow = 0
 
         return Natural(''.join(map(str, result)))
-
 
     # Умножение натурального числа на цифру
     def MUL_ND_N(self, digit):
         if not (0 <= digit <= 9):
             raise ValueError("Digit must be between 0 and 9")
         result = []
-        carry = 0
-        for i in range(len(self.number) - 1, -1, -1):
-            total = self.number[i] * digit + carry
-            result.insert(0, total % 10)
-            carry = total // 10
+        carry = 0  # Перенос для обработки разрядов
+        for i in range(len(self.number) - 1, -1, -1):  # Проходим по цифрам числа self в обратном порядке
+            total = self.number[i] * digit + carry  # Вычисляем сумму текущей цифры, умноженной на digit, и carry
+            result.insert(0, total % 10)  # Добавляем последнюю цифру результата в список result
+            carry = total // 10  # Получаем значение переноса
         while carry:
             result.insert(0, carry % 10)
-            carry //= 10 #Обновляем carry, взяв оставшуюся часть (total // 10). Она будет перенесена в следующий разряд
+            carry //= 10  # Обновляем carry, взяв оставшуюся часть (total // 10). Она будет перенесена в следующий разряд
 
         return Natural(''.join(map(str, result)))
 
@@ -107,13 +109,13 @@ class Natural:
     def MUL_Nk_N(self, k):
         if k < 0:
             raise ValueError("k must be a non-negative integer")
-        return Natural(str(self) + '0' * k) #приписываем k нулей к строке
+        return Natural(str(self) + '0' * k)  # приписываем k нулей к строке
 
     # Умножение натуральных чисел
     def MUL_NN_N(self, other):
         result = Natural('0')
         for i in range(len(other.number)):
-            digit = other.number[-i-1] #берем последнюю цифру второго числа
+            digit = other.number[-i-1]  # берем последнюю цифру второго числа
             # умножаем на цифру и результат умножения смещается на i разрядов влево, чтобы учесть позицию разряда digit в числе other
             temp_result = self.MUL_ND_N(digit).MUL_Nk_N(i)
             result = result.ADD_NN_N(temp_result)
@@ -148,7 +150,7 @@ class Natural:
         result = Natural('0')
         result.number = []
         dl1.number = self.number[:m]  # отрезаем от делимого(self) часть длиной делителя(m)
-        dl2.number = self.number[m:]  # отрезаем оставщуюся часть от делимого после прошлого действия
+        dl2.number = self.number[m:]  # отрезаем оставшуюся часть от делимого после прошлого действия
         for i in range(0, n - m + 1):
             while len(dl1.number) > 1 and dl1.number[0] == 0:
                 dl1.number.pop(0)
@@ -168,22 +170,25 @@ class Natural:
     def MOD_NN_N(self, other):
         if self.COM_NN_D(other) == 1: return self
         quotient = self.DIV_NN_N(other)
-        return self.SUB_NN_N(quotient.MUL_NN_N(other))  #умножаем частное на делитель и вычитаем из делителя
+        return self.SUB_NN_N(quotient.MUL_NN_N(other))  # умножаем частное на делитель и вычитаем из делителя
 
     # НОД натуральных чисел
     def GCF_NN_N(self, other):
-        if self.COM_NN_D(Natural('0')) == 0: return Natural('1')
-        if other.COM_NN_D(Natural('0')) == 0: return Natural('1')
+        if self.COM_NN_D(Natural('0')) == 0: return Natural('1')  # Если self == 0, возвращаем 1 (по определению)
+        if other.COM_NN_D(Natural('0')) == 0: return Natural('1')  # Если other == 0, возвращаем 1 (по определению)
         a = Natural(str(self))
         b = Natural(str(other))
-        if self.COM_NN_D(other) == 2: a,b = b,a
-        while a.NZER_N_B() and b.NZER_N_B(): #пока не нули
-            a, b = b, a.MOD_NN_N(b) #находим остатки
+        # Упорядочиваем a и b так, чтобы выполнялось a >= b
+        if self.COM_NN_D(other) == 2:
+            a, b = b, a
+        # Основной алгоритм Евклида для нахождения НОД
+        while b.NZER_N_B():  # пока не нули
+            a, b = b, a.MOD_NN_N(b)  # находим остатки
         return a
 
     # НОК натуральных чисел
     def LCM_NN_N(self, other):
-        return self.MUL_NN_N(other).DIV_NN_N(self.GCF_NN_N(other))
+        return self.MUL_NN_N(other).DIV_NN_N(self.GCF_NN_N(other))  # возвращаем произведение чисел, деленное на НОД
 
 
 # Тестики (базовая демонстрация работы)

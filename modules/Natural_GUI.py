@@ -217,11 +217,17 @@ class NaturalApp:
                     return
 
             elif method_name == "Деление целочисленное":
-                result = first_number.DIV_NN_N(second_number)
+                try:
+                    result = first_number.DIV_NN_N(second_number)
+                except:
+                    messagebox.showerror("Ошибка", f"Нельзя делить на ноль  ( ´•︵•` )")
                 self.result_label.config(text=f"{first_number} div {second_number} = {result}")
 
             elif method_name == "Деление с остатком":
-                result = first_number.MOD_NN_N(second_number)
+                try:
+                    result = first_number.MOD_NN_N(second_number)
+                except:
+                    messagebox.showerror("Ошибка", f"Нельзя делить на ноль  ( ´•︵•` )")
                 self.result_label.config(text=f"{first_number} mod {second_number} = {result}")
 
             elif method_name == "НОД":

@@ -80,8 +80,10 @@ class Integer:
         x1 = self.ABS_Z_N()
         x2 = other.ABS_Z_N()
         compare = x1.COM_NN_D(x2)
-        if compare == 0: return Integer('0')
-        elif compare == 2: return Integer(str(x1.SUB_NN_N(x2)))
+        if compare == 0:
+            return Integer('0')
+        elif compare == 2:
+            return Integer(str(x1.SUB_NN_N(x2)))
         return Integer(str(x2.SUB_NN_N(x1))).MUL_ZM_Z()
 
     # Вычитание целых чисел
@@ -103,7 +105,6 @@ class Integer:
         first = Integer.TRANS_Z_N(self.ABS_Z_N())
         second = Integer.TRANS_Z_N(other.ABS_Z_N())
         result = Natural.MUL_NN_N(first, second)
-
         result = Integer.TRANS_N_Z(result)  # Переводим результат в целое (без знака)
         result.sign = mul_sign  # Добавляем знак
 

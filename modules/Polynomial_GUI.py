@@ -167,11 +167,17 @@ class PolynomialApp:
                 self.result_label.config(text=f"Результат: {result}")
 
             elif method_name == "Частное от деления":
-                result = first_polynomial.DIV_PP_P(second_polynomial)
+                try:
+                    result = first_polynomial.DIV_PP_P(second_polynomial)
+                except:
+                    messagebox.showerror("Ошибка", f"Нельзя делить на ноль  ( ´•︵•` )")
                 self.result_label.config(text=f"Результат: {result}")
 
             elif method_name == "Остаток от деления":
-                result = first_polynomial.MOD_PP_P(second_polynomial)
+                try:
+                    result = first_polynomial.MOD_PP_P(second_polynomial)
+                except:
+                    messagebox.showerror("Ошибка", f"Нельзя делить на ноль  ( ´•︵•` )")
                 self.result_label.config(text=f"Результат: {result}")
 
             elif method_name == "НОД":
