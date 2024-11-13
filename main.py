@@ -2,12 +2,13 @@ from modules.Natural_GUI import create_NaturalApp
 from modules.Integer_GUI import create_IntegerApp
 from modules.Rational_GUI import create_RationalApp
 from modules.Polynomial_GUI import create_PolynomialApp
+import datetime
 import tkinter as tk
 import json
 
 class App:
     def __init__(self, root):
-        # Определяем цвета темы
+        # Определяем цвета тем
         self.dark_theme = {
             "bg": "#272830",
             "title": "#FFFFFF",
@@ -24,6 +25,14 @@ class App:
             "button_hover": "#AAAAAA"
         }
 
+        self.pink_theme = {
+            "bg": "#fcc1c0",  # Розовый фон
+            "title": "#A50000",  # Белый текст заголовка
+            "button_bg": "#ffe3e3",  # Ярко-розовые кнопки
+            "button_fg": "red",  # Белый текст на кнопках
+            "button_hover": "#ffffff"  # Темно-розовый при наведении
+        }
+
         # Загружаем сохраненную тему или устанавливаем темную тему по умолчанию
         self.current_theme = self.load_theme() or self.dark_theme
 
@@ -34,10 +43,11 @@ class App:
         self.root.configure(bg=self.current_theme["bg"])
         self.root.attributes('-alpha', 1)
         self.root.resizable(False, False)
+        self.counter = 0
 
         # Заголовок
         self.title_label = tk.Label(root, text="Выберите модуль", bg=self.current_theme["bg"],
-                                    fg=self.current_theme["title"], font=("Arial", 16))
+                                     fg=self.current_theme["title"], font=("Arial", 18))
         self.title_label.pack(pady=20)
 
         # Кнопки
@@ -50,6 +60,9 @@ class App:
         self.theme_button = tk.Button(self.root, text="☀", command=self.toggle_theme,
                                       bg=self.current_theme["bg"], fg=self.current_theme["button_fg"],
                                       font=("Arial", 14), relief=tk.FLAT, width=3, height=1, anchor=tk.CENTER)
+
+        #if self.current_theme == self.pink_theme: self.theme_button.config(text='♥')
+        #else: self.theme_button.config(text="☀")
         # Позиционируем кнопку в правом верхнем углу
         self.theme_button.place(x=350, y=10)
         self.theme_button.tkraise()
@@ -68,11 +81,21 @@ class App:
         button.bind("<Leave>", lambda e: button.config(bg=self.current_theme["button_bg"]))
 
     def toggle_theme(self):
-        # Меняем тему
-        if self.current_theme == self.dark_theme:
-            self.current_theme = self.light_theme
+        # Меняем тему по кругу
+        self.counter += 1
+        if self.counter > 10:
+            if self.current_theme == self.dark_theme:
+                self.current_theme = self.light_theme
+            elif self.current_theme == self.light_theme:
+                self.current_theme = self.pink_theme
+            else:
+                self.current_theme = self.dark_theme
         else:
-            self.current_theme = self.dark_theme
+            if self.current_theme == self.dark_theme:
+                self.current_theme = self.light_theme
+            else:
+                self.current_theme = self.dark_theme
+
 
         # Обновляем цвета интерфейса
         self.update_colors()
@@ -84,6 +107,19 @@ class App:
         # Обновляем цвета всех элементов интерфейса
         self.root.configure(bg=self.current_theme["bg"])
         self.title_label.configure(bg=self.current_theme["bg"], fg=self.current_theme["title"])
+        if self.current_theme == self.pink_theme:
+            # Получаем текущее системное время
+            current_time = datetime.datetime.now()
+            current_hour = current_time.hour
+            # Определяем пожелание в зависимости от времени суток
+            if 5 <= current_hour < 12: greeting = "С доброй утрой"
+            elif 12 <= current_hour < 18: greeting = "С доброй днёй"
+            else: greeting = "С доброй вечерой"
+            self.theme_button.config(text='♥')
+            self.title_label['text'] = greeting + "  ʕ ᵔᴥᵔ ʔ"
+        else:
+            self.theme_button.config(text="☀")
+            self.title_label['text'] = "Выберите модуль"
         for widget in self.root.winfo_children():
             if isinstance(widget, tk.Button):
                 widget.configure(bg=self.current_theme["button_bg"], fg=self.current_theme["button_fg"])
@@ -91,7 +127,9 @@ class App:
     def save_theme(self):
         # Сохраняем текущую тему в файл
         try:
-            theme_name = 'light' if self.current_theme == self.light_theme else 'dark'
+            if self.current_theme == self.light_theme: theme_name = 'light'
+            elif self.current_theme == self.pink_theme: theme_name = 'pink'
+            else: theme_name = 'dark'
             with open('theme.json', 'w') as f:
                 json.dump({"theme": theme_name}, f)
         except:
@@ -101,27 +139,39 @@ class App:
         try:
             with open('theme.json', 'r') as f:
                 data = json.load(f)
-                if data.get("theme") == 'light':
-                    return self.light_theme
-                else:
-                    return self.dark_theme
+                if data.get("theme") == 'light': return self.light_theme
+                else: return self.dark_theme
         except:
             return None
 
     def run_file1(self):
-        theme = 'light' if self.current_theme == self.light_theme else 'dark'  # Определяем текущую тему
+        if self.current_theme == self.light_theme: theme = 'light'
+        elif self.current_theme == self.pink_theme: theme = 'pink'
+        else: theme = 'dark'
         window = create_NaturalApp(root, theme)
 
     def run_file2(self):
-        theme = 'light' if self.current_theme == self.light_theme else 'dark'  # Определяем текущую тему
+        if self.current_theme == self.light_theme: theme = 'light'
+        elif self.current_theme == self.pink_theme: theme = 'pink'
+        else: theme = 'dark'
         window = create_IntegerApp(root, theme)
 
     def run_file3(self):
-        theme = 'light' if self.current_theme == self.light_theme else 'dark'  # Определяем текущую тему
+        if self.current_theme == self.light_theme:
+            theme = 'light'
+        elif self.current_theme == self.pink_theme:
+            theme = 'pink'
+        else:
+            theme = 'dark'
         window = create_RationalApp(root, theme)
 
     def run_file4(self):
-        theme = 'light' if self.current_theme == self.light_theme else 'dark'  # Определяем текущую тему
+        if self.current_theme == self.light_theme:
+            theme = 'light'
+        elif self.current_theme == self.pink_theme:
+            theme = 'pink'
+        else:
+            theme = 'dark'
         window = create_PolynomialApp(root, theme)
 
 

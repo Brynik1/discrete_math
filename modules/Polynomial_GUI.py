@@ -16,6 +16,11 @@ class PolynomialApp:
             self.window_color = "#EAEAEA"  # Цвет окон
             self.text_color = "#2e2e2e"  # Цвет текста
             self.backlight = "#2e2e2e"  # Цвет подсветки текста
+        elif theme == 'pink':
+            self.bg_color = "#fcc1c0"  # Цвет фона
+            self.window_color = "#ffe3e3"  # Цвет окон
+            self.text_color = "red"  # Цвет текста
+            self.backlight = "#A50000"  # Цвет подсветки текста
         else:  # Темная тема по умолчанию
             self.bg_color = "#24252b"  # Цвет фона
             self.window_color = "#3e404d"  # Цвет окон

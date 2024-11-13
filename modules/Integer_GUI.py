@@ -16,6 +16,13 @@ class IntegerApp:
             self.hover_color = "#61e867"  # Цвет при наведении
             self.button_color = "#5ebf62"  # Цвет для кнопки
             self.backlight = "#2e2e2e"  # Цвет подсветки текста
+        elif theme == 'pink':
+            self.bg_color = "#fcc1c0"  # Цвет фона
+            self.window_color = "#ffe3e3"  # Цвет окон
+            self.text_color = "red"  # Цвет текста
+            self.hover_color = "#61e867"  # Цвет при наведении
+            self.button_color = "#5ebf62"  # Цвет для кнопки
+            self.backlight = "#A50000"  # Цвет подсветки текста
         else:  # Темная тема по умолчанию
             self.bg_color = "#24252b"  # Цвет фона
             self.window_color = "#3e404d"  # Цвет окон
