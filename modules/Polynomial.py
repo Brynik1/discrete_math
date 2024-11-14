@@ -58,7 +58,7 @@ class Polynomial:
     def ADD_PP_P(self, other):
         a = copy.deepcopy(self.coefficients)  # Копируем коэффициенты первого многочлена
         b = copy.deepcopy(other.coefficients)  # Копируем коэффициенты второго многочлена
-        if len(b) > len(a): # Первым слагаемым берем многочлен с наибольшей длиной
+        if len(b) > len(a):  # Первым слагаемым берем многочлен с наибольшей длиной
             a, b = b, a
         for i in range(min(len(a), len(b))):
             a[i] = Rational.ADD_QQ_Q(a[i], b[i])  # Складываем коэффициенты
@@ -93,13 +93,8 @@ class Polynomial:
         if not self.coefficients:
             raise ValueError("Polynomial has no coefficients.")
 
-        # Просматриваем все коэффициенты многочлена, находим максимальный не равный нулю
-        for i in range(len(self.coefficients) - 1, -1, -1):
-            # POZ_Z_D() возвращает 0, если значание равно 0
-            if self.coefficients[i].numerator.POZ_Z_D():
-                return self.coefficients[i]
-        # Если все коэффициенты равны 0
-        raise ValueError("Polynomial has no coefficients.")
+        # Возвращаем старший коэффициент
+        return self.coefficients[-1]
 
     # Степень многочлена
     def DEG_P_N(self):

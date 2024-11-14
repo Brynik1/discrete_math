@@ -189,7 +189,7 @@ class PolynomialApp:
 
             elif method_name == "Степень многочлена":
                 result = first_polynomial.DEG_P_N()
-                self.result_label.config(text=f"DEG = {result}")
+                self.result_label.config(text=f"deg = {result}")
 
             elif method_name == "Умножение на xⁿ":
                 k_str = self.digit_entry.get()
@@ -202,7 +202,7 @@ class PolynomialApp:
 
             elif method_name == "Старший коэффициент":
                 result = first_polynomial.LED_P_Q()
-                self.result_label.config(text=f"deg = {result}")
+                self.result_label.config(text=f"led = {result}")
 
             elif method_name == "НОК знаменателей и НОД числителей":
                 result = first_polynomial.FAC_P_Q()
