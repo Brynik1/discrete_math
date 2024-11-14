@@ -39,7 +39,7 @@ class App:
         # Создание окна
         self.root = root
         self.root.title("Выбор модуля")
-        self.root.geometry("400x300")
+        self.root.geometry("400x280")
         self.root.configure(bg=self.current_theme["bg"])
         self.root.attributes('-alpha', 1)
         self.root.resizable(False, False)
@@ -59,10 +59,8 @@ class App:
         # Кнопка для смены темы
         self.theme_button = tk.Button(self.root, text="☀", command=self.toggle_theme,
                                       bg=self.current_theme["bg"], fg=self.current_theme["button_fg"],
-                                      font=("Arial", 14), relief=tk.FLAT, width=3, height=1, anchor=tk.CENTER)
+                                      font=("Arial", 15), relief=tk.FLAT, width=3, height=1, anchor=tk.CENTER)
 
-        #if self.current_theme == self.pink_theme: self.theme_button.config(text='♥')
-        #else: self.theme_button.config(text="☀")
         # Позиционируем кнопку в правом верхнем углу
         self.theme_button.place(x=350, y=10)
         self.theme_button.tkraise()
@@ -74,7 +72,7 @@ class App:
                            bg=self.current_theme["button_bg"], fg=self.current_theme["button_fg"],
                            font=("Arial", 12), relief=tk.FLAT)
 
-        button.pack(pady=10, padx=20, fill=tk.X)
+        button.pack(pady=8, padx=15, fill=tk.X)
 
         # Привязываем события наведения мыши
         button.bind("<Enter>", lambda e: button.config(bg=self.current_theme["button_hover"]))
@@ -123,6 +121,11 @@ class App:
         for widget in self.root.winfo_children():
             if isinstance(widget, tk.Button):
                 widget.configure(bg=self.current_theme["button_bg"], fg=self.current_theme["button_fg"])
+                #if self.current_theme == self.pink_theme and widget != self.theme_button:
+                #    widget['text'] = widget['text'] + '  (^･ｪ･^)'
+                #elif widget != self.theme_button and '(^･ｪ･^)' in widget['text']:
+                #    widget['text'] = widget['text'][:-9]
+
 
     def save_theme(self):
         # Сохраняем текущую тему в файл

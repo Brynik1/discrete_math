@@ -123,8 +123,7 @@ class PolynomialApp:
             if first_polynomial_str == '':
                 messagebox.showerror("Ошибка", f"Первый многочлен не введен  ( ´•︵•` )")
             else:
-                messagebox.showerror("Ошибка",
-                                     f"Неверный ввод первого многочлена  ( ´•︵•` )\nПример ввода:  3 2  =  {Polynomial('3 2')}\nИли:  3x^10 + 2  =  {get_Polynomial('3x^10 + 2')}")
+                messagebox.showerror("Ошибка",f"Неверный ввод первого многочлена  ( ´•︵•` )\nПример ввода:  3 2  =  {Polynomial('3 2')}\nИли:  3x^10 + 2  =  {get_Polynomial('3x^10 + 2')}")
             return
 
 

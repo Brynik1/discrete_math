@@ -19,6 +19,7 @@ def is_Polynomial(polynomial_str):
     coefficients = polynomial_str.split()
     return len(coefficients) > 0 and all(is_Rational(coefficient) for coefficient in coefficients)
 def polynomial_to_coefficients(polynomial_str):
+    if polynomial_str == '': return ''
     if is_Polynomial(polynomial_str): return polynomial_str
     polynomial_str = polynomial_str.replace('-','+-').replace(' ', '').replace('**','^')
     if polynomial_str[0] == '+': polynomial_str = polynomial_str[1:]

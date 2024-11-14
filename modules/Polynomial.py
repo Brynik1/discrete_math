@@ -49,6 +49,7 @@ class Polynomial:
                 result += 'x'
                 if i > 1: result += to_superscript(i)
         expression = result
+        if expression == '': expression = '0'
         expression = expression.replace('+', f'{short_space}+{short_space}').replace('-',
                                                                                      f'{short_space}-{short_space}')
         return expression
